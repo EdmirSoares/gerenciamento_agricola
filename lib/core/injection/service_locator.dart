@@ -1,5 +1,8 @@
+import 'package:gerenciamento_agricola/data/repositories/category_repository_impl.dart';
 import 'package:gerenciamento_agricola/data/repositories/simulation_repository_impl.dart';
+import 'package:gerenciamento_agricola/domain/repositories/category_repository.dart';
 import 'package:gerenciamento_agricola/domain/repositories/simulation_repository.dart';
+import 'package:gerenciamento_agricola/domain/usecases/category_usecase.dart';
 import 'package:gerenciamento_agricola/presentation/cubits/simulation_cubit.dart';
 
 import '../../data/database/app_database.dart';
@@ -12,13 +15,18 @@ void setup() {
   // Database Singleton
   sl.registerSingleton<AppDatabase>(AppDatabase());
 
-  // Repositories (O contrato aponta para a implementação)
   sl.registerLazySingleton<ISimulationRepository>(
     () => SimulationRepositoryImpl(sl<AppDatabase>()),
   );
 
+  sl.registerLazySingleton<ICategoryRepository>(
+    () => CategoryRepositoryImpl(sl<AppDatabase>()),
+  );
+
   // UseCases
   sl.registerLazySingleton(() => CalculateCreditUseCase());
+
+  sl.registerLazySingleton(() => CreateCategoryUseCase(sl()));
 
   // Cubits
   sl.registerFactory(() => SimulationCubit(sl(), sl()));
