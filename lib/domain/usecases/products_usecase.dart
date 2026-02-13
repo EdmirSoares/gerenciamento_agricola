@@ -12,8 +12,6 @@ class CreateProductUseCase {
     String unit,
     String description,
     bool isProduction,
-    DateTime createdAt,
-    DateTime updatedAt,
   ) async {
     final product = ProductsEntity.create(
       name: name,
