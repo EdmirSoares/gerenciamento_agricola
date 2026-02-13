@@ -1,6 +1,8 @@
 import 'package:gerenciamento_agricola/data/repositories/category_repository_impl.dart';
+import 'package:gerenciamento_agricola/data/repositories/products-repository_impl.dart';
 import 'package:gerenciamento_agricola/data/repositories/simulation_repository_impl.dart';
 import 'package:gerenciamento_agricola/domain/repositories/category_repository.dart';
+import 'package:gerenciamento_agricola/domain/repositories/products_repository.dart';
 import 'package:gerenciamento_agricola/domain/repositories/simulation_repository.dart';
 import 'package:gerenciamento_agricola/domain/usecases/category_usecase.dart';
 import 'package:gerenciamento_agricola/presentation/cubits/simulation_cubit.dart';
@@ -21,6 +23,10 @@ void setup() {
 
   sl.registerLazySingleton<ICategoryRepository>(
     () => CategoryRepositoryImpl(sl<AppDatabase>()),
+  );
+
+  sl.registerLazySingleton<IProductRepository>(
+    () => ProductsRepositoryImpl(sl<AppDatabase>()),
   );
 
   // UseCases
