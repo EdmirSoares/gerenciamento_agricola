@@ -13,6 +13,9 @@ class ProductsRepositoryImpl implements IProductRepository {
     final companion = FarmProductsCompanion(
       name: Value<String>(product.name),
       categoryId: Value<int>(product.categoryId),
+      description: Value<String>(product.description),
+      unit: Value<String>(product.unit),
+      isProduction: Value<bool>(product.isProduction),
       createdAt: Value<DateTime>(product.createdAt),
       updatedAt: Value<DateTime>(product.updatedAt),
       isDeleted: Value<bool>(product.isDeleted),
