@@ -46,7 +46,7 @@ class ProductsEntity {
     if (!entity.isValid) {
       throw ArgumentError('Produto inválido: $name');
     }
-    
+
     return entity;
   }
 
@@ -61,7 +61,7 @@ class ProductsEntity {
     DateTime? updatedAt,
     bool? isDeleted,
   }) {
-    return ProductsEntity(
+    final entity = ProductsEntity(
       id: id ?? this.id,
       name: name ?? this.name,
       categoryId: categoryId ?? this.categoryId,
@@ -72,5 +72,11 @@ class ProductsEntity {
       updatedAt: updatedAt ?? this.updatedAt,
       isDeleted: isDeleted ?? this.isDeleted,
     );
+
+    if (!entity.isValid) {
+      throw ArgumentError('Produto inválido: ${entity.name}');
+    }
+
+    return entity;
   }
 }
