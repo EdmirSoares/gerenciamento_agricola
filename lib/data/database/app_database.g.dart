@@ -1486,22 +1486,22 @@ class $FarmStockTable extends FarmStock
     'quantity',
   );
   @override
-  late final GeneratedColumn<int> quantity = GeneratedColumn<int>(
+  late final GeneratedColumn<double> quantity = GeneratedColumn<double>(
     'quantity',
     aliasedName,
     false,
-    type: DriftSqlType.int,
+    type: DriftSqlType.double,
     requiredDuringInsert: true,
   );
   static const VerificationMeta _minimumStockMeta = const VerificationMeta(
     'minimumStock',
   );
   @override
-  late final GeneratedColumn<int> minimumStock = GeneratedColumn<int>(
+  late final GeneratedColumn<double> minimumStock = GeneratedColumn<double>(
     'minimum_stock',
     aliasedName,
     true,
-    type: DriftSqlType.int,
+    type: DriftSqlType.double,
     requiredDuringInsert: false,
   );
   static const VerificationMeta _locationMeta = const VerificationMeta(
@@ -1687,11 +1687,11 @@ class $FarmStockTable extends FarmStock
         data['${effectivePrefix}product_id'],
       )!,
       quantity: attachedDatabase.typeMapping.read(
-        DriftSqlType.int,
+        DriftSqlType.double,
         data['${effectivePrefix}quantity'],
       )!,
       minimumStock: attachedDatabase.typeMapping.read(
-        DriftSqlType.int,
+        DriftSqlType.double,
         data['${effectivePrefix}minimum_stock'],
       ),
       location: attachedDatabase.typeMapping.read(
@@ -1730,8 +1730,8 @@ class $FarmStockTable extends FarmStock
 class FarmStockData extends DataClass implements Insertable<FarmStockData> {
   final int id;
   final int productId;
-  final int quantity;
-  final int? minimumStock;
+  final double quantity;
+  final double? minimumStock;
   final String? location;
   final String? lotNumber;
   final DateTime? expirationDate;
@@ -1755,9 +1755,9 @@ class FarmStockData extends DataClass implements Insertable<FarmStockData> {
     final map = <String, Expression>{};
     map['id'] = Variable<int>(id);
     map['product_id'] = Variable<int>(productId);
-    map['quantity'] = Variable<int>(quantity);
+    map['quantity'] = Variable<double>(quantity);
     if (!nullToAbsent || minimumStock != null) {
-      map['minimum_stock'] = Variable<int>(minimumStock);
+      map['minimum_stock'] = Variable<double>(minimumStock);
     }
     if (!nullToAbsent || location != null) {
       map['location'] = Variable<String>(location);
@@ -1805,8 +1805,8 @@ class FarmStockData extends DataClass implements Insertable<FarmStockData> {
     return FarmStockData(
       id: serializer.fromJson<int>(json['id']),
       productId: serializer.fromJson<int>(json['productId']),
-      quantity: serializer.fromJson<int>(json['quantity']),
-      minimumStock: serializer.fromJson<int?>(json['minimumStock']),
+      quantity: serializer.fromJson<double>(json['quantity']),
+      minimumStock: serializer.fromJson<double?>(json['minimumStock']),
       location: serializer.fromJson<String?>(json['location']),
       lotNumber: serializer.fromJson<String?>(json['lotNumber']),
       expirationDate: serializer.fromJson<DateTime?>(json['expirationDate']),
@@ -1821,8 +1821,8 @@ class FarmStockData extends DataClass implements Insertable<FarmStockData> {
     return <String, dynamic>{
       'id': serializer.toJson<int>(id),
       'productId': serializer.toJson<int>(productId),
-      'quantity': serializer.toJson<int>(quantity),
-      'minimumStock': serializer.toJson<int?>(minimumStock),
+      'quantity': serializer.toJson<double>(quantity),
+      'minimumStock': serializer.toJson<double?>(minimumStock),
       'location': serializer.toJson<String?>(location),
       'lotNumber': serializer.toJson<String?>(lotNumber),
       'expirationDate': serializer.toJson<DateTime?>(expirationDate),
@@ -1835,8 +1835,8 @@ class FarmStockData extends DataClass implements Insertable<FarmStockData> {
   FarmStockData copyWith({
     int? id,
     int? productId,
-    int? quantity,
-    Value<int?> minimumStock = const Value.absent(),
+    double? quantity,
+    Value<double?> minimumStock = const Value.absent(),
     Value<String?> location = const Value.absent(),
     Value<String?> lotNumber = const Value.absent(),
     Value<DateTime?> expirationDate = const Value.absent(),
@@ -1925,8 +1925,8 @@ class FarmStockData extends DataClass implements Insertable<FarmStockData> {
 class FarmStockCompanion extends UpdateCompanion<FarmStockData> {
   final Value<int> id;
   final Value<int> productId;
-  final Value<int> quantity;
-  final Value<int?> minimumStock;
+  final Value<double> quantity;
+  final Value<double?> minimumStock;
   final Value<String?> location;
   final Value<String?> lotNumber;
   final Value<DateTime?> expirationDate;
@@ -1948,7 +1948,7 @@ class FarmStockCompanion extends UpdateCompanion<FarmStockData> {
   FarmStockCompanion.insert({
     this.id = const Value.absent(),
     required int productId,
-    required int quantity,
+    required double quantity,
     this.minimumStock = const Value.absent(),
     this.location = const Value.absent(),
     this.lotNumber = const Value.absent(),
@@ -1961,8 +1961,8 @@ class FarmStockCompanion extends UpdateCompanion<FarmStockData> {
   static Insertable<FarmStockData> custom({
     Expression<int>? id,
     Expression<int>? productId,
-    Expression<int>? quantity,
-    Expression<int>? minimumStock,
+    Expression<double>? quantity,
+    Expression<double>? minimumStock,
     Expression<String>? location,
     Expression<String>? lotNumber,
     Expression<DateTime>? expirationDate,
@@ -1987,8 +1987,8 @@ class FarmStockCompanion extends UpdateCompanion<FarmStockData> {
   FarmStockCompanion copyWith({
     Value<int>? id,
     Value<int>? productId,
-    Value<int>? quantity,
-    Value<int?>? minimumStock,
+    Value<double>? quantity,
+    Value<double?>? minimumStock,
     Value<String?>? location,
     Value<String?>? lotNumber,
     Value<DateTime?>? expirationDate,
@@ -2020,10 +2020,10 @@ class FarmStockCompanion extends UpdateCompanion<FarmStockData> {
       map['product_id'] = Variable<int>(productId.value);
     }
     if (quantity.present) {
-      map['quantity'] = Variable<int>(quantity.value);
+      map['quantity'] = Variable<double>(quantity.value);
     }
     if (minimumStock.present) {
-      map['minimum_stock'] = Variable<int>(minimumStock.value);
+      map['minimum_stock'] = Variable<double>(minimumStock.value);
     }
     if (location.present) {
       map['location'] = Variable<String>(location.value);
@@ -6656,8 +6656,8 @@ typedef $$FarmStockTableCreateCompanionBuilder =
     FarmStockCompanion Function({
       Value<int> id,
       required int productId,
-      required int quantity,
-      Value<int?> minimumStock,
+      required double quantity,
+      Value<double?> minimumStock,
       Value<String?> location,
       Value<String?> lotNumber,
       Value<DateTime?> expirationDate,
@@ -6669,8 +6669,8 @@ typedef $$FarmStockTableUpdateCompanionBuilder =
     FarmStockCompanion Function({
       Value<int> id,
       Value<int> productId,
-      Value<int> quantity,
-      Value<int?> minimumStock,
+      Value<double> quantity,
+      Value<double?> minimumStock,
       Value<String?> location,
       Value<String?> lotNumber,
       Value<DateTime?> expirationDate,
@@ -6717,12 +6717,12 @@ class $$FarmStockTableFilterComposer
     builder: (column) => ColumnFilters(column),
   );
 
-  ColumnFilters<int> get quantity => $composableBuilder(
+  ColumnFilters<double> get quantity => $composableBuilder(
     column: $table.quantity,
     builder: (column) => ColumnFilters(column),
   );
 
-  ColumnFilters<int> get minimumStock => $composableBuilder(
+  ColumnFilters<double> get minimumStock => $composableBuilder(
     column: $table.minimumStock,
     builder: (column) => ColumnFilters(column),
   );
@@ -6795,12 +6795,12 @@ class $$FarmStockTableOrderingComposer
     builder: (column) => ColumnOrderings(column),
   );
 
-  ColumnOrderings<int> get quantity => $composableBuilder(
+  ColumnOrderings<double> get quantity => $composableBuilder(
     column: $table.quantity,
     builder: (column) => ColumnOrderings(column),
   );
 
-  ColumnOrderings<int> get minimumStock => $composableBuilder(
+  ColumnOrderings<double> get minimumStock => $composableBuilder(
     column: $table.minimumStock,
     builder: (column) => ColumnOrderings(column),
   );
@@ -6871,10 +6871,10 @@ class $$FarmStockTableAnnotationComposer
   GeneratedColumn<int> get id =>
       $composableBuilder(column: $table.id, builder: (column) => column);
 
-  GeneratedColumn<int> get quantity =>
+  GeneratedColumn<double> get quantity =>
       $composableBuilder(column: $table.quantity, builder: (column) => column);
 
-  GeneratedColumn<int> get minimumStock => $composableBuilder(
+  GeneratedColumn<double> get minimumStock => $composableBuilder(
     column: $table.minimumStock,
     builder: (column) => column,
   );
@@ -6953,8 +6953,8 @@ class $$FarmStockTableTableManager
               ({
                 Value<int> id = const Value.absent(),
                 Value<int> productId = const Value.absent(),
-                Value<int> quantity = const Value.absent(),
-                Value<int?> minimumStock = const Value.absent(),
+                Value<double> quantity = const Value.absent(),
+                Value<double?> minimumStock = const Value.absent(),
                 Value<String?> location = const Value.absent(),
                 Value<String?> lotNumber = const Value.absent(),
                 Value<DateTime?> expirationDate = const Value.absent(),
@@ -6977,8 +6977,8 @@ class $$FarmStockTableTableManager
               ({
                 Value<int> id = const Value.absent(),
                 required int productId,
-                required int quantity,
-                Value<int?> minimumStock = const Value.absent(),
+                required double quantity,
+                Value<double?> minimumStock = const Value.absent(),
                 Value<String?> location = const Value.absent(),
                 Value<String?> lotNumber = const Value.absent(),
                 Value<DateTime?> expirationDate = const Value.absent(),

@@ -25,7 +25,23 @@ class AppDatabase extends _$AppDatabase {
   AppDatabase([QueryExecutor? executor]) : super(executor ?? _openConnection());
 
   @override
-  int get schemaVersion => 2;
+  int get schemaVersion => 3;
+
+  @override
+  MigrationStrategy get migration => MigrationStrategy(
+    onUpgrade: (migrator, from, to) async {
+      if (from < 3) {
+        await migrator.alterTable(
+          TableMigration(
+            farmStock,
+            columnTransformer: {
+              farmStock.quantity: farmStock.quantity.cast<double>(),
+            },
+          ),
+        );
+      }
+    },
+  );
 
   Future<List<Simulation>> getUnsyncedSimulations() {
     return (select(simulations)..where((t) => t.isSynced.equals(false))).get();
