@@ -45,8 +45,8 @@ class FarmStock extends Table {
   IntColumn get id => integer().autoIncrement()();
   IntColumn get productId => integer().references(FarmProducts, #id)();
 
-  IntColumn get quantity => integer()(); //atualizar somente via movimentações
-  IntColumn get minimumStock => integer().nullable()();
+  RealColumn get quantity => real()(); //atualizar somente via movimentações
+  RealColumn get minimumStock => real().nullable()();
 
   TextColumn get location => text().nullable()();
   TextColumn get lotNumber => text().nullable()();
