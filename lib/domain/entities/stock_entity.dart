@@ -1,8 +1,8 @@
 class StockEntity {
   final int? id;
   final int productId;
-  final int quantity;
-  final int? minimumStock;
+  final double quantity;
+  final double? minimumStock;
   final String? location;
   final String? lotNumber;
   final DateTime? expirationDate;
@@ -27,8 +27,8 @@ class StockEntity {
 
   factory StockEntity.create({
     required int productId,
-    required int quantity,
-    int? minimumStock,
+    required double quantity,
+    double? minimumStock,
     String? location,
     String? lotNumber,
     DateTime? expirationDate,
@@ -68,8 +68,8 @@ class StockEntity {
   StockEntity copyWith({
     int? id,
     int? productId,
-    int? quantity,
-    int? minimumStock,
+    double? quantity,
+    double? minimumStock,
     String? location,
     String? lotNumber,
     DateTime? expirationDate,
