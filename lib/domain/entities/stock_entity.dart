@@ -33,8 +33,21 @@ class StockEntity {
     String? lotNumber,
     DateTime? expirationDate,
   }) {
+    if (productId <= 0) {
+      throw ArgumentError('ID do produto deve ser maior que zero');
+    }
+
+    if (quantity < 0) {
+      throw ArgumentError('Quantidade não pode ser negativa');
+    }
+
     final now = DateTime.now();
-    final entity = StockEntity(
+
+    if (expirationDate != null && expirationDate.isBefore(now)) {
+      throw ArgumentError('Data de validade não pode ser no passado');
+    }
+
+    return StockEntity(
       productId: productId,
       quantity: quantity,
       minimumStock: minimumStock,
@@ -45,24 +58,6 @@ class StockEntity {
       updatedAt: now,
       isDeleted: false,
     );
-
-    if (entity.isLowStock) {
-      throw ArgumentError('Estoque baixo para o produto ID: $productId');
-    }
-
-    if (productId <= 0) {
-      throw ArgumentError('ID do produto deve ser maior que zero');
-    }
-
-    if (quantity < 0) {
-      throw ArgumentError('Quantidade não pode ser negativa');
-    }
-
-    if(expirationDate != null && expirationDate.isBefore(now)) {
-      throw ArgumentError('Data de validade não pode ser no passado');
-    }
-
-    return entity;
   }
 
   StockEntity copyWith({
@@ -77,7 +72,7 @@ class StockEntity {
     DateTime? updatedAt,
     bool? isDeleted,
   }) {
-    final entity = StockEntity(
+    return StockEntity(
       id: id ?? this.id,
       productId: productId ?? this.productId,
       quantity: quantity ?? this.quantity,
@@ -89,13 +84,5 @@ class StockEntity {
       updatedAt: updatedAt ?? this.updatedAt,
       isDeleted: isDeleted ?? this.isDeleted,
     );
-
-    if (entity.isLowStock) {
-      throw ArgumentError(
-        'Estoque baixo para o produto ID: ${entity.productId}',
-      );
-    }
-
-    return entity;
   }
 }
