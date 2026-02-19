@@ -1,5 +1,5 @@
 import 'package:gerenciamento_agricola/data/repositories/category_repository_impl.dart';
-import 'package:gerenciamento_agricola/data/repositories/products-repository_impl.dart';
+import 'package:gerenciamento_agricola/data/repositories/products_repository_impl.dart';
 import 'package:gerenciamento_agricola/data/repositories/simulation_repository_impl.dart';
 import 'package:gerenciamento_agricola/domain/repositories/category_repository.dart';
 import 'package:gerenciamento_agricola/domain/repositories/products_repository.dart';

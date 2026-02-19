@@ -1,6 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:gerenciamento_agricola/data/database/app_database.dart';
-import 'package:gerenciamento_agricola/data/repositories/products-repository_impl.dart';
+import 'package:gerenciamento_agricola/data/repositories/products_repository_impl.dart';
 import 'package:gerenciamento_agricola/domain/usecases/products_usecase.dart';
 import 'package:drift/native.dart';
 
