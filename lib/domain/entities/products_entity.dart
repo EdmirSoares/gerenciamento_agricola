@@ -21,6 +21,9 @@ class ProductsEntity {
     this.isDeleted = false,
   });
 
+  bool get isValid =>
+      name.trim().isNotEmpty && name.length >= 3 && categoryId > 0;
+
   factory ProductsEntity.create({
     required String name,
     required int categoryId,
@@ -29,7 +32,8 @@ class ProductsEntity {
     required bool isProduction,
   }) {
     final now = DateTime.now();
-    return ProductsEntity(
+
+    final entity = ProductsEntity(
       name: name,
       categoryId: categoryId,
       description: description,
@@ -38,6 +42,12 @@ class ProductsEntity {
       createdAt: now,
       updatedAt: now,
     );
+
+    if (!entity.isValid) {
+      throw ArgumentError('Produto inválido: $name');
+    }
+    
+    return entity;
   }
 
   ProductsEntity copyWith({
