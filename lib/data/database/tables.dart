@@ -68,7 +68,7 @@ class FarmStockMovements extends Table {
 
   IntColumn get type => intEnum<StockMovementType>()();
 
-  IntColumn get quantity => integer()();
+  RealColumn get quantity => real()();
   IntColumn get unitCostInCents => integer().nullable()();
 
   TextColumn get referenceType => text().nullable()();
@@ -119,7 +119,7 @@ class FarmPurchaseItems extends Table {
   IntColumn get purchaseId => integer().references(FarmPurchases, #id)();
   IntColumn get productId => integer().references(FarmProducts, #id)();
 
-  IntColumn get quantity => integer()();
+  RealColumn get quantity => real()();
   IntColumn get unitCostInCents => integer()();
   DateTimeColumn get createdAt => dateTime().withDefault(currentDateAndTime)();
 
@@ -147,7 +147,7 @@ class FarmProductions extends Table {
   IntColumn get id => integer().autoIncrement()();
   IntColumn get productId => integer().references(FarmProducts, #id)();
 
-  IntColumn get quantity => integer()();
+  RealColumn get quantity => real()();
   IntColumn get unitPriceInCents => integer()();
   IntColumn get productionCostInCents => integer()();
 

@@ -2112,11 +2112,11 @@ class $FarmStockMovementsTable extends FarmStockMovements
     'quantity',
   );
   @override
-  late final GeneratedColumn<int> quantity = GeneratedColumn<int>(
+  late final GeneratedColumn<double> quantity = GeneratedColumn<double>(
     'quantity',
     aliasedName,
     false,
-    type: DriftSqlType.int,
+    type: DriftSqlType.double,
     requiredDuringInsert: true,
   );
   static const VerificationMeta _unitCostInCentsMeta = const VerificationMeta(
@@ -2283,7 +2283,7 @@ class $FarmStockMovementsTable extends FarmStockMovements
         )!,
       ),
       quantity: attachedDatabase.typeMapping.read(
-        DriftSqlType.int,
+        DriftSqlType.double,
         data['${effectivePrefix}quantity'],
       )!,
       unitCostInCents: attachedDatabase.typeMapping.read(
@@ -2323,7 +2323,7 @@ class FarmStockMovement extends DataClass
   final int id;
   final int productId;
   final StockMovementType type;
-  final int quantity;
+  final double quantity;
   final int? unitCostInCents;
   final String? referenceType;
   final DateTime createdAt;
@@ -2350,7 +2350,7 @@ class FarmStockMovement extends DataClass
         $FarmStockMovementsTable.$convertertype.toSql(type),
       );
     }
-    map['quantity'] = Variable<int>(quantity);
+    map['quantity'] = Variable<double>(quantity);
     if (!nullToAbsent || unitCostInCents != null) {
       map['unit_cost_in_cents'] = Variable<int>(unitCostInCents);
     }
@@ -2392,7 +2392,7 @@ class FarmStockMovement extends DataClass
       type: $FarmStockMovementsTable.$convertertype.fromJson(
         serializer.fromJson<int>(json['type']),
       ),
-      quantity: serializer.fromJson<int>(json['quantity']),
+      quantity: serializer.fromJson<double>(json['quantity']),
       unitCostInCents: serializer.fromJson<int?>(json['unitCostInCents']),
       referenceType: serializer.fromJson<String?>(json['referenceType']),
       createdAt: serializer.fromJson<DateTime>(json['createdAt']),
@@ -2409,7 +2409,7 @@ class FarmStockMovement extends DataClass
       'type': serializer.toJson<int>(
         $FarmStockMovementsTable.$convertertype.toJson(type),
       ),
-      'quantity': serializer.toJson<int>(quantity),
+      'quantity': serializer.toJson<double>(quantity),
       'unitCostInCents': serializer.toJson<int?>(unitCostInCents),
       'referenceType': serializer.toJson<String?>(referenceType),
       'createdAt': serializer.toJson<DateTime>(createdAt),
@@ -2422,7 +2422,7 @@ class FarmStockMovement extends DataClass
     int? id,
     int? productId,
     StockMovementType? type,
-    int? quantity,
+    double? quantity,
     Value<int?> unitCostInCents = const Value.absent(),
     Value<String?> referenceType = const Value.absent(),
     DateTime? createdAt,
@@ -2508,7 +2508,7 @@ class FarmStockMovementsCompanion extends UpdateCompanion<FarmStockMovement> {
   final Value<int> id;
   final Value<int> productId;
   final Value<StockMovementType> type;
-  final Value<int> quantity;
+  final Value<double> quantity;
   final Value<int?> unitCostInCents;
   final Value<String?> referenceType;
   final Value<DateTime> createdAt;
@@ -2529,7 +2529,7 @@ class FarmStockMovementsCompanion extends UpdateCompanion<FarmStockMovement> {
     this.id = const Value.absent(),
     required int productId,
     required StockMovementType type,
-    required int quantity,
+    required double quantity,
     this.unitCostInCents = const Value.absent(),
     this.referenceType = const Value.absent(),
     this.createdAt = const Value.absent(),
@@ -2542,7 +2542,7 @@ class FarmStockMovementsCompanion extends UpdateCompanion<FarmStockMovement> {
     Expression<int>? id,
     Expression<int>? productId,
     Expression<int>? type,
-    Expression<int>? quantity,
+    Expression<double>? quantity,
     Expression<int>? unitCostInCents,
     Expression<String>? referenceType,
     Expression<DateTime>? createdAt,
@@ -2566,7 +2566,7 @@ class FarmStockMovementsCompanion extends UpdateCompanion<FarmStockMovement> {
     Value<int>? id,
     Value<int>? productId,
     Value<StockMovementType>? type,
-    Value<int>? quantity,
+    Value<double>? quantity,
     Value<int?>? unitCostInCents,
     Value<String?>? referenceType,
     Value<DateTime>? createdAt,
@@ -2601,7 +2601,7 @@ class FarmStockMovementsCompanion extends UpdateCompanion<FarmStockMovement> {
       );
     }
     if (quantity.present) {
-      map['quantity'] = Variable<int>(quantity.value);
+      map['quantity'] = Variable<double>(quantity.value);
     }
     if (unitCostInCents.present) {
       map['unit_cost_in_cents'] = Variable<int>(unitCostInCents.value);
@@ -3764,11 +3764,11 @@ class $FarmPurchaseItemsTable extends FarmPurchaseItems
     'quantity',
   );
   @override
-  late final GeneratedColumn<int> quantity = GeneratedColumn<int>(
+  late final GeneratedColumn<double> quantity = GeneratedColumn<double>(
     'quantity',
     aliasedName,
     false,
-    type: DriftSqlType.int,
+    type: DriftSqlType.double,
     requiredDuringInsert: true,
   );
   static const VerificationMeta _unitCostInCentsMeta = const VerificationMeta(
@@ -3922,7 +3922,7 @@ class $FarmPurchaseItemsTable extends FarmPurchaseItems
         data['${effectivePrefix}product_id'],
       )!,
       quantity: attachedDatabase.typeMapping.read(
-        DriftSqlType.int,
+        DriftSqlType.double,
         data['${effectivePrefix}quantity'],
       )!,
       unitCostInCents: attachedDatabase.typeMapping.read(
@@ -3955,7 +3955,7 @@ class FarmPurchaseItem extends DataClass
   final int id;
   final int purchaseId;
   final int productId;
-  final int quantity;
+  final double quantity;
   final int unitCostInCents;
   final DateTime createdAt;
   final DateTime updatedAt;
@@ -3976,7 +3976,7 @@ class FarmPurchaseItem extends DataClass
     map['id'] = Variable<int>(id);
     map['purchase_id'] = Variable<int>(purchaseId);
     map['product_id'] = Variable<int>(productId);
-    map['quantity'] = Variable<int>(quantity);
+    map['quantity'] = Variable<double>(quantity);
     map['unit_cost_in_cents'] = Variable<int>(unitCostInCents);
     map['created_at'] = Variable<DateTime>(createdAt);
     map['updated_at'] = Variable<DateTime>(updatedAt);
@@ -4006,7 +4006,7 @@ class FarmPurchaseItem extends DataClass
       id: serializer.fromJson<int>(json['id']),
       purchaseId: serializer.fromJson<int>(json['purchaseId']),
       productId: serializer.fromJson<int>(json['productId']),
-      quantity: serializer.fromJson<int>(json['quantity']),
+      quantity: serializer.fromJson<double>(json['quantity']),
       unitCostInCents: serializer.fromJson<int>(json['unitCostInCents']),
       createdAt: serializer.fromJson<DateTime>(json['createdAt']),
       updatedAt: serializer.fromJson<DateTime>(json['updatedAt']),
@@ -4020,7 +4020,7 @@ class FarmPurchaseItem extends DataClass
       'id': serializer.toJson<int>(id),
       'purchaseId': serializer.toJson<int>(purchaseId),
       'productId': serializer.toJson<int>(productId),
-      'quantity': serializer.toJson<int>(quantity),
+      'quantity': serializer.toJson<double>(quantity),
       'unitCostInCents': serializer.toJson<int>(unitCostInCents),
       'createdAt': serializer.toJson<DateTime>(createdAt),
       'updatedAt': serializer.toJson<DateTime>(updatedAt),
@@ -4032,7 +4032,7 @@ class FarmPurchaseItem extends DataClass
     int? id,
     int? purchaseId,
     int? productId,
-    int? quantity,
+    double? quantity,
     int? unitCostInCents,
     DateTime? createdAt,
     DateTime? updatedAt,
@@ -4108,7 +4108,7 @@ class FarmPurchaseItemsCompanion extends UpdateCompanion<FarmPurchaseItem> {
   final Value<int> id;
   final Value<int> purchaseId;
   final Value<int> productId;
-  final Value<int> quantity;
+  final Value<double> quantity;
   final Value<int> unitCostInCents;
   final Value<DateTime> createdAt;
   final Value<DateTime> updatedAt;
@@ -4127,7 +4127,7 @@ class FarmPurchaseItemsCompanion extends UpdateCompanion<FarmPurchaseItem> {
     this.id = const Value.absent(),
     required int purchaseId,
     required int productId,
-    required int quantity,
+    required double quantity,
     required int unitCostInCents,
     this.createdAt = const Value.absent(),
     this.updatedAt = const Value.absent(),
@@ -4140,7 +4140,7 @@ class FarmPurchaseItemsCompanion extends UpdateCompanion<FarmPurchaseItem> {
     Expression<int>? id,
     Expression<int>? purchaseId,
     Expression<int>? productId,
-    Expression<int>? quantity,
+    Expression<double>? quantity,
     Expression<int>? unitCostInCents,
     Expression<DateTime>? createdAt,
     Expression<DateTime>? updatedAt,
@@ -4162,7 +4162,7 @@ class FarmPurchaseItemsCompanion extends UpdateCompanion<FarmPurchaseItem> {
     Value<int>? id,
     Value<int>? purchaseId,
     Value<int>? productId,
-    Value<int>? quantity,
+    Value<double>? quantity,
     Value<int>? unitCostInCents,
     Value<DateTime>? createdAt,
     Value<DateTime>? updatedAt,
@@ -4193,7 +4193,7 @@ class FarmPurchaseItemsCompanion extends UpdateCompanion<FarmPurchaseItem> {
       map['product_id'] = Variable<int>(productId.value);
     }
     if (quantity.present) {
-      map['quantity'] = Variable<int>(quantity.value);
+      map['quantity'] = Variable<double>(quantity.value);
     }
     if (unitCostInCents.present) {
       map['unit_cost_in_cents'] = Variable<int>(unitCostInCents.value);
@@ -4670,11 +4670,11 @@ class $FarmProductionsTable extends FarmProductions
     'quantity',
   );
   @override
-  late final GeneratedColumn<int> quantity = GeneratedColumn<int>(
+  late final GeneratedColumn<double> quantity = GeneratedColumn<double>(
     'quantity',
     aliasedName,
     false,
-    type: DriftSqlType.int,
+    type: DriftSqlType.double,
     requiredDuringInsert: true,
   );
   static const VerificationMeta _unitPriceInCentsMeta = const VerificationMeta(
@@ -4886,7 +4886,7 @@ class $FarmProductionsTable extends FarmProductions
         data['${effectivePrefix}product_id'],
       )!,
       quantity: attachedDatabase.typeMapping.read(
-        DriftSqlType.int,
+        DriftSqlType.double,
         data['${effectivePrefix}quantity'],
       )!,
       unitPriceInCents: attachedDatabase.typeMapping.read(
@@ -4929,7 +4929,7 @@ class $FarmProductionsTable extends FarmProductions
 class FarmProduction extends DataClass implements Insertable<FarmProduction> {
   final int id;
   final int productId;
-  final int quantity;
+  final double quantity;
   final int unitPriceInCents;
   final int productionCostInCents;
   final DateTime harvestDate;
@@ -4954,7 +4954,7 @@ class FarmProduction extends DataClass implements Insertable<FarmProduction> {
     final map = <String, Expression>{};
     map['id'] = Variable<int>(id);
     map['product_id'] = Variable<int>(productId);
-    map['quantity'] = Variable<int>(quantity);
+    map['quantity'] = Variable<double>(quantity);
     map['unit_price_in_cents'] = Variable<int>(unitPriceInCents);
     map['production_cost_in_cents'] = Variable<int>(productionCostInCents);
     map['harvest_date'] = Variable<DateTime>(harvestDate);
@@ -4988,7 +4988,7 @@ class FarmProduction extends DataClass implements Insertable<FarmProduction> {
     return FarmProduction(
       id: serializer.fromJson<int>(json['id']),
       productId: serializer.fromJson<int>(json['productId']),
-      quantity: serializer.fromJson<int>(json['quantity']),
+      quantity: serializer.fromJson<double>(json['quantity']),
       unitPriceInCents: serializer.fromJson<int>(json['unitPriceInCents']),
       productionCostInCents: serializer.fromJson<int>(
         json['productionCostInCents'],
@@ -5006,7 +5006,7 @@ class FarmProduction extends DataClass implements Insertable<FarmProduction> {
     return <String, dynamic>{
       'id': serializer.toJson<int>(id),
       'productId': serializer.toJson<int>(productId),
-      'quantity': serializer.toJson<int>(quantity),
+      'quantity': serializer.toJson<double>(quantity),
       'unitPriceInCents': serializer.toJson<int>(unitPriceInCents),
       'productionCostInCents': serializer.toJson<int>(productionCostInCents),
       'harvestDate': serializer.toJson<DateTime>(harvestDate),
@@ -5020,7 +5020,7 @@ class FarmProduction extends DataClass implements Insertable<FarmProduction> {
   FarmProduction copyWith({
     int? id,
     int? productId,
-    int? quantity,
+    double? quantity,
     int? unitPriceInCents,
     int? productionCostInCents,
     DateTime? harvestDate,
@@ -5112,7 +5112,7 @@ class FarmProduction extends DataClass implements Insertable<FarmProduction> {
 class FarmProductionsCompanion extends UpdateCompanion<FarmProduction> {
   final Value<int> id;
   final Value<int> productId;
-  final Value<int> quantity;
+  final Value<double> quantity;
   final Value<int> unitPriceInCents;
   final Value<int> productionCostInCents;
   final Value<DateTime> harvestDate;
@@ -5135,7 +5135,7 @@ class FarmProductionsCompanion extends UpdateCompanion<FarmProduction> {
   FarmProductionsCompanion.insert({
     this.id = const Value.absent(),
     required int productId,
-    required int quantity,
+    required double quantity,
     required int unitPriceInCents,
     required int productionCostInCents,
     required DateTime harvestDate,
@@ -5152,7 +5152,7 @@ class FarmProductionsCompanion extends UpdateCompanion<FarmProduction> {
   static Insertable<FarmProduction> custom({
     Expression<int>? id,
     Expression<int>? productId,
-    Expression<int>? quantity,
+    Expression<double>? quantity,
     Expression<int>? unitPriceInCents,
     Expression<int>? productionCostInCents,
     Expression<DateTime>? harvestDate,
@@ -5179,7 +5179,7 @@ class FarmProductionsCompanion extends UpdateCompanion<FarmProduction> {
   FarmProductionsCompanion copyWith({
     Value<int>? id,
     Value<int>? productId,
-    Value<int>? quantity,
+    Value<double>? quantity,
     Value<int>? unitPriceInCents,
     Value<int>? productionCostInCents,
     Value<DateTime>? harvestDate,
@@ -5213,7 +5213,7 @@ class FarmProductionsCompanion extends UpdateCompanion<FarmProduction> {
       map['product_id'] = Variable<int>(productId.value);
     }
     if (quantity.present) {
-      map['quantity'] = Variable<int>(quantity.value);
+      map['quantity'] = Variable<double>(quantity.value);
     }
     if (unitPriceInCents.present) {
       map['unit_price_in_cents'] = Variable<int>(unitPriceInCents.value);
@@ -7069,7 +7069,7 @@ typedef $$FarmStockMovementsTableCreateCompanionBuilder =
       Value<int> id,
       required int productId,
       required StockMovementType type,
-      required int quantity,
+      required double quantity,
       Value<int?> unitCostInCents,
       Value<String?> referenceType,
       Value<DateTime> createdAt,
@@ -7081,7 +7081,7 @@ typedef $$FarmStockMovementsTableUpdateCompanionBuilder =
       Value<int> id,
       Value<int> productId,
       Value<StockMovementType> type,
-      Value<int> quantity,
+      Value<double> quantity,
       Value<int?> unitCostInCents,
       Value<String?> referenceType,
       Value<DateTime> createdAt,
@@ -7145,7 +7145,7 @@ class $$FarmStockMovementsTableFilterComposer
     builder: (column) => ColumnWithTypeConverterFilters(column),
   );
 
-  ColumnFilters<int> get quantity => $composableBuilder(
+  ColumnFilters<double> get quantity => $composableBuilder(
     column: $table.quantity,
     builder: (column) => ColumnFilters(column),
   );
@@ -7218,7 +7218,7 @@ class $$FarmStockMovementsTableOrderingComposer
     builder: (column) => ColumnOrderings(column),
   );
 
-  ColumnOrderings<int> get quantity => $composableBuilder(
+  ColumnOrderings<double> get quantity => $composableBuilder(
     column: $table.quantity,
     builder: (column) => ColumnOrderings(column),
   );
@@ -7287,7 +7287,7 @@ class $$FarmStockMovementsTableAnnotationComposer
   GeneratedColumnWithTypeConverter<StockMovementType, int> get type =>
       $composableBuilder(column: $table.type, builder: (column) => column);
 
-  GeneratedColumn<int> get quantity =>
+  GeneratedColumn<double> get quantity =>
       $composableBuilder(column: $table.quantity, builder: (column) => column);
 
   GeneratedColumn<int> get unitCostInCents => $composableBuilder(
@@ -7369,7 +7369,7 @@ class $$FarmStockMovementsTableTableManager
                 Value<int> id = const Value.absent(),
                 Value<int> productId = const Value.absent(),
                 Value<StockMovementType> type = const Value.absent(),
-                Value<int> quantity = const Value.absent(),
+                Value<double> quantity = const Value.absent(),
                 Value<int?> unitCostInCents = const Value.absent(),
                 Value<String?> referenceType = const Value.absent(),
                 Value<DateTime> createdAt = const Value.absent(),
@@ -7391,7 +7391,7 @@ class $$FarmStockMovementsTableTableManager
                 Value<int> id = const Value.absent(),
                 required int productId,
                 required StockMovementType type,
-                required int quantity,
+                required double quantity,
                 Value<int?> unitCostInCents = const Value.absent(),
                 Value<String?> referenceType = const Value.absent(),
                 Value<DateTime> createdAt = const Value.absent(),
@@ -8348,7 +8348,7 @@ typedef $$FarmPurchaseItemsTableCreateCompanionBuilder =
       Value<int> id,
       required int purchaseId,
       required int productId,
-      required int quantity,
+      required double quantity,
       required int unitCostInCents,
       Value<DateTime> createdAt,
       Value<DateTime> updatedAt,
@@ -8359,7 +8359,7 @@ typedef $$FarmPurchaseItemsTableUpdateCompanionBuilder =
       Value<int> id,
       Value<int> purchaseId,
       Value<int> productId,
-      Value<int> quantity,
+      Value<double> quantity,
       Value<int> unitCostInCents,
       Value<DateTime> createdAt,
       Value<DateTime> updatedAt,
@@ -8438,7 +8438,7 @@ class $$FarmPurchaseItemsTableFilterComposer
     builder: (column) => ColumnFilters(column),
   );
 
-  ColumnFilters<int> get quantity => $composableBuilder(
+  ColumnFilters<double> get quantity => $composableBuilder(
     column: $table.quantity,
     builder: (column) => ColumnFilters(column),
   );
@@ -8524,7 +8524,7 @@ class $$FarmPurchaseItemsTableOrderingComposer
     builder: (column) => ColumnOrderings(column),
   );
 
-  ColumnOrderings<int> get quantity => $composableBuilder(
+  ColumnOrderings<double> get quantity => $composableBuilder(
     column: $table.quantity,
     builder: (column) => ColumnOrderings(column),
   );
@@ -8608,7 +8608,7 @@ class $$FarmPurchaseItemsTableAnnotationComposer
   GeneratedColumn<int> get id =>
       $composableBuilder(column: $table.id, builder: (column) => column);
 
-  GeneratedColumn<int> get quantity =>
+  GeneratedColumn<double> get quantity =>
       $composableBuilder(column: $table.quantity, builder: (column) => column);
 
   GeneratedColumn<int> get unitCostInCents => $composableBuilder(
@@ -8708,7 +8708,7 @@ class $$FarmPurchaseItemsTableTableManager
                 Value<int> id = const Value.absent(),
                 Value<int> purchaseId = const Value.absent(),
                 Value<int> productId = const Value.absent(),
-                Value<int> quantity = const Value.absent(),
+                Value<double> quantity = const Value.absent(),
                 Value<int> unitCostInCents = const Value.absent(),
                 Value<DateTime> createdAt = const Value.absent(),
                 Value<DateTime> updatedAt = const Value.absent(),
@@ -8728,7 +8728,7 @@ class $$FarmPurchaseItemsTableTableManager
                 Value<int> id = const Value.absent(),
                 required int purchaseId,
                 required int productId,
-                required int quantity,
+                required double quantity,
                 required int unitCostInCents,
                 Value<DateTime> createdAt = const Value.absent(),
                 Value<DateTime> updatedAt = const Value.absent(),
@@ -9156,7 +9156,7 @@ typedef $$FarmProductionsTableCreateCompanionBuilder =
     FarmProductionsCompanion Function({
       Value<int> id,
       required int productId,
-      required int quantity,
+      required double quantity,
       required int unitPriceInCents,
       required int productionCostInCents,
       required DateTime harvestDate,
@@ -9169,7 +9169,7 @@ typedef $$FarmProductionsTableUpdateCompanionBuilder =
     FarmProductionsCompanion Function({
       Value<int> id,
       Value<int> productId,
-      Value<int> quantity,
+      Value<double> quantity,
       Value<int> unitPriceInCents,
       Value<int> productionCostInCents,
       Value<DateTime> harvestDate,
@@ -9244,7 +9244,7 @@ class $$FarmProductionsTableFilterComposer
     builder: (column) => ColumnFilters(column),
   );
 
-  ColumnFilters<int> get quantity => $composableBuilder(
+  ColumnFilters<double> get quantity => $composableBuilder(
     column: $table.quantity,
     builder: (column) => ColumnFilters(column),
   );
@@ -9340,7 +9340,7 @@ class $$FarmProductionsTableOrderingComposer
     builder: (column) => ColumnOrderings(column),
   );
 
-  ColumnOrderings<int> get quantity => $composableBuilder(
+  ColumnOrderings<double> get quantity => $composableBuilder(
     column: $table.quantity,
     builder: (column) => ColumnOrderings(column),
   );
@@ -9434,7 +9434,7 @@ class $$FarmProductionsTableAnnotationComposer
   GeneratedColumn<int> get id =>
       $composableBuilder(column: $table.id, builder: (column) => column);
 
-  GeneratedColumn<int> get quantity =>
+  GeneratedColumn<double> get quantity =>
       $composableBuilder(column: $table.quantity, builder: (column) => column);
 
   GeneratedColumn<int> get unitPriceInCents => $composableBuilder(
@@ -9540,7 +9540,7 @@ class $$FarmProductionsTableTableManager
               ({
                 Value<int> id = const Value.absent(),
                 Value<int> productId = const Value.absent(),
-                Value<int> quantity = const Value.absent(),
+                Value<double> quantity = const Value.absent(),
                 Value<int> unitPriceInCents = const Value.absent(),
                 Value<int> productionCostInCents = const Value.absent(),
                 Value<DateTime> harvestDate = const Value.absent(),
@@ -9564,7 +9564,7 @@ class $$FarmProductionsTableTableManager
               ({
                 Value<int> id = const Value.absent(),
                 required int productId,
-                required int quantity,
+                required double quantity,
                 required int unitPriceInCents,
                 required int productionCostInCents,
                 required DateTime harvestDate,
