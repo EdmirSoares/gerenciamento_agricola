@@ -73,7 +73,6 @@ class StockMovementEntity {
     DateTime? updatedAt,
     bool? isDeleted,
   }) {
-    // Valida dados ao copiar
     final newQuantity = quantity ?? this.quantity;
     final newUnitCost = unitCostInCents ?? this.unitCostInCents;
 

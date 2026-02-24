@@ -15,18 +15,6 @@ class AddStockMovementUseCase {
     int? unitCostInCents,
     String? referenceType,
   ) async {
-    if (productId <= 0) {
-      throw ArgumentError('ID do produto deve ser maior que zero');
-    }
-    
-    if (quantity <= 0) {
-      throw ArgumentError('Quantidade deve ser maior que zero');
-    }
-    
-    if (unitCostInCents != null && unitCostInCents < 0) {
-      throw ArgumentError('Custo unitário não pode ser negativo');
-    }
-
     try {
       final stockMovement = StockMovementEntity.create(
         productId: productId,
@@ -35,10 +23,14 @@ class AddStockMovementUseCase {
         unitCostInCents: unitCostInCents,
         referenceType: referenceType,
       );
-      
+
       await _repository.addStockMovement(stockMovement);
+    } on ArgumentError catch (e) {
+      throw ArgumentError('Validação falhou: ${e.message}');
     } catch (e) {
-      throw Exception('Erro ao adicionar movimentação de estoque: ${e.toString()}');
+      throw Exception(
+        'Erro ao adicionar movimentação de estoque: ${e.toString()}',
+      );
     }
   }
 }
@@ -52,18 +44,11 @@ class UpdateStockMovementUseCase {
     if (stockMovement.id == null) {
       throw ArgumentError('ID da movimentação é obrigatório para atualização');
     }
-    
-    if (stockMovement.quantity <= 0) {
-      throw ArgumentError('Quantidade deve ser maior que zero');
-    }
-    
-    if (stockMovement.unitCostInCents != null && 
-        stockMovement.unitCostInCents! < 0) {
-      throw ArgumentError('Custo unitário não pode ser negativo');
-    }
 
     try {
       await _repository.updateStockMovement(stockMovement);
+    } on ArgumentError catch (e) {
+      throw ArgumentError('Validação falhou: ${e.message}');
     } catch (e) {
       throw Exception('Erro ao atualizar movimentação: ${e.toString()}');
     }
@@ -79,8 +64,7 @@ class DeleteStockMovementsUseCase {
     if (ids.isEmpty) {
       throw ArgumentError('Lista de IDs não pode estar vazia');
     }
-    
-    // Valida que todos os IDs são válidos
+
     if (ids.any((id) => id <= 0)) {
       throw ArgumentError('Todos os IDs devem ser maiores que zero');
     }
@@ -102,7 +86,9 @@ class DeleteAllStockMovementsUseCase {
     try {
       await _repository.deleteAllStockMovements();
     } catch (e) {
-      throw Exception('Erro ao deletar todas as movimentações: ${e.toString()}');
+      throw Exception(
+        'Erro ao deletar todas as movimentações: ${e.toString()}',
+      );
     }
   }
 }
@@ -119,6 +105,10 @@ class GetStockMovementByIdUseCase {
 
     try {
       return await _repository.getStockMovementById(id);
+    } on ArgumentError catch (e) {
+      throw ArgumentError(
+        'Validação falhou ao buscar movimentação por ID: ${e.message}',
+      );
     } catch (e) {
       throw Exception('Erro ao buscar movimentação: ${e.toString()}');
     }
@@ -152,7 +142,9 @@ class GetMovementsByProductIdUseCase {
     try {
       return await _repository.getMovementsByProductId(productId);
     } catch (e) {
-      throw Exception('Erro ao buscar movimentações do produto: ${e.toString()}');
+      throw Exception(
+        'Erro ao buscar movimentações do produto: ${e.toString()}',
+      );
     }
   }
 }
@@ -189,7 +181,9 @@ class GetMovementsByDateRangeUseCase {
     try {
       return await _repository.getMovementsByDateRange(startDate, endDate);
     } catch (e) {
-      throw Exception('Erro ao buscar movimentações por período: ${e.toString()}');
+      throw Exception(
+        'Erro ao buscar movimentações por período: ${e.toString()}',
+      );
     }
   }
 }
@@ -201,13 +195,19 @@ class SearchMovementsByProductNameUseCase {
 
   Future<List<StockMovementWithProduct>> call(String productName) async {
     final trimmedName = productName.trim();
-    
+
     if (trimmedName.isEmpty) {
       throw ArgumentError('Nome do produto não pode estar vazio');
     }
 
+    if (trimmedName.length < 2) {
+      throw ArgumentError('Nome do produto deve ter pelo menos 2 caracteres');
+    }
+
     try {
       return await _repository.searchMovementsByProductName(trimmedName);
+    } on ArgumentError {
+      rethrow;
     } catch (e) {
       throw Exception('Erro ao buscar movimentações por nome: ${e.toString()}');
     }
@@ -226,8 +226,12 @@ class GetMovementsByCategoryUseCase {
 
     try {
       return await _repository.getMovementsByCategory(categoryId);
+    } on ArgumentError {
+      rethrow;
     } catch (e) {
-      throw Exception('Erro ao buscar movimentações por categoria: ${e.toString()}');
+      throw Exception(
+        'Erro ao buscar movimentações por categoria: ${e.toString()}',
+      );
     }
   }
 }
