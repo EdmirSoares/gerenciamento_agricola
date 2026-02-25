@@ -34,8 +34,22 @@ class ProductsCubit extends Cubit<ProductsState> {
     try {
       await _createUseCase(name, categoryId, unit, description, isProduction);
       await loadProducts();
+    } on ArgumentError catch (e) {
+      emit(
+        ProductOperationError(
+          'Dados inválidos',
+          details: e.message,
+          type: ErrorType.validation,
+        ),
+      );
     } catch (e) {
-      emit(ProductOperationError(e.toString()));
+      emit(
+        ProductOperationError(
+          'Erro ao criar produto',
+          details: e.toString(),
+          type: ErrorType.generic,
+        ),
+      );
     }
   }
 
@@ -50,10 +64,17 @@ class ProductsCubit extends Cubit<ProductsState> {
     emit(ProductsLoading());
     try {
       final product = await _getByIdUseCase(id);
+
       if (product == null) {
-        emit(ProductOperationError("Produto não encontrado"));
+        emit(
+          ProductOperationError(
+            'Produto não encontrado',
+            type: ErrorType.notFound,
+          ),
+        );
         return;
       }
+
       final updatedProduct = product.copyWith(
         name: name,
         categoryId: categoryId,
@@ -62,10 +83,25 @@ class ProductsCubit extends Cubit<ProductsState> {
         isProduction: isProduction,
         updatedAt: DateTime.now(),
       );
+
       await _updateUseCase(updatedProduct);
       await loadProducts();
+    } on ArgumentError catch (e) {
+      emit(
+        ProductOperationError(
+          'Dados inválidos',
+          details: e.message,
+          type: ErrorType.validation,
+        ),
+      );
     } catch (e) {
-      emit(ProductOperationError(e.toString()));
+      emit(
+        ProductOperationError(
+          'Erro ao atualizar produto',
+          details: e.toString(),
+          type: ErrorType.generic,
+        ),
+      );
     }
   }
 
@@ -74,8 +110,22 @@ class ProductsCubit extends Cubit<ProductsState> {
     try {
       final products = await _getAllUseCase();
       emit(ProductsLoaded(products));
+    } on ArgumentError catch (e) {
+      emit(
+        ProductOperationError(
+          'Erro de validação',
+          details: e.message,
+          type: ErrorType.validation,
+        ),
+      );
     } catch (e) {
-      emit(ProductOperationError(e.toString()));
+      emit(
+        ProductOperationError(
+          'Erro ao carregar produtos',
+          details: e.toString(),
+          type: ErrorType.generic,
+        ),
+      );
     }
   }
 
@@ -84,8 +134,22 @@ class ProductsCubit extends Cubit<ProductsState> {
     try {
       final products = await _getByCategoryIdUseCase(categoryId);
       emit(ProductsLoaded(products));
+    } on ArgumentError catch (e) {
+      emit(
+        ProductOperationError(
+          'ID de categoria inválido',
+          details: e.message,
+          type: ErrorType.validation,
+        ),
+      );
     } catch (e) {
-      emit(ProductOperationError(e.toString()));
+      emit(
+        ProductOperationError(
+          'Erro ao buscar produtos por categoria',
+          details: e.toString(),
+          type: ErrorType.generic,
+        ),
+      );
     }
   }
 
@@ -94,8 +158,22 @@ class ProductsCubit extends Cubit<ProductsState> {
     try {
       final products = await _getByNameUseCase(name);
       emit(ProductsLoaded(products));
+    } on ArgumentError catch (e) {
+      emit(
+        ProductOperationError(
+          'Nome de busca inválido',
+          details: e.message,
+          type: ErrorType.validation,
+        ),
+      );
     } catch (e) {
-      emit(ProductOperationError(e.toString()));
+      emit(
+        ProductOperationError(
+          'Erro ao buscar produtos por nome',
+          details: e.toString(),
+          type: ErrorType.generic,
+        ),
+      );
     }
   }
 
@@ -104,8 +182,22 @@ class ProductsCubit extends Cubit<ProductsState> {
     try {
       final products = await _getProductionProductsUseCase();
       emit(ProductsLoaded(products));
+    } on ArgumentError catch (e) {
+      emit(
+        ProductOperationError(
+          'Erro de validação',
+          details: e.message,
+          type: ErrorType.validation,
+        ),
+      );
     } catch (e) {
-      emit(ProductOperationError(e.toString()));
+      emit(
+        ProductOperationError(
+          'Erro ao buscar produtos de produção',
+          details: e.toString(),
+          type: ErrorType.generic,
+        ),
+      );
     }
   }
 
@@ -114,8 +206,22 @@ class ProductsCubit extends Cubit<ProductsState> {
     try {
       await _deleteUseCase(id);
       await loadProducts();
+    } on ArgumentError catch (e) {
+      emit(
+        ProductOperationError(
+          'ID inválido',
+          details: e.message,
+          type: ErrorType.validation,
+        ),
+      );
     } catch (e) {
-      emit(ProductOperationError(e.toString()));
+      emit(
+        ProductOperationError(
+          'Erro ao deletar produto',
+          details: e.toString(),
+          type: ErrorType.generic,
+        ),
+      );
     }
   }
 }

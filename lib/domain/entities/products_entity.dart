@@ -24,6 +24,8 @@ class ProductsEntity {
   bool get isValid =>
       name.trim().isNotEmpty && name.length >= 3 && categoryId > 0;
 
+  bool get isInput => !isProduction;
+
   factory ProductsEntity.create({
     required String name,
     required int categoryId,
@@ -31,20 +33,28 @@ class ProductsEntity {
     required String unit,
     required bool isProduction,
   }) {
+    if (categoryId <= 0) {
+      throw ArgumentError('ID da categoria deve ser maior que zero');
+    }
+
+    if (unit.trim().isEmpty) {
+      throw ArgumentError('Unidade de medida não pode ser vazia');
+    }
+
     final now = DateTime.now();
 
     final entity = ProductsEntity(
-      name: name,
+      name: name.trim(),
       categoryId: categoryId,
-      description: description,
-      unit: unit,
+      description: description.trim(),
+      unit: unit.trim(),
       isProduction: isProduction,
       createdAt: now,
       updatedAt: now,
     );
 
     if (!entity.isValid) {
-      throw ArgumentError('Produto inválido: $name');
+      throw ArgumentError('Nome do produto deve ter pelo menos 3 caracteres');
     }
 
     return entity;
@@ -61,22 +71,32 @@ class ProductsEntity {
     DateTime? updatedAt,
     bool? isDeleted,
   }) {
-    final entity = ProductsEntity(
+    final newName = name ?? this.name;
+    final newCategoryId = categoryId ?? this.categoryId;
+    final newUnit = unit ?? this.unit;
+
+    if (newName.trim().isEmpty || newName.trim().length < 3) {
+      throw ArgumentError('Nome do produto deve ter pelo menos 3 caracteres');
+    }
+
+    if (newCategoryId <= 0) {
+      throw ArgumentError('ID da categoria deve ser maior que zero');
+    }
+
+    if (newUnit.trim().isEmpty) {
+      throw ArgumentError('Unidade de medida não pode ser vazia');
+    }
+
+    return ProductsEntity(
       id: id ?? this.id,
-      name: name ?? this.name,
-      categoryId: categoryId ?? this.categoryId,
-      description: description ?? this.description,
-      unit: unit ?? this.unit,
+      name: newName.trim(),
+      categoryId: newCategoryId,
+      description: (description ?? this.description).trim(),
+      unit: newUnit.trim(),
       isProduction: isProduction ?? this.isProduction,
       createdAt: createdAt ?? this.createdAt,
       updatedAt: updatedAt ?? this.updatedAt,
       isDeleted: isDeleted ?? this.isDeleted,
     );
-
-    if (!entity.isValid) {
-      throw ArgumentError('Produto inválido: ${entity.name}');
-    }
-
-    return entity;
   }
 }

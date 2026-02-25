@@ -26,42 +26,22 @@ class ProductsRepositoryImpl implements IProductRepository {
 
   @override
   Future<List<ProductsEntity>> getAllProducts() async {
-    final results = await _db.select(_db.farmProducts).get();
-    return results
-        .map(
-          (row) => ProductsEntity(
-            id: row.id,
-            name: row.name,
-            categoryId: row.categoryId,
-            unit: row.unit,
-            description: row.description ?? '',
-            isProduction: row.isProduction,
-            createdAt: row.createdAt,
-            updatedAt: row.updatedAt,
-            isDeleted: row.isDeleted,
-          ),
-        )
-        .toList();
+    final query = _db.select(_db.farmProducts)
+      ..where((tbl) => tbl.isDeleted.equals(false))
+      ..orderBy([(tbl) => OrderingTerm.desc(tbl.updatedAt)]);
+
+    final results = await query.get();
+    return results.map((row) => _mapToEntity(row)).toList();
   }
 
   @override
   Future<ProductsEntity?> getProductById(int id) async {
     final query = _db.select(_db.farmProducts)
-      ..where((tbl) => tbl.id.equals(id));
+      ..where((tbl) => tbl.id.equals(id) & tbl.isDeleted.equals(false));
     final result = await query.getSingleOrNull();
     if (result == null) return null;
 
-    return ProductsEntity(
-      id: result.id,
-      name: result.name,
-      categoryId: result.categoryId,
-      unit: result.unit,
-      description: result.description ?? '',
-      isProduction: result.isProduction,
-      createdAt: result.createdAt,
-      updatedAt: result.updatedAt,
-      isDeleted: result.isDeleted,
-    );
+    return _mapToEntity(result);
   }
 
   @override
@@ -87,72 +67,66 @@ class ProductsRepositoryImpl implements IProductRepository {
 
   @override
   Future<void> deleteProduct(int id) async {
-    await (_db.delete(
+    await (_db.update(
       _db.farmProducts,
-    )..where((tbl) => tbl.id.equals(id))).go();
+    )..where((tbl) => tbl.id.equals(id))).write(
+      const FarmProductsCompanion(
+        isDeleted: Value(true),
+        updatedAt: Value.absent(),
+      ),
+    );
   }
 
   @override
   Future<List<ProductsEntity>> getProductsByCategoryId(int categoryId) async {
     final query = _db.select(_db.farmProducts)
-      ..where((tbl) => tbl.categoryId.equals(categoryId));
+      ..where(
+        (tbl) =>
+            tbl.categoryId.equals(categoryId) & tbl.isDeleted.equals(false),
+      )
+      ..orderBy([(tbl) => OrderingTerm.asc(tbl.name)]);
+
     final results = await query.get();
-    return results
-        .map(
-          (row) => ProductsEntity(
-            id: row.id,
-            name: row.name,
-            categoryId: row.categoryId,
-            unit: row.unit,
-            description: row.description ?? '',
-            isProduction: row.isProduction,
-            createdAt: row.createdAt,
-            updatedAt: row.updatedAt,
-            isDeleted: row.isDeleted,
-          ),
-        )
-        .toList();
+    return results.map((row) => _mapToEntity(row)).toList();
   }
 
   @override
   Future<List<ProductsEntity>> searchProductsByName(String query) async {
-    final results = await (_db.select(
-      _db.farmProducts,
-    )..where((tbl) => tbl.name.like('%$query%'))).get();
-    return results
-        .map(
-          (row) => ProductsEntity(
-            id: row.id,
-            name: row.name,
-            categoryId: row.categoryId,
-            unit: row.unit,
-            description: row.description ?? '',
-            isProduction: row.isProduction,
-            createdAt: row.createdAt,
-            updatedAt: row.updatedAt,
-            isDeleted: row.isDeleted,
-          ),
-        )
-        .toList();
+    final results =
+        await (_db.select(_db.farmProducts)
+              ..where(
+                (tbl) =>
+                    tbl.name.like('%$query%') & tbl.isDeleted.equals(false),
+              )
+              ..orderBy([(tbl) => OrderingTerm.asc(tbl.name)]))
+            .get();
+
+    return results.map((row) => _mapToEntity(row)).toList();
   }
 
   @override
   Future<List<ProductsEntity>> getProductionProducts() async {
-    final results = await (_db.select(
-      _db.farmProducts,
-    )..where((tbl) => tbl.isProduction.equals(true))).get();
-    return results
-        .map(
-          (row) => ProductsEntity(
-            name: row.name,
-            categoryId: row.categoryId,
-            description: row.description ?? '',
-            unit: row.unit,
-            isProduction: row.isProduction,
-            createdAt: row.createdAt,
-            updatedAt: row.updatedAt,
-          ),
-        )
-        .toList();
+    final query = _db.select(_db.farmProducts)
+      ..where(
+        (tbl) => tbl.isProduction.equals(true) & tbl.isDeleted.equals(false),
+      )
+      ..orderBy([(tbl) => OrderingTerm.asc(tbl.name)]);
+
+    final results = await query.get();
+    return results.map((row) => _mapToEntity(row)).toList();
+  }
+
+  ProductsEntity _mapToEntity(FarmProduct row) {
+    return ProductsEntity(
+      id: row.id,
+      name: row.name,
+      categoryId: row.categoryId,
+      unit: row.unit,
+      description: row.description ?? '',
+      isProduction: row.isProduction,
+      createdAt: row.createdAt,
+      updatedAt: row.updatedAt,
+      isDeleted: row.isDeleted,
+    );
   }
 }

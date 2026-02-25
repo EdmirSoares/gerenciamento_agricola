@@ -13,5 +13,14 @@ class ProductsLoaded extends ProductsState {
 
 class ProductOperationError extends ProductsState {
   final String message;
-  ProductOperationError(this.message);
+  final String? details;
+  final ErrorType type;
+
+  ProductOperationError(
+    this.message, {
+    this.details,
+    this.type = ErrorType.generic,
+  });
 }
+
+enum ErrorType { validation, notFound, network, permission, generic }
