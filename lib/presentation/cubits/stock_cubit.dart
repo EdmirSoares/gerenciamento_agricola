@@ -37,16 +37,6 @@ class StockCubit extends Cubit<StockState> {
     String? lotNumber,
     DateTime? expirationDate,
   ) async {
-    if (productId <= 0) {
-      emit(StockError('ID do produto inválido'));
-      return;
-    }
-
-    if (quantity < 0) {
-      emit(StockError('Quantidade não pode ser negativa'));
-      return;
-    }
-
     emit(StockLoading());
     try {
       await _addStockUseCase(
@@ -58,8 +48,22 @@ class StockCubit extends Cubit<StockState> {
         expirationDate,
       );
       await loadAllStock();
+    } on ArgumentError catch (e) {
+      emit(
+        StockError(
+          'Dados inválidos',
+          details: e.message,
+          type: ErrorType.validation,
+        ),
+      );
     } catch (e) {
-      emit(StockError(e.toString()));
+      emit(
+        StockError(
+          'Erro ao adicionar estoque',
+          details: e.toString(),
+          type: ErrorType.generic,
+        ),
+      );
     }
   }
 
@@ -71,16 +75,12 @@ class StockCubit extends Cubit<StockState> {
     String? lotNumber,
     DateTime? expirationDate,
   ) async {
-    if (stockId <= 0) {
-      emit(StockError('ID do estoque inválido'));
-      return;
-    }
-
     emit(StockLoading());
     try {
       final stock = await _getStockByIdUseCase(stockId);
+
       if (stock == null) {
-        emit(StockError('Estoque não encontrado'));
+        emit(StockError('Estoque não encontrado', type: ErrorType.notFound));
         return;
       }
 
@@ -92,86 +92,199 @@ class StockCubit extends Cubit<StockState> {
         expirationDate: expirationDate,
         updatedAt: DateTime.now(),
       );
+
       await _updateStockUseCase(updatedStock);
       await loadAllStock();
+    } on ArgumentError catch (e) {
+      emit(
+        StockError(
+          'Dados inválidos',
+          details: e.message,
+          type: ErrorType.validation,
+        ),
+      );
     } catch (e) {
-      emit(StockError(e.toString()));
+      emit(
+        StockError(
+          'Erro ao atualizar estoque',
+          details: e.toString(),
+          type: ErrorType.generic,
+        ),
+      );
+    }
+  }
+
+  Future<void> loadAllStock() async {
+    emit(StockLoading());
+    try {
+      final stocks = await _getAllStockUseCase();
+      emit(StockLoaded(stocks));
+    } on ArgumentError catch (e) {
+      emit(
+        StockError(
+          'Erro de validação',
+          details: e.message,
+          type: ErrorType.validation,
+        ),
+      );
+    } catch (e) {
+      emit(
+        StockError(
+          'Erro ao carregar estoque',
+          details: e.toString(),
+          type: ErrorType.generic,
+        ),
+      );
+    }
+  }
+
+  Future<void> loadStockById(int id) async {
+    emit(StockLoading());
+    try {
+      final stock = await _getStockByIdUseCase(id);
+
+      if (stock == null) {
+        emit(StockError('Estoque não encontrado', type: ErrorType.notFound));
+        return;
+      }
+
+      emit(StockLoaded([stock]));
+    } on ArgumentError catch (e) {
+      emit(
+        StockError(
+          'ID inválido',
+          details: e.message,
+          type: ErrorType.validation,
+        ),
+      );
+    } catch (e) {
+      emit(
+        StockError(
+          'Erro ao buscar estoque',
+          details: e.toString(),
+          type: ErrorType.generic,
+        ),
+      );
     }
   }
 
   Future<void> loadStockByProductId(int productId) async {
-    if (productId <= 0) {
-      emit(StockError('ID do produto inválido'));
-      return;
-    }
-
     emit(StockLoading());
     try {
       final stocks = await _getStockByProductIdUseCase(productId);
       emit(StockLoaded(stocks));
+    } on ArgumentError catch (e) {
+      emit(
+        StockError(
+          'ID de produto inválido',
+          details: e.message,
+          type: ErrorType.validation,
+        ),
+      );
     } catch (e) {
-      emit(StockError(e.toString()));
+      emit(
+        StockError(
+          'Erro ao buscar estoque por produto',
+          details: e.toString(),
+          type: ErrorType.generic,
+        ),
+      );
     }
   }
 
   Future<void> loadStockBelowQuantity(double threshold) async {
-    if (threshold < 0) {
-      emit(StockError('Quantidade limite não pode ser negativa'));
-      return;
-    }
-
     emit(StockLoading());
     try {
       final stocks = await _getStockBelowQuantityUseCase(threshold);
       emit(StockLoaded(stocks));
+    } on ArgumentError catch (e) {
+      emit(
+        StockError(
+          'Limite de quantidade inválido',
+          details: e.message,
+          type: ErrorType.validation,
+        ),
+      );
     } catch (e) {
-      emit(StockError(e.toString()));
+      emit(
+        StockError(
+          'Erro ao buscar estoque abaixo da quantidade',
+          details: e.toString(),
+          type: ErrorType.generic,
+        ),
+      );
     }
   }
 
   Future<void> loadStockExpiringWithin(int days) async {
-    if (days < 0) {
-      emit(StockError('Número de dias não pode ser negativo'));
-      return;
-    }
-
     emit(StockLoading());
     try {
       final stocks = await _getStockExpiringWithinUseCase(days);
       emit(StockLoaded(stocks));
+    } on ArgumentError catch (e) {
+      emit(
+        StockError(
+          'Número de dias inválido',
+          details: e.message,
+          type: ErrorType.validation,
+        ),
+      );
     } catch (e) {
-      emit(StockError(e.toString()));
+      emit(
+        StockError(
+          'Erro ao buscar estoque próximo do vencimento',
+          details: e.toString(),
+          type: ErrorType.generic,
+        ),
+      );
     }
   }
 
-  Future<void> searchStockByProductName(String query) async {
-    final trimmedQuery = query.trim();
-    if (trimmedQuery.isEmpty) {
-      emit(StockError('Digite o nome do produto para buscar'));
-      return;
-    }
-
+  Future<void> searchStockByProductName(String productName) async {
     emit(StockLoading());
     try {
-      final stocks = await _searchStockByProductNameUseCase(trimmedQuery);
+      final stocks = await _searchStockByProductNameUseCase(productName);
       emit(StockLoaded(stocks));
+    } on ArgumentError catch (e) {
+      emit(
+        StockError(
+          'Nome de produto inválido',
+          details: e.message,
+          type: ErrorType.validation,
+        ),
+      );
     } catch (e) {
-      emit(StockError(e.toString()));
+      emit(
+        StockError(
+          'Erro ao buscar estoque por nome de produto',
+          details: e.toString(),
+          type: ErrorType.generic,
+        ),
+      );
     }
   }
 
   Future<void> deleteStockById(int id) async {
-    if (id <= 0) {
-      emit(StockError('ID do estoque inválido'));
-      return;
-    }
-
     emit(StockLoading());
     try {
       await _deleteStockByIdUseCase(id);
       await loadAllStock();
+    } on ArgumentError catch (e) {
+      emit(
+        StockError(
+          'ID inválido',
+          details: e.message,
+          type: ErrorType.validation,
+        ),
+      );
     } catch (e) {
-      emit(StockError(e.toString()));
+      emit(
+        StockError(
+          'Erro ao deletar estoque',
+          details: e.toString(),
+          type: ErrorType.generic,
+        ),
+      );
     }
   }
 
@@ -181,51 +294,37 @@ class StockCubit extends Cubit<StockState> {
       await _deleteExpiredStockUseCase();
       await loadAllStock();
     } catch (e) {
-      emit(StockError(e.toString()));
+      emit(
+        StockError(
+          'Erro ao deletar estoque vencido',
+          details: e.toString(),
+          type: ErrorType.generic,
+        ),
+      );
     }
   }
 
   Future<void> deleteStockBelowQuantity(double threshold) async {
-    if (threshold < 0) {
-      emit(StockError('Quantidade limite não pode ser negativa'));
-      return;
-    }
-
     emit(StockLoading());
     try {
       await _deleteStockBelowQuantityUseCase(threshold);
       await loadAllStock();
+    } on ArgumentError catch (e) {
+      emit(
+        StockError(
+          'Limite de quantidade inválido',
+          details: e.message,
+          type: ErrorType.validation,
+        ),
+      );
     } catch (e) {
-      emit(StockError(e.toString()));
-    }
-  }
-
-  Future<void> loadStockById(int id) async {
-    if (id <= 0) {
-      emit(StockError('ID do estoque inválido'));
-      return;
-    }
-
-    emit(StockLoading());
-    try {
-      final stock = await _getStockByIdUseCase(id);
-      if (stock == null) {
-        emit(StockError('Estoque não encontrado'));
-        return;
-      }
-      emit(StockLoaded([stock]));
-    } catch (e) {
-      emit(StockError(e.toString()));
-    }
-  }
-
-  Future<void> loadAllStock() async {
-    emit(StockLoading());
-    try {
-      final stocks = await _getAllStockUseCase();
-      emit(StockLoaded(stocks));
-    } catch (e) {
-      emit(StockError(e.toString()));
+      emit(
+        StockError(
+          'Erro ao deletar estoque abaixo da quantidade',
+          details: e.toString(),
+          type: ErrorType.generic,
+        ),
+      );
     }
   }
 }

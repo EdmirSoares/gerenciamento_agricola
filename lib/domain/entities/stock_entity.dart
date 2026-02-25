@@ -24,6 +24,17 @@ class StockEntity {
   });
 
   bool get isLowStock => minimumStock != null && quantity <= minimumStock!;
+  
+  bool get isExpiringSoon {
+    if (expirationDate == null) return false;
+    final daysUntilExpiration = expirationDate!.difference(DateTime.now()).inDays;
+    return daysUntilExpiration >= 0 && daysUntilExpiration <= 30;
+  }
+  
+  bool get isExpired {
+    if (expirationDate == null) return false;
+    return expirationDate!.isBefore(DateTime.now());
+  }
 
   factory StockEntity.create({
     required int productId,
@@ -39,6 +50,10 @@ class StockEntity {
 
     if (quantity < 0) {
       throw ArgumentError('Quantidade não pode ser negativa');
+    }
+    
+    if (minimumStock != null && minimumStock < 0) {
+      throw ArgumentError('Estoque mínimo não pode ser negativo');
     }
 
     final now = DateTime.now();
@@ -72,14 +87,30 @@ class StockEntity {
     DateTime? updatedAt,
     bool? isDeleted,
   }) {
+    final newQuantity = quantity ?? this.quantity;
+    final newMinimumStock = minimumStock ?? this.minimumStock;
+    final newExpirationDate = expirationDate ?? this.expirationDate;
+    
+    if (newQuantity < 0) {
+      throw ArgumentError('Quantidade não pode ser negativa');
+    }
+    
+    if (newMinimumStock != null && newMinimumStock < 0) {
+      throw ArgumentError('Estoque mínimo não pode ser negativo');
+    }
+    
+    if (newExpirationDate != null && newExpirationDate.isBefore(DateTime.now())) {
+      throw ArgumentError('Data de validade não pode ser no passado');
+    }
+
     return StockEntity(
       id: id ?? this.id,
       productId: productId ?? this.productId,
-      quantity: quantity ?? this.quantity,
-      minimumStock: minimumStock ?? this.minimumStock,
+      quantity: newQuantity,
+      minimumStock: newMinimumStock,
       location: location ?? this.location,
       lotNumber: lotNumber ?? this.lotNumber,
-      expirationDate: expirationDate ?? this.expirationDate,
+      expirationDate: newExpirationDate,
       createdAt: createdAt ?? this.createdAt,
       updatedAt: updatedAt ?? this.updatedAt,
       isDeleted: isDeleted ?? this.isDeleted,

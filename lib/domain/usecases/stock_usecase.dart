@@ -14,15 +14,21 @@ class AddStockUseCase {
     String? lotNumber,
     DateTime? expirationDate,
   ) async {
-    final stock = StockEntity.create(
-      productId: productId,
-      quantity: quantity,
-      minimumStock: minimumStock,
-      location: location,
-      lotNumber: lotNumber,
-      expirationDate: expirationDate,
-    );
-    await _repository.addStock(stock);
+    try {
+      final stock = StockEntity.create(
+        productId: productId,
+        quantity: quantity,
+        minimumStock: minimumStock,
+        location: location,
+        lotNumber: lotNumber,
+        expirationDate: expirationDate,
+      );
+      await _repository.addStock(stock);
+    } on ArgumentError {
+      rethrow;
+    } catch (e) {
+      throw Exception('Erro ao adicionar estoque: ${e.toString()}');
+    }
   }
 }
 
@@ -32,7 +38,15 @@ class UpdateStockUseCase {
   UpdateStockUseCase(this._repository);
 
   Future<void> call(StockEntity stock) async {
-    await _repository.updateStock(stock);
+    if (stock.id == null) {
+      throw ArgumentError('ID do estoque é obrigatório para atualização');
+    }
+
+    try {
+      await _repository.updateStock(stock);
+    } catch (e) {
+      throw Exception('Erro ao atualizar estoque: ${e.toString()}');
+    }
   }
 }
 
@@ -42,7 +56,11 @@ class GetAllStockUseCase {
   GetAllStockUseCase(this._repository);
 
   Future<List<StockEntity>> call() async {
-    return await _repository.getAllStock();
+    try {
+      return await _repository.getAllStock();
+    } catch (e) {
+      throw Exception('Erro ao carregar estoque: ${e.toString()}');
+    }
   }
 }
 
@@ -52,7 +70,15 @@ class GetStockByIdUseCase {
   GetStockByIdUseCase(this._repository);
 
   Future<StockEntity?> call(int id) async {
-    return await _repository.getStockById(id);
+    if (id <= 0) {
+      throw ArgumentError('ID deve ser maior que zero');
+    }
+
+    try {
+      return await _repository.getStockById(id);
+    } catch (e) {
+      throw Exception('Erro ao buscar estoque: ${e.toString()}');
+    }
   }
 }
 
@@ -62,7 +88,15 @@ class GetStockByProductIdUseCase {
   GetStockByProductIdUseCase(this._repository);
 
   Future<List<StockEntity>> call(int productId) async {
-    return await _repository.getStockByProductId(productId);
+    if (productId <= 0) {
+      throw ArgumentError('ID do produto deve ser maior que zero');
+    }
+
+    try {
+      return await _repository.getStockByProductId(productId);
+    } catch (e) {
+      throw Exception('Erro ao buscar estoque do produto: ${e.toString()}');
+    }
   }
 }
 
@@ -75,7 +109,12 @@ class GetStockBelowQuantityUseCase {
     if (threshold < 0) {
       throw ArgumentError('Quantidade limite não pode ser negativa');
     }
-    return await _repository.getStockBelowQuantity(threshold);
+
+    try {
+      return await _repository.getStockBelowQuantity(threshold);
+    } catch (e) {
+      throw Exception('Erro ao buscar estoque baixo: ${e.toString()}');
+    }
   }
 }
 
@@ -88,7 +127,14 @@ class GetStockExpiringWithinUseCase {
     if (days < 0) {
       throw ArgumentError('Número de dias não pode ser negativo');
     }
-    return await _repository.getStockExpiringWithin(days);
+
+    try {
+      return await _repository.getStockExpiringWithin(days);
+    } catch (e) {
+      throw Exception(
+        'Erro ao buscar produtos próximos da validade: ${e.toString()}',
+      );
+    }
   }
 }
 
@@ -99,10 +145,20 @@ class SearchStockByProductNameUseCase {
 
   Future<List<StockEntity>> call(String productName) async {
     final trimmedName = productName.trim();
+
     if (trimmedName.isEmpty) {
       throw ArgumentError('Nome do produto não pode ser vazio');
     }
-    return await _repository.searchStockByProductName(trimmedName);
+
+    if (trimmedName.length < 2) {
+      throw ArgumentError('Nome do produto deve ter pelo menos 2 caracteres');
+    }
+
+    try {
+      return await _repository.searchStockByProductName(trimmedName);
+    } catch (e) {
+      throw Exception('Erro ao buscar estoque por nome: ${e.toString()}');
+    }
   }
 }
 
@@ -115,7 +171,12 @@ class DeleteStockByIdUseCase {
     if (id <= 0) {
       throw ArgumentError('ID do estoque deve ser maior que zero');
     }
-    await _repository.deleteStockById(id);
+
+    try {
+      await _repository.deleteStockById(id);
+    } catch (e) {
+      throw Exception('Erro ao deletar estoque: ${e.toString()}');
+    }
   }
 }
 
@@ -125,7 +186,11 @@ class DeleteExpiredStockUseCase {
   DeleteExpiredStockUseCase(this._repository);
 
   Future<void> call() async {
-    await _repository.deleteExpiredStock();
+    try {
+      await _repository.deleteExpiredStock();
+    } catch (e) {
+      throw Exception('Erro ao deletar estoque vencido: ${e.toString()}');
+    }
   }
 }
 
@@ -138,6 +203,11 @@ class DeleteStockBelowQuantityUseCase {
     if (threshold < 0) {
       throw ArgumentError('Quantidade limite não pode ser negativa');
     }
-    await _repository.deleteStockBelowQuantity(threshold);
+
+    try {
+      await _repository.deleteStockBelowQuantity(threshold);
+    } catch (e) {
+      throw Exception('Erro ao deletar estoque baixo: ${e.toString()}');
+    }
   }
 }

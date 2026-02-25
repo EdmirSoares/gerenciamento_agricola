@@ -13,5 +13,20 @@ class StockLoaded extends StockState {
 
 class StockError extends StockState {
   final String message;
-  StockError(this.message);
+  final String? details;
+  final ErrorType type;
+  
+  StockError(
+    this.message, {
+    this.details,
+    this.type = ErrorType.generic,
+  });
+}
+
+enum ErrorType {
+  validation,
+  notFound,
+  network,
+  permission,
+  generic,
 }

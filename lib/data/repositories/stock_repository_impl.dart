@@ -50,28 +50,17 @@ class StockRepositoryImpl implements IStockRepository {
   @override
   Future<List<StockEntity>> getAllStock() async {
     final query = _db.select(_db.farmStock)
-      ..where((tbl) => tbl.isDeleted.equals(false));
-    final results = await query.get();
+      ..where((tbl) => tbl.isDeleted.equals(false))
+      ..orderBy([(tbl) => OrderingTerm.desc(tbl.updatedAt)]);
 
-    return results.map((row) {
-      return StockEntity(
-        id: row.id,
-        productId: row.productId,
-        quantity: row.quantity,
-        minimumStock: row.minimumStock,
-        location: row.location,
-        lotNumber: row.lotNumber,
-        expirationDate: row.expirationDate,
-        createdAt: row.createdAt,
-        updatedAt: row.updatedAt,
-        isDeleted: row.isDeleted,
-      );
-    }).toList();
+    final results = await query.get();
+    return results.map((row) => _mapToEntity(row)).toList();
   }
 
   @override
   Future<StockEntity?> getStockById(int id) async {
-    final query = _db.select(_db.farmStock)..where((tbl) => tbl.id.equals(id));
+    final query = _db.select(_db.farmStock)
+      ..where((tbl) => tbl.id.equals(id) & tbl.isDeleted.equals(false));
 
     final result = await query.getSingleOrNull();
 
@@ -79,18 +68,7 @@ class StockRepositoryImpl implements IStockRepository {
       return null;
     }
 
-    return StockEntity(
-      id: result.id,
-      productId: result.productId,
-      quantity: result.quantity,
-      minimumStock: result.minimumStock,
-      location: result.location,
-      lotNumber: result.lotNumber,
-      expirationDate: result.expirationDate,
-      createdAt: result.createdAt,
-      updatedAt: result.updatedAt,
-      isDeleted: result.isDeleted,
-    );
+    return _mapToEntity(result);
   }
 
   @override
@@ -98,107 +76,62 @@ class StockRepositoryImpl implements IStockRepository {
     final now = DateTime.now();
     final targetDate = now.add(Duration(days: days));
     final query = _db.select(_db.farmStock)
-      ..where((tbl) => 
-        tbl.expirationDate.isNotNull() &
-        tbl.expirationDate.isBetweenValues(now, targetDate) &
-        tbl.isDeleted.equals(false)
-      );
+      ..where(
+        (tbl) =>
+            tbl.expirationDate.isNotNull() &
+            tbl.expirationDate.isBetweenValues(now, targetDate) &
+            tbl.isDeleted.equals(false),
+      )
+      ..orderBy([(tbl) => OrderingTerm.asc(tbl.expirationDate)]);
+
     final results = await query.get();
-    return results.map((row) {
-      return StockEntity(
-        id: row.id,
-        productId: row.productId,
-        quantity: row.quantity,
-        minimumStock: row.minimumStock,
-        location: row.location,
-        lotNumber: row.lotNumber,
-        expirationDate: row.expirationDate,
-        createdAt: row.createdAt,
-        updatedAt: row.updatedAt,
-        isDeleted: row.isDeleted,
-      );
-    }).toList();
+    return results.map((row) => _mapToEntity(row)).toList();
   }
 
   @override
   Future<List<StockEntity>> getStockByProductId(int productId) async {
     final query = _db.select(_db.farmStock)
-      ..where((tbl) => 
-        tbl.productId.equals(productId) &
-        tbl.isDeleted.equals(false)
-      );
+      ..where(
+        (tbl) => tbl.productId.equals(productId) & tbl.isDeleted.equals(false),
+      )
+      ..orderBy([(tbl) => OrderingTerm.desc(tbl.updatedAt)]);
 
     final results = await query.get();
-
-    return results.map((row) {
-      return StockEntity(
-        id: row.id,
-        productId: row.productId,
-        quantity: row.quantity,
-        minimumStock: row.minimumStock,
-        location: row.location,
-        lotNumber: row.lotNumber,
-        expirationDate: row.expirationDate,
-        createdAt: row.createdAt,
-        updatedAt: row.updatedAt,
-        isDeleted: row.isDeleted,
-      );
-    }).toList();
+    return results.map((row) => _mapToEntity(row)).toList();
   }
 
   @override
   Future<List<StockEntity>> getStockBelowQuantity(double threshold) async {
     final query = _db.select(_db.farmStock)
-      ..where((tbl) => 
-        tbl.quantity.isSmallerThanValue(threshold) &
-        tbl.isDeleted.equals(false)
-      );
+      ..where(
+        (tbl) =>
+            tbl.quantity.isSmallerThanValue(threshold) &
+            tbl.isDeleted.equals(false),
+      )
+      ..orderBy([(tbl) => OrderingTerm.asc(tbl.quantity)]);
 
     final results = await query.get();
-
-    return results.map((row) {
-      return StockEntity(
-        id: row.id,
-        productId: row.productId,
-        quantity: row.quantity,
-        minimumStock: row.minimumStock,
-        location: row.location,
-        lotNumber: row.lotNumber,
-        expirationDate: row.expirationDate,
-        createdAt: row.createdAt,
-        updatedAt: row.updatedAt,
-        isDeleted: row.isDeleted,
-      );
-    }).toList();
+    return results.map((row) => _mapToEntity(row)).toList();
   }
 
   @override
   Future<List<StockEntity>> searchStockByProductName(String query) async {
-    final results = await (_db.select(_db.farmStock).join([
-      innerJoin(
-        _db.farmProducts,
-        _db.farmProducts.id.equalsExp(_db.farmStock.productId),
-      ),
-    ])..where(
-      _db.farmProducts.name.like('%${query.trim()}%') &
-      _db.farmStock.isDeleted.equals(false)
-    )).get();
+    final results =
+        await (_db.select(_db.farmStock).join([
+              innerJoin(
+                _db.farmProducts,
+                _db.farmProducts.id.equalsExp(_db.farmStock.productId),
+              ),
+            ])..where(
+              _db.farmProducts.name.like('%${query.trim()}%') &
+                  _db.farmStock.isDeleted.equals(false) &
+                  _db.farmProducts.isDeleted.equals(false),
+            ))
+            .get();
 
     return results.map((row) {
       final stockRow = row.readTable(_db.farmStock);
-
-      return StockEntity(
-        id: stockRow.id,
-        productId: stockRow.productId,
-        quantity: stockRow.quantity,
-        minimumStock: stockRow.minimumStock,
-        location: stockRow.location,
-        lotNumber: stockRow.lotNumber,
-        expirationDate: stockRow.expirationDate,
-        createdAt: stockRow.createdAt,
-        updatedAt: stockRow.updatedAt,
-        isDeleted: stockRow.isDeleted,
-      );
+      return _mapToEntity(stockRow);
     }).toList();
   }
 
@@ -212,12 +145,12 @@ class StockRepositoryImpl implements IStockRepository {
   @override
   Future<void> deleteExpiredStock() async {
     final now = DateTime.now();
-    await (_db.delete(
-      _db.farmStock,
-    )..where((tbl) => 
-      tbl.expirationDate.isNotNull() &
-      tbl.expirationDate.isSmallerThanValue(now)
-    )).go();
+    await (_db.delete(_db.farmStock)..where(
+          (tbl) =>
+              tbl.expirationDate.isNotNull() &
+              tbl.expirationDate.isSmallerThanValue(now),
+        ))
+        .go();
   }
 
   @override
@@ -229,16 +162,50 @@ class StockRepositoryImpl implements IStockRepository {
 
   @override
   Future<void> deleteStockById(int id) async {
-    await (_db.delete(_db.farmStock)..where((tbl) => tbl.id.equals(id))).go();
+    await (_db.update(_db.farmStock)..where((tbl) => tbl.id.equals(id))).write(
+      const FarmStockCompanion(
+        isDeleted: Value(true),
+        updatedAt: Value.absent(),
+      ),
+    );
   }
 
   @override
   Future<void> deleteStockByIds(List<int> ids) async {
-    await (_db.delete(_db.farmStock)..where((tbl) => tbl.id.isIn(ids))).go();
+    if (ids.isEmpty) return;
+
+    await (_db.update(_db.farmStock)..where((tbl) => tbl.id.isIn(ids))).write(
+      const FarmStockCompanion(
+        isDeleted: Value(true),
+        updatedAt: Value.absent(),
+      ),
+    );
   }
 
   @override
   Future<void> deleteAllStock() async {
-    await _db.delete(_db.farmStock).go();
+    await _db
+        .update(_db.farmStock)
+        .write(
+          const FarmStockCompanion(
+            isDeleted: Value(true),
+            updatedAt: Value.absent(),
+          ),
+        );
+  }
+
+  StockEntity _mapToEntity(FarmStockData row) {
+    return StockEntity(
+      id: row.id,
+      productId: row.productId,
+      quantity: row.quantity,
+      minimumStock: row.minimumStock,
+      location: row.location,
+      lotNumber: row.lotNumber,
+      expirationDate: row.expirationDate,
+      createdAt: row.createdAt,
+      updatedAt: row.updatedAt,
+      isDeleted: row.isDeleted,
+    );
   }
 }
