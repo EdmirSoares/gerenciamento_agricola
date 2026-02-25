@@ -1,20 +1,26 @@
 import 'package:gerenciamento_agricola/data/repositories/category_repository_impl.dart';
 import 'package:gerenciamento_agricola/data/repositories/products_repository_impl.dart';
 import 'package:gerenciamento_agricola/data/repositories/simulation_repository_impl.dart';
+import 'package:gerenciamento_agricola/data/repositories/stock_movements_impl.dart';
 import 'package:gerenciamento_agricola/data/repositories/stock_repository_impl.dart';
+import 'package:gerenciamento_agricola/data/repositories/supplier_repository_impl.dart';
 import 'package:gerenciamento_agricola/domain/repositories/category_repository.dart';
 import 'package:gerenciamento_agricola/domain/repositories/products_repository.dart';
 import 'package:gerenciamento_agricola/domain/repositories/simulation_repository.dart';
+import 'package:gerenciamento_agricola/domain/repositories/stock_movements_repository.dart';
 import 'package:gerenciamento_agricola/domain/repositories/stock_repository.dart';
+import 'package:gerenciamento_agricola/domain/repositories/supplier_repository.dart';
 import 'package:gerenciamento_agricola/domain/usecases/category_usecase.dart';
 import 'package:gerenciamento_agricola/domain/usecases/products_usecase.dart';
 import 'package:gerenciamento_agricola/domain/usecases/stock_movements_usecase.dart';
 import 'package:gerenciamento_agricola/domain/usecases/stock_usecase.dart';
+import 'package:gerenciamento_agricola/domain/usecases/supplier_usecase.dart';
 import 'package:gerenciamento_agricola/presentation/cubits/category_cubit.dart';
 import 'package:gerenciamento_agricola/presentation/cubits/products_cubit.dart';
 import 'package:gerenciamento_agricola/presentation/cubits/simulation_cubit.dart';
 import 'package:gerenciamento_agricola/presentation/cubits/stock_cubit.dart';
 import 'package:gerenciamento_agricola/presentation/cubits/stock_movements/stock_movements_cubit.dart';
+import 'package:gerenciamento_agricola/presentation/cubits/supplier_cubit.dart';
 
 import '../../data/database/app_database.dart';
 import '../../domain/usecases/calculate_credit_usecase.dart';
@@ -40,6 +46,14 @@ void setup() {
 
   sl.registerLazySingleton<IStockRepository>(
     () => StockRepositoryImpl(sl<AppDatabase>()),
+  );
+
+  sl.registerLazySingleton<IStockMovementsRepository>(
+    () => StockMovementsImpl(sl<AppDatabase>()),
+  );
+
+  sl.registerLazySingleton<ISupplierRepository>(
+    () => SupplierRepositoryImpl(sl<AppDatabase>()),
   );
 
   // UseCases - Simulation
@@ -87,6 +101,14 @@ sl.registerLazySingleton(() => GetMovementsByDateRangeUseCase(sl()));
 sl.registerLazySingleton(() => SearchMovementsByProductNameUseCase(sl()));
 sl.registerLazySingleton(() => GetMovementsByCategoryUseCase(sl()));
 
+  // UseCases - Supplier
+  sl.registerLazySingleton(() => CreateSupplierUseCase(sl()));
+  sl.registerLazySingleton(() => GetAllSuppliersUseCase(sl()));
+  sl.registerLazySingleton(() => GetSupplierByIdUseCase(sl()));
+  sl.registerLazySingleton(() => UpdateSupplierUseCase(sl()));
+  sl.registerLazySingleton(() => DeleteSupplierByIdUseCase(sl()));
+  sl.registerLazySingleton(() => SearchSuppliersByNameUseCase(sl()));
+
   // Cubits
   sl.registerFactory(() => SimulationCubit(sl(), sl()));
   sl.registerFactory(
@@ -101,12 +123,12 @@ sl.registerLazySingleton(() => GetMovementsByCategoryUseCase(sl()));
   sl.registerFactory(
     () => ProductsCubit(
       sl(), // CreateProductUseCase
-      sl(), // UpdateProductUseCase
       sl(), // GetAllProductsUseCase
       sl(), // GetProductByIdUseCase
       sl(), // GetProductsByCategoryIdUseCase
       sl(), // GetProductsByNameUseCase
       sl(), // GetProductionProductsUseCase
+      sl(), // UpdateProductUseCase
       sl(), // DeleteProductByIdUseCase
     ),
   );
@@ -138,6 +160,17 @@ sl.registerLazySingleton(() => GetMovementsByCategoryUseCase(sl()));
       sl(), // GetMovementsByDateRangeUseCase
       sl(), // SearchMovementsByProductNameUseCase
       sl(), // GetMovementsByCategoryUseCase
+    ),
+  );
+
+  sl.registerFactory(
+    () => SupplierCubit(
+      sl(), // CreateSupplierUseCase
+      sl(), // GetAllSuppliersUseCase
+      sl(), // GetSupplierByIdUseCase
+      sl(), // UpdateSupplierUseCase
+      sl(), // DeleteSupplierByIdUseCase
+      sl(), // SearchSuppliersByNameUseCase
     ),
   );
 }
