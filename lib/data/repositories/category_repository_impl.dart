@@ -22,35 +22,23 @@ class CategoryRepositoryImpl implements ICategoryRepository {
 
   @override
   Future<List<CategoryEntity>> getAllCategories() async {
-    final results = await _db.select(_db.farmCategories).get();
+    final query = _db.select(_db.farmCategories)
+      ..where((tbl) => tbl.isDeleted.equals(false))
+      ..orderBy([(tbl) => OrderingTerm.asc(tbl.name)]);
 
-    return results.map((row) {
-      return CategoryEntity(
-        id: row.id,
-        name: row.name,
-        createdAt: row.createdAt,
-        updatedAt: row.updatedAt,
-        isDeleted: row.isDeleted,
-      );
-    }).toList();
+    final results = await query.get();
+    return results.map((row) => _mapToEntity(row)).toList();
   }
 
   @override
   Future<CategoryEntity?> getCategoryById(int id) async {
     final query = _db.select(_db.farmCategories)
-      ..where((tbl) => tbl.id.equals(id));
+      ..where((tbl) => tbl.id.equals(id) & tbl.isDeleted.equals(false));
 
     final result = await query.getSingleOrNull();
-
     if (result == null) return null;
 
-    return CategoryEntity(
-      id: result.id,
-      name: result.name,
-      createdAt: result.createdAt,
-      updatedAt: result.updatedAt,
-      isDeleted: result.isDeleted,
-    );
+    return _mapToEntity(result);
   }
 
   @override
@@ -70,8 +58,23 @@ class CategoryRepositoryImpl implements ICategoryRepository {
 
   @override
   Future<void> deleteCategory(int id) async {
-    await (_db.delete(
+    await (_db.update(
       _db.farmCategories,
-    )..where((tbl) => tbl.id.equals(id))).go();
+    )..where((tbl) => tbl.id.equals(id))).write(
+      const FarmCategoriesCompanion(
+        isDeleted: Value(true),
+        updatedAt: Value.absent(),
+      ),
+    );
+  }
+
+  CategoryEntity _mapToEntity(FarmCategory row) {
+    return CategoryEntity(
+      id: row.id,
+      name: row.name,
+      createdAt: row.createdAt,
+      updatedAt: row.updatedAt,
+      isDeleted: row.isDeleted,
+    );
   }
 }

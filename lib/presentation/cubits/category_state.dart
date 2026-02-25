@@ -15,5 +15,10 @@ class CategoriesLoaded extends CategoryState {
 
 class CategoryError extends CategoryState {
   final String message;
-  CategoryError(this.message);
+  final String? details;
+  final ErrorType type;
+
+  CategoryError(this.message, {this.details, this.type = ErrorType.generic});
 }
+
+enum ErrorType { validation, notFound, network, permission, generic }

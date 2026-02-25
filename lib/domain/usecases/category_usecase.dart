@@ -7,8 +7,14 @@ class CreateCategoryUseCase {
   CreateCategoryUseCase(this._repository);
 
   Future<void> call(String name) async {
-    final category = CategoryEntity.create(name: name);
-    await _repository.saveCategory(category);
+    try {
+      final category = CategoryEntity.create(name: name);
+      await _repository.saveCategory(category);
+    } on ArgumentError {
+      rethrow;
+    } catch (e) {
+      throw Exception('Erro ao criar categoria: ${e.toString()}');
+    }
   }
 }
 
@@ -18,27 +24,15 @@ class UpdateCategoryUseCase {
   UpdateCategoryUseCase(this._repository);
 
   Future<void> call(CategoryEntity category) async {
-    await _repository.updateCategory(category);
-  }
-}
+    if (category.id == null) {
+      throw ArgumentError('Não é possível atualizar categoria sem ID');
+    }
 
-class GetAllCategoriesUseCase {
-  final ICategoryRepository _repository;
-
-  GetAllCategoriesUseCase(this._repository);
-
-  Future<List<CategoryEntity>> call() async {
-    return await _repository.getAllCategories();
-  }
-}
-
-class GetCategoryByIdUseCase {
-  final ICategoryRepository _repository;
-
-  GetCategoryByIdUseCase(this._repository);
-
-  Future<CategoryEntity?> call(int id) async {
-    return await _repository.getCategoryById(id);
+    try {
+      await _repository.updateCategory(category);
+    } catch (e) {
+      throw Exception('Erro ao atualizar categoria: ${e.toString()}');
+    }
   }
 }
 
@@ -48,6 +42,46 @@ class DeleteCategoryByIdUseCase {
   DeleteCategoryByIdUseCase(this._repository);
 
   Future<void> call(int id) async {
-    await _repository.deleteCategory(id);
+    if (id <= 0) {
+      throw ArgumentError('ID da categoria deve ser maior que zero');
+    }
+
+    try {
+      await _repository.deleteCategory(id);
+    } catch (e) {
+      throw Exception('Erro ao deletar categoria: ${e.toString()}');
+    }
+  }
+}
+
+class GetAllCategoriesUseCase {
+  final ICategoryRepository _repository;
+
+  GetAllCategoriesUseCase(this._repository);
+
+  Future<List<CategoryEntity>> call() async {
+    try {
+      return await _repository.getAllCategories();
+    } catch (e) {
+      throw Exception('Erro ao buscar categorias: ${e.toString()}');
+    }
+  }
+}
+
+class GetCategoryByIdUseCase {
+  final ICategoryRepository _repository;
+
+  GetCategoryByIdUseCase(this._repository);
+
+  Future<CategoryEntity?> call(int id) async {
+    if (id <= 0) {
+      throw ArgumentError('ID da categoria deve ser maior que zero');
+    }
+
+    try {
+      return await _repository.getCategoryById(id);
+    } catch (e) {
+      throw Exception('Erro ao buscar categoria por ID: ${e.toString()}');
+    }
   }
 }

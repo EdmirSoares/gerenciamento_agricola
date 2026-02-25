@@ -22,8 +22,22 @@ class CategoryCubit extends Cubit<CategoryState> {
     try {
       await _createUseCase(name);
       await loadCategories();
+    } on ArgumentError catch (e) {
+      emit(
+        CategoryError(
+          'Dados inválidos',
+          details: e.message,
+          type: ErrorType.validation,
+        ),
+      );
     } catch (e) {
-      emit(CategoryError(e.toString()));
+      emit(
+        CategoryError(
+          'Erro ao criar categoria',
+          details: e.toString(),
+          type: ErrorType.generic,
+        ),
+      );
     }
   }
 
@@ -31,18 +45,37 @@ class CategoryCubit extends Cubit<CategoryState> {
     emit(CategoryLoading());
     try {
       final category = await _getByIdUseCase(id);
+
       if (category == null) {
-        emit(CategoryError("Categoria não encontrada"));
+        emit(
+          CategoryError('Categoria não encontrada', type: ErrorType.notFound),
+        );
         return;
       }
+
       final updatedCategory = category.copyWith(
         name: name,
         updatedAt: DateTime.now(),
       );
+
       await _updateUseCase(updatedCategory);
       await loadCategories();
+    } on ArgumentError catch (e) {
+      emit(
+        CategoryError(
+          'Dados inválidos',
+          details: e.message,
+          type: ErrorType.validation,
+        ),
+      );
     } catch (e) {
-      emit(CategoryError(e.toString()));
+      emit(
+        CategoryError(
+          'Erro ao atualizar categoria',
+          details: e.toString(),
+          type: ErrorType.generic,
+        ),
+      );
     }
   }
 
@@ -51,8 +84,22 @@ class CategoryCubit extends Cubit<CategoryState> {
     try {
       final categories = await _getAllUseCase();
       emit(CategoriesLoaded(categories));
+    } on ArgumentError catch (e) {
+      emit(
+        CategoryError(
+          'Erro de validação',
+          details: e.message,
+          type: ErrorType.validation,
+        ),
+      );
     } catch (e) {
-      emit(CategoryError(e.toString()));
+      emit(
+        CategoryError(
+          'Erro ao carregar categorias',
+          details: e.toString(),
+          type: ErrorType.generic,
+        ),
+      );
     }
   }
 
@@ -61,8 +108,22 @@ class CategoryCubit extends Cubit<CategoryState> {
     try {
       await _deleteUseCase(id);
       await loadCategories();
+    } on ArgumentError catch (e) {
+      emit(
+        CategoryError(
+          'ID inválido',
+          details: e.message,
+          type: ErrorType.validation,
+        ),
+      );
     } catch (e) {
-      emit(CategoryError(e.toString()));
+      emit(
+        CategoryError(
+          'Erro ao deletar categoria',
+          details: e.toString(),
+          type: ErrorType.generic,
+        ),
+      );
     }
   }
 }
