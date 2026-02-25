@@ -52,8 +52,8 @@ void main() {
 
       expect(categories.length, 3);
       expect(categories[0].name, 'Frutas');
-      expect(categories[1].name, 'Verduras');
-      expect(categories[2].name, 'Legumes');
+      expect(categories[1].name, 'Legumes');
+      expect(categories[2].name, 'Verduras');
     });
 
     test('Deve buscar uma categoria por ID', () async {
@@ -117,7 +117,7 @@ void main() {
       await createUseCase('Legumes');
       
       final allCategories = await getAllUseCase();
-      final categoryToDelete = allCategories[1];
+      final categoryToDelete = allCategories.firstWhere((c) => c.name == 'Verduras');
 
       await deleteUseCase(categoryToDelete.id!);
 
