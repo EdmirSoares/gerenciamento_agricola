@@ -8,11 +8,13 @@ import 'package:gerenciamento_agricola/domain/repositories/simulation_repository
 import 'package:gerenciamento_agricola/domain/repositories/stock_repository.dart';
 import 'package:gerenciamento_agricola/domain/usecases/category_usecase.dart';
 import 'package:gerenciamento_agricola/domain/usecases/products_usecase.dart';
+import 'package:gerenciamento_agricola/domain/usecases/stock_movements_usecase.dart';
 import 'package:gerenciamento_agricola/domain/usecases/stock_usecase.dart';
 import 'package:gerenciamento_agricola/presentation/cubits/category_cubit.dart';
 import 'package:gerenciamento_agricola/presentation/cubits/products_cubit.dart';
 import 'package:gerenciamento_agricola/presentation/cubits/simulation_cubit.dart';
 import 'package:gerenciamento_agricola/presentation/cubits/stock_cubit.dart';
+import 'package:gerenciamento_agricola/presentation/cubits/stock_movements/stock_movements_cubit.dart';
 
 import '../../data/database/app_database.dart';
 import '../../domain/usecases/calculate_credit_usecase.dart';
@@ -73,6 +75,18 @@ void setup() {
   sl.registerLazySingleton(() => DeleteExpiredStockUseCase(sl()));
   sl.registerLazySingleton(() => DeleteStockBelowQuantityUseCase(sl()));
 
+// UseCases - Stock Movements
+sl.registerLazySingleton(() => AddStockMovementUseCase(sl()));
+sl.registerLazySingleton(() => UpdateStockMovementUseCase(sl()));
+sl.registerLazySingleton(() => DeleteStockMovementsUseCase(sl()));
+sl.registerLazySingleton(() => GetAllStockMovementsUseCase(sl()));
+sl.registerLazySingleton(() => GetStockMovementByIdUseCase(sl()));
+sl.registerLazySingleton(() => GetMovementsByProductIdUseCase(sl()));
+sl.registerLazySingleton(() => GetMovementsByTypeUseCase(sl()));
+sl.registerLazySingleton(() => GetMovementsByDateRangeUseCase(sl()));
+sl.registerLazySingleton(() => SearchMovementsByProductNameUseCase(sl()));
+sl.registerLazySingleton(() => GetMovementsByCategoryUseCase(sl()));
+
   // Cubits
   sl.registerFactory(() => SimulationCubit(sl(), sl()));
   sl.registerFactory(
@@ -109,6 +123,21 @@ void setup() {
       sl(), // DeleteStockByIdUseCase
       sl(), // DeleteExpiredStockUseCase
       sl(), // DeleteStockBelowQuantityUseCase
+    ),
+  );
+
+  sl.registerFactory(
+    () => StockMovementsCubit(
+      sl(), // AddStockMovementUseCase
+      sl(), // UpdateStockMovementUseCase
+      sl(), // DeleteStockMovementsUseCase
+      sl(), // GetAllStockMovementsUseCase
+      sl(), // GetStockMovementByIdUseCase
+      sl(), // GetMovementsByProductIdUseCase
+      sl(), // GetMovementsByTypeUseCase
+      sl(), // GetMovementsByDateRangeUseCase
+      sl(), // SearchMovementsByProductNameUseCase
+      sl(), // GetMovementsByCategoryUseCase
     ),
   );
 }
