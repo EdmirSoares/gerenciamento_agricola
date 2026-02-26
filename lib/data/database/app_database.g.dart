@@ -9,556 +9,15 @@ class $SimulationsTable extends Simulations
   final GeneratedDatabase attachedDatabase;
   final String? _alias;
   $SimulationsTable(this.attachedDatabase, [this._alias]);
-  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  static const VerificationMeta _uuidMeta = const VerificationMeta('uuid');
   @override
-  late final GeneratedColumn<int> id = GeneratedColumn<int>(
-    'id',
+  late final GeneratedColumn<String> uuid = GeneratedColumn<String>(
+    'uuid',
     aliasedName,
     false,
-    hasAutoIncrement: true,
-    type: DriftSqlType.int,
+    type: DriftSqlType.string,
     requiredDuringInsert: false,
-    defaultConstraints: GeneratedColumn.constraintIsAlways(
-      'PRIMARY KEY AUTOINCREMENT',
-    ),
-  );
-  static const VerificationMeta _producerNameMeta = const VerificationMeta(
-    'producerName',
-  );
-  @override
-  late final GeneratedColumn<String> producerName = GeneratedColumn<String>(
-    'producer_name',
-    aliasedName,
-    false,
-    additionalChecks: GeneratedColumn.checkTextLength(
-      minTextLength: 1,
-      maxTextLength: 100,
-    ),
-    type: DriftSqlType.string,
-    requiredDuringInsert: true,
-  );
-  static const VerificationMeta _principalAmountMeta = const VerificationMeta(
-    'principalAmount',
-  );
-  @override
-  late final GeneratedColumn<String> principalAmount = GeneratedColumn<String>(
-    'principal_amount',
-    aliasedName,
-    false,
-    type: DriftSqlType.string,
-    requiredDuringInsert: true,
-  );
-  static const VerificationMeta _interestRateMeta = const VerificationMeta(
-    'interestRate',
-  );
-  @override
-  late final GeneratedColumn<String> interestRate = GeneratedColumn<String>(
-    'interest_rate',
-    aliasedName,
-    false,
-    type: DriftSqlType.string,
-    requiredDuringInsert: true,
-  );
-  static const VerificationMeta _periodsMeta = const VerificationMeta(
-    'periods',
-  );
-  @override
-  late final GeneratedColumn<int> periods = GeneratedColumn<int>(
-    'periods',
-    aliasedName,
-    false,
-    type: DriftSqlType.int,
-    requiredDuringInsert: true,
-  );
-  static const VerificationMeta _totalAmountMeta = const VerificationMeta(
-    'totalAmount',
-  );
-  @override
-  late final GeneratedColumn<String> totalAmount = GeneratedColumn<String>(
-    'total_amount',
-    aliasedName,
-    false,
-    type: DriftSqlType.string,
-    requiredDuringInsert: true,
-  );
-  static const VerificationMeta _createdAtMeta = const VerificationMeta(
-    'createdAt',
-  );
-  @override
-  late final GeneratedColumn<DateTime> createdAt = GeneratedColumn<DateTime>(
-    'created_at',
-    aliasedName,
-    false,
-    type: DriftSqlType.dateTime,
-    requiredDuringInsert: false,
-    defaultValue: currentDateAndTime,
-  );
-  static const VerificationMeta _isSyncedMeta = const VerificationMeta(
-    'isSynced',
-  );
-  @override
-  late final GeneratedColumn<bool> isSynced = GeneratedColumn<bool>(
-    'is_synced',
-    aliasedName,
-    false,
-    type: DriftSqlType.bool,
-    requiredDuringInsert: false,
-    defaultConstraints: GeneratedColumn.constraintIsAlways(
-      'CHECK ("is_synced" IN (0, 1))',
-    ),
-    defaultValue: const Constant(false),
-  );
-  @override
-  List<GeneratedColumn> get $columns => [
-    id,
-    producerName,
-    principalAmount,
-    interestRate,
-    periods,
-    totalAmount,
-    createdAt,
-    isSynced,
-  ];
-  @override
-  String get aliasedName => _alias ?? actualTableName;
-  @override
-  String get actualTableName => $name;
-  static const String $name = 'simulations';
-  @override
-  VerificationContext validateIntegrity(
-    Insertable<Simulation> instance, {
-    bool isInserting = false,
-  }) {
-    final context = VerificationContext();
-    final data = instance.toColumns(true);
-    if (data.containsKey('id')) {
-      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
-    }
-    if (data.containsKey('producer_name')) {
-      context.handle(
-        _producerNameMeta,
-        producerName.isAcceptableOrUnknown(
-          data['producer_name']!,
-          _producerNameMeta,
-        ),
-      );
-    } else if (isInserting) {
-      context.missing(_producerNameMeta);
-    }
-    if (data.containsKey('principal_amount')) {
-      context.handle(
-        _principalAmountMeta,
-        principalAmount.isAcceptableOrUnknown(
-          data['principal_amount']!,
-          _principalAmountMeta,
-        ),
-      );
-    } else if (isInserting) {
-      context.missing(_principalAmountMeta);
-    }
-    if (data.containsKey('interest_rate')) {
-      context.handle(
-        _interestRateMeta,
-        interestRate.isAcceptableOrUnknown(
-          data['interest_rate']!,
-          _interestRateMeta,
-        ),
-      );
-    } else if (isInserting) {
-      context.missing(_interestRateMeta);
-    }
-    if (data.containsKey('periods')) {
-      context.handle(
-        _periodsMeta,
-        periods.isAcceptableOrUnknown(data['periods']!, _periodsMeta),
-      );
-    } else if (isInserting) {
-      context.missing(_periodsMeta);
-    }
-    if (data.containsKey('total_amount')) {
-      context.handle(
-        _totalAmountMeta,
-        totalAmount.isAcceptableOrUnknown(
-          data['total_amount']!,
-          _totalAmountMeta,
-        ),
-      );
-    } else if (isInserting) {
-      context.missing(_totalAmountMeta);
-    }
-    if (data.containsKey('created_at')) {
-      context.handle(
-        _createdAtMeta,
-        createdAt.isAcceptableOrUnknown(data['created_at']!, _createdAtMeta),
-      );
-    }
-    if (data.containsKey('is_synced')) {
-      context.handle(
-        _isSyncedMeta,
-        isSynced.isAcceptableOrUnknown(data['is_synced']!, _isSyncedMeta),
-      );
-    }
-    return context;
-  }
-
-  @override
-  Set<GeneratedColumn> get $primaryKey => {id};
-  @override
-  Simulation map(Map<String, dynamic> data, {String? tablePrefix}) {
-    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
-    return Simulation(
-      id: attachedDatabase.typeMapping.read(
-        DriftSqlType.int,
-        data['${effectivePrefix}id'],
-      )!,
-      producerName: attachedDatabase.typeMapping.read(
-        DriftSqlType.string,
-        data['${effectivePrefix}producer_name'],
-      )!,
-      principalAmount: attachedDatabase.typeMapping.read(
-        DriftSqlType.string,
-        data['${effectivePrefix}principal_amount'],
-      )!,
-      interestRate: attachedDatabase.typeMapping.read(
-        DriftSqlType.string,
-        data['${effectivePrefix}interest_rate'],
-      )!,
-      periods: attachedDatabase.typeMapping.read(
-        DriftSqlType.int,
-        data['${effectivePrefix}periods'],
-      )!,
-      totalAmount: attachedDatabase.typeMapping.read(
-        DriftSqlType.string,
-        data['${effectivePrefix}total_amount'],
-      )!,
-      createdAt: attachedDatabase.typeMapping.read(
-        DriftSqlType.dateTime,
-        data['${effectivePrefix}created_at'],
-      )!,
-      isSynced: attachedDatabase.typeMapping.read(
-        DriftSqlType.bool,
-        data['${effectivePrefix}is_synced'],
-      )!,
-    );
-  }
-
-  @override
-  $SimulationsTable createAlias(String alias) {
-    return $SimulationsTable(attachedDatabase, alias);
-  }
-}
-
-class Simulation extends DataClass implements Insertable<Simulation> {
-  final int id;
-  final String producerName;
-  final String principalAmount;
-  final String interestRate;
-  final int periods;
-  final String totalAmount;
-  final DateTime createdAt;
-  final bool isSynced;
-  const Simulation({
-    required this.id,
-    required this.producerName,
-    required this.principalAmount,
-    required this.interestRate,
-    required this.periods,
-    required this.totalAmount,
-    required this.createdAt,
-    required this.isSynced,
-  });
-  @override
-  Map<String, Expression> toColumns(bool nullToAbsent) {
-    final map = <String, Expression>{};
-    map['id'] = Variable<int>(id);
-    map['producer_name'] = Variable<String>(producerName);
-    map['principal_amount'] = Variable<String>(principalAmount);
-    map['interest_rate'] = Variable<String>(interestRate);
-    map['periods'] = Variable<int>(periods);
-    map['total_amount'] = Variable<String>(totalAmount);
-    map['created_at'] = Variable<DateTime>(createdAt);
-    map['is_synced'] = Variable<bool>(isSynced);
-    return map;
-  }
-
-  SimulationsCompanion toCompanion(bool nullToAbsent) {
-    return SimulationsCompanion(
-      id: Value(id),
-      producerName: Value(producerName),
-      principalAmount: Value(principalAmount),
-      interestRate: Value(interestRate),
-      periods: Value(periods),
-      totalAmount: Value(totalAmount),
-      createdAt: Value(createdAt),
-      isSynced: Value(isSynced),
-    );
-  }
-
-  factory Simulation.fromJson(
-    Map<String, dynamic> json, {
-    ValueSerializer? serializer,
-  }) {
-    serializer ??= driftRuntimeOptions.defaultSerializer;
-    return Simulation(
-      id: serializer.fromJson<int>(json['id']),
-      producerName: serializer.fromJson<String>(json['producerName']),
-      principalAmount: serializer.fromJson<String>(json['principalAmount']),
-      interestRate: serializer.fromJson<String>(json['interestRate']),
-      periods: serializer.fromJson<int>(json['periods']),
-      totalAmount: serializer.fromJson<String>(json['totalAmount']),
-      createdAt: serializer.fromJson<DateTime>(json['createdAt']),
-      isSynced: serializer.fromJson<bool>(json['isSynced']),
-    );
-  }
-  @override
-  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
-    serializer ??= driftRuntimeOptions.defaultSerializer;
-    return <String, dynamic>{
-      'id': serializer.toJson<int>(id),
-      'producerName': serializer.toJson<String>(producerName),
-      'principalAmount': serializer.toJson<String>(principalAmount),
-      'interestRate': serializer.toJson<String>(interestRate),
-      'periods': serializer.toJson<int>(periods),
-      'totalAmount': serializer.toJson<String>(totalAmount),
-      'createdAt': serializer.toJson<DateTime>(createdAt),
-      'isSynced': serializer.toJson<bool>(isSynced),
-    };
-  }
-
-  Simulation copyWith({
-    int? id,
-    String? producerName,
-    String? principalAmount,
-    String? interestRate,
-    int? periods,
-    String? totalAmount,
-    DateTime? createdAt,
-    bool? isSynced,
-  }) => Simulation(
-    id: id ?? this.id,
-    producerName: producerName ?? this.producerName,
-    principalAmount: principalAmount ?? this.principalAmount,
-    interestRate: interestRate ?? this.interestRate,
-    periods: periods ?? this.periods,
-    totalAmount: totalAmount ?? this.totalAmount,
-    createdAt: createdAt ?? this.createdAt,
-    isSynced: isSynced ?? this.isSynced,
-  );
-  Simulation copyWithCompanion(SimulationsCompanion data) {
-    return Simulation(
-      id: data.id.present ? data.id.value : this.id,
-      producerName: data.producerName.present
-          ? data.producerName.value
-          : this.producerName,
-      principalAmount: data.principalAmount.present
-          ? data.principalAmount.value
-          : this.principalAmount,
-      interestRate: data.interestRate.present
-          ? data.interestRate.value
-          : this.interestRate,
-      periods: data.periods.present ? data.periods.value : this.periods,
-      totalAmount: data.totalAmount.present
-          ? data.totalAmount.value
-          : this.totalAmount,
-      createdAt: data.createdAt.present ? data.createdAt.value : this.createdAt,
-      isSynced: data.isSynced.present ? data.isSynced.value : this.isSynced,
-    );
-  }
-
-  @override
-  String toString() {
-    return (StringBuffer('Simulation(')
-          ..write('id: $id, ')
-          ..write('producerName: $producerName, ')
-          ..write('principalAmount: $principalAmount, ')
-          ..write('interestRate: $interestRate, ')
-          ..write('periods: $periods, ')
-          ..write('totalAmount: $totalAmount, ')
-          ..write('createdAt: $createdAt, ')
-          ..write('isSynced: $isSynced')
-          ..write(')'))
-        .toString();
-  }
-
-  @override
-  int get hashCode => Object.hash(
-    id,
-    producerName,
-    principalAmount,
-    interestRate,
-    periods,
-    totalAmount,
-    createdAt,
-    isSynced,
-  );
-  @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      (other is Simulation &&
-          other.id == this.id &&
-          other.producerName == this.producerName &&
-          other.principalAmount == this.principalAmount &&
-          other.interestRate == this.interestRate &&
-          other.periods == this.periods &&
-          other.totalAmount == this.totalAmount &&
-          other.createdAt == this.createdAt &&
-          other.isSynced == this.isSynced);
-}
-
-class SimulationsCompanion extends UpdateCompanion<Simulation> {
-  final Value<int> id;
-  final Value<String> producerName;
-  final Value<String> principalAmount;
-  final Value<String> interestRate;
-  final Value<int> periods;
-  final Value<String> totalAmount;
-  final Value<DateTime> createdAt;
-  final Value<bool> isSynced;
-  const SimulationsCompanion({
-    this.id = const Value.absent(),
-    this.producerName = const Value.absent(),
-    this.principalAmount = const Value.absent(),
-    this.interestRate = const Value.absent(),
-    this.periods = const Value.absent(),
-    this.totalAmount = const Value.absent(),
-    this.createdAt = const Value.absent(),
-    this.isSynced = const Value.absent(),
-  });
-  SimulationsCompanion.insert({
-    this.id = const Value.absent(),
-    required String producerName,
-    required String principalAmount,
-    required String interestRate,
-    required int periods,
-    required String totalAmount,
-    this.createdAt = const Value.absent(),
-    this.isSynced = const Value.absent(),
-  }) : producerName = Value(producerName),
-       principalAmount = Value(principalAmount),
-       interestRate = Value(interestRate),
-       periods = Value(periods),
-       totalAmount = Value(totalAmount);
-  static Insertable<Simulation> custom({
-    Expression<int>? id,
-    Expression<String>? producerName,
-    Expression<String>? principalAmount,
-    Expression<String>? interestRate,
-    Expression<int>? periods,
-    Expression<String>? totalAmount,
-    Expression<DateTime>? createdAt,
-    Expression<bool>? isSynced,
-  }) {
-    return RawValuesInsertable({
-      if (id != null) 'id': id,
-      if (producerName != null) 'producer_name': producerName,
-      if (principalAmount != null) 'principal_amount': principalAmount,
-      if (interestRate != null) 'interest_rate': interestRate,
-      if (periods != null) 'periods': periods,
-      if (totalAmount != null) 'total_amount': totalAmount,
-      if (createdAt != null) 'created_at': createdAt,
-      if (isSynced != null) 'is_synced': isSynced,
-    });
-  }
-
-  SimulationsCompanion copyWith({
-    Value<int>? id,
-    Value<String>? producerName,
-    Value<String>? principalAmount,
-    Value<String>? interestRate,
-    Value<int>? periods,
-    Value<String>? totalAmount,
-    Value<DateTime>? createdAt,
-    Value<bool>? isSynced,
-  }) {
-    return SimulationsCompanion(
-      id: id ?? this.id,
-      producerName: producerName ?? this.producerName,
-      principalAmount: principalAmount ?? this.principalAmount,
-      interestRate: interestRate ?? this.interestRate,
-      periods: periods ?? this.periods,
-      totalAmount: totalAmount ?? this.totalAmount,
-      createdAt: createdAt ?? this.createdAt,
-      isSynced: isSynced ?? this.isSynced,
-    );
-  }
-
-  @override
-  Map<String, Expression> toColumns(bool nullToAbsent) {
-    final map = <String, Expression>{};
-    if (id.present) {
-      map['id'] = Variable<int>(id.value);
-    }
-    if (producerName.present) {
-      map['producer_name'] = Variable<String>(producerName.value);
-    }
-    if (principalAmount.present) {
-      map['principal_amount'] = Variable<String>(principalAmount.value);
-    }
-    if (interestRate.present) {
-      map['interest_rate'] = Variable<String>(interestRate.value);
-    }
-    if (periods.present) {
-      map['periods'] = Variable<int>(periods.value);
-    }
-    if (totalAmount.present) {
-      map['total_amount'] = Variable<String>(totalAmount.value);
-    }
-    if (createdAt.present) {
-      map['created_at'] = Variable<DateTime>(createdAt.value);
-    }
-    if (isSynced.present) {
-      map['is_synced'] = Variable<bool>(isSynced.value);
-    }
-    return map;
-  }
-
-  @override
-  String toString() {
-    return (StringBuffer('SimulationsCompanion(')
-          ..write('id: $id, ')
-          ..write('producerName: $producerName, ')
-          ..write('principalAmount: $principalAmount, ')
-          ..write('interestRate: $interestRate, ')
-          ..write('periods: $periods, ')
-          ..write('totalAmount: $totalAmount, ')
-          ..write('createdAt: $createdAt, ')
-          ..write('isSynced: $isSynced')
-          ..write(')'))
-        .toString();
-  }
-}
-
-class $FarmCategoriesTable extends FarmCategories
-    with TableInfo<$FarmCategoriesTable, FarmCategory> {
-  @override
-  final GeneratedDatabase attachedDatabase;
-  final String? _alias;
-  $FarmCategoriesTable(this.attachedDatabase, [this._alias]);
-  static const VerificationMeta _idMeta = const VerificationMeta('id');
-  @override
-  late final GeneratedColumn<int> id = GeneratedColumn<int>(
-    'id',
-    aliasedName,
-    false,
-    hasAutoIncrement: true,
-    type: DriftSqlType.int,
-    requiredDuringInsert: false,
-    defaultConstraints: GeneratedColumn.constraintIsAlways(
-      'PRIMARY KEY AUTOINCREMENT',
-    ),
-  );
-  static const VerificationMeta _nameMeta = const VerificationMeta('name');
-  @override
-  late final GeneratedColumn<String> name = GeneratedColumn<String>(
-    'name',
-    aliasedName,
-    false,
-    additionalChecks: GeneratedColumn.checkTextLength(
-      minTextLength: 1,
-      maxTextLength: 100,
-    ),
-    type: DriftSqlType.string,
-    requiredDuringInsert: true,
+    clientDefault: () => uuidGenerator.v4(),
   );
   static const VerificationMeta _createdAtMeta = const VerificationMeta(
     'createdAt',
@@ -599,36 +58,122 @@ class $FarmCategoriesTable extends FarmCategories
     ),
     defaultValue: const Constant(false),
   );
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<int> id = GeneratedColumn<int>(
+    'id',
+    aliasedName,
+    false,
+    hasAutoIncrement: true,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'PRIMARY KEY AUTOINCREMENT',
+    ),
+  );
+  static const VerificationMeta _producerNameMeta = const VerificationMeta(
+    'producerName',
+  );
+  @override
+  late final GeneratedColumn<String> producerName = GeneratedColumn<String>(
+    'producer_name',
+    aliasedName,
+    false,
+    additionalChecks: GeneratedColumn.checkTextLength(
+      minTextLength: 1,
+      maxTextLength: 100,
+    ),
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _principalAmountInCentsMeta =
+      const VerificationMeta('principalAmountInCents');
+  @override
+  late final GeneratedColumn<int> principalAmountInCents = GeneratedColumn<int>(
+    'principal_amount_in_cents',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _interestRateBasisPointsMeta =
+      const VerificationMeta('interestRateBasisPoints');
+  @override
+  late final GeneratedColumn<int> interestRateBasisPoints =
+      GeneratedColumn<int>(
+        'interest_rate_basis_points',
+        aliasedName,
+        false,
+        type: DriftSqlType.int,
+        requiredDuringInsert: true,
+      );
+  static const VerificationMeta _periodsMeta = const VerificationMeta(
+    'periods',
+  );
+  @override
+  late final GeneratedColumn<int> periods = GeneratedColumn<int>(
+    'periods',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _totalAmountInCentsMeta =
+      const VerificationMeta('totalAmountInCents');
+  @override
+  late final GeneratedColumn<int> totalAmountInCents = GeneratedColumn<int>(
+    'total_amount_in_cents',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _isSyncedMeta = const VerificationMeta(
+    'isSynced',
+  );
+  @override
+  late final GeneratedColumn<bool> isSynced = GeneratedColumn<bool>(
+    'is_synced',
+    aliasedName,
+    false,
+    type: DriftSqlType.bool,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'CHECK ("is_synced" IN (0, 1))',
+    ),
+    defaultValue: const Constant(false),
+  );
   @override
   List<GeneratedColumn> get $columns => [
-    id,
-    name,
+    uuid,
     createdAt,
     updatedAt,
     isDeleted,
+    id,
+    producerName,
+    principalAmountInCents,
+    interestRateBasisPoints,
+    periods,
+    totalAmountInCents,
+    isSynced,
   ];
   @override
   String get aliasedName => _alias ?? actualTableName;
   @override
   String get actualTableName => $name;
-  static const String $name = 'farm_categories';
+  static const String $name = 'simulations';
   @override
   VerificationContext validateIntegrity(
-    Insertable<FarmCategory> instance, {
+    Insertable<Simulation> instance, {
     bool isInserting = false,
   }) {
     final context = VerificationContext();
     final data = instance.toColumns(true);
-    if (data.containsKey('id')) {
-      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
-    }
-    if (data.containsKey('name')) {
+    if (data.containsKey('uuid')) {
       context.handle(
-        _nameMeta,
-        name.isAcceptableOrUnknown(data['name']!, _nameMeta),
+        _uuidMeta,
+        uuid.isAcceptableOrUnknown(data['uuid']!, _uuidMeta),
       );
-    } else if (isInserting) {
-      context.missing(_nameMeta);
     }
     if (data.containsKey('created_at')) {
       context.handle(
@@ -648,22 +193,79 @@ class $FarmCategoriesTable extends FarmCategories
         isDeleted.isAcceptableOrUnknown(data['is_deleted']!, _isDeletedMeta),
       );
     }
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    }
+    if (data.containsKey('producer_name')) {
+      context.handle(
+        _producerNameMeta,
+        producerName.isAcceptableOrUnknown(
+          data['producer_name']!,
+          _producerNameMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_producerNameMeta);
+    }
+    if (data.containsKey('principal_amount_in_cents')) {
+      context.handle(
+        _principalAmountInCentsMeta,
+        principalAmountInCents.isAcceptableOrUnknown(
+          data['principal_amount_in_cents']!,
+          _principalAmountInCentsMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_principalAmountInCentsMeta);
+    }
+    if (data.containsKey('interest_rate_basis_points')) {
+      context.handle(
+        _interestRateBasisPointsMeta,
+        interestRateBasisPoints.isAcceptableOrUnknown(
+          data['interest_rate_basis_points']!,
+          _interestRateBasisPointsMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_interestRateBasisPointsMeta);
+    }
+    if (data.containsKey('periods')) {
+      context.handle(
+        _periodsMeta,
+        periods.isAcceptableOrUnknown(data['periods']!, _periodsMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_periodsMeta);
+    }
+    if (data.containsKey('total_amount_in_cents')) {
+      context.handle(
+        _totalAmountInCentsMeta,
+        totalAmountInCents.isAcceptableOrUnknown(
+          data['total_amount_in_cents']!,
+          _totalAmountInCentsMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_totalAmountInCentsMeta);
+    }
+    if (data.containsKey('is_synced')) {
+      context.handle(
+        _isSyncedMeta,
+        isSynced.isAcceptableOrUnknown(data['is_synced']!, _isSyncedMeta),
+      );
+    }
     return context;
   }
 
   @override
   Set<GeneratedColumn> get $primaryKey => {id};
   @override
-  FarmCategory map(Map<String, dynamic> data, {String? tablePrefix}) {
+  Simulation map(Map<String, dynamic> data, {String? tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
-    return FarmCategory(
-      id: attachedDatabase.typeMapping.read(
-        DriftSqlType.int,
-        data['${effectivePrefix}id'],
-      )!,
-      name: attachedDatabase.typeMapping.read(
+    return Simulation(
+      uuid: attachedDatabase.typeMapping.read(
         DriftSqlType.string,
-        data['${effectivePrefix}name'],
+        data['${effectivePrefix}uuid'],
       )!,
       createdAt: attachedDatabase.typeMapping.read(
         DriftSqlType.dateTime,
@@ -677,182 +279,352 @@ class $FarmCategoriesTable extends FarmCategories
         DriftSqlType.bool,
         data['${effectivePrefix}is_deleted'],
       )!,
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}id'],
+      )!,
+      producerName: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}producer_name'],
+      )!,
+      principalAmountInCents: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}principal_amount_in_cents'],
+      )!,
+      interestRateBasisPoints: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}interest_rate_basis_points'],
+      )!,
+      periods: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}periods'],
+      )!,
+      totalAmountInCents: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}total_amount_in_cents'],
+      )!,
+      isSynced: attachedDatabase.typeMapping.read(
+        DriftSqlType.bool,
+        data['${effectivePrefix}is_synced'],
+      )!,
     );
   }
 
   @override
-  $FarmCategoriesTable createAlias(String alias) {
-    return $FarmCategoriesTable(attachedDatabase, alias);
+  $SimulationsTable createAlias(String alias) {
+    return $SimulationsTable(attachedDatabase, alias);
   }
 }
 
-class FarmCategory extends DataClass implements Insertable<FarmCategory> {
-  final int id;
-  final String name;
+class Simulation extends DataClass implements Insertable<Simulation> {
+  final String uuid;
   final DateTime createdAt;
   final DateTime updatedAt;
   final bool isDeleted;
-  const FarmCategory({
-    required this.id,
-    required this.name,
+  final int id;
+  final String producerName;
+  final int principalAmountInCents;
+  final int interestRateBasisPoints;
+  final int periods;
+  final int totalAmountInCents;
+  final bool isSynced;
+  const Simulation({
+    required this.uuid,
     required this.createdAt,
     required this.updatedAt,
     required this.isDeleted,
+    required this.id,
+    required this.producerName,
+    required this.principalAmountInCents,
+    required this.interestRateBasisPoints,
+    required this.periods,
+    required this.totalAmountInCents,
+    required this.isSynced,
   });
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
-    map['id'] = Variable<int>(id);
-    map['name'] = Variable<String>(name);
+    map['uuid'] = Variable<String>(uuid);
     map['created_at'] = Variable<DateTime>(createdAt);
     map['updated_at'] = Variable<DateTime>(updatedAt);
     map['is_deleted'] = Variable<bool>(isDeleted);
+    map['id'] = Variable<int>(id);
+    map['producer_name'] = Variable<String>(producerName);
+    map['principal_amount_in_cents'] = Variable<int>(principalAmountInCents);
+    map['interest_rate_basis_points'] = Variable<int>(interestRateBasisPoints);
+    map['periods'] = Variable<int>(periods);
+    map['total_amount_in_cents'] = Variable<int>(totalAmountInCents);
+    map['is_synced'] = Variable<bool>(isSynced);
     return map;
   }
 
-  FarmCategoriesCompanion toCompanion(bool nullToAbsent) {
-    return FarmCategoriesCompanion(
-      id: Value(id),
-      name: Value(name),
+  SimulationsCompanion toCompanion(bool nullToAbsent) {
+    return SimulationsCompanion(
+      uuid: Value(uuid),
       createdAt: Value(createdAt),
       updatedAt: Value(updatedAt),
       isDeleted: Value(isDeleted),
+      id: Value(id),
+      producerName: Value(producerName),
+      principalAmountInCents: Value(principalAmountInCents),
+      interestRateBasisPoints: Value(interestRateBasisPoints),
+      periods: Value(periods),
+      totalAmountInCents: Value(totalAmountInCents),
+      isSynced: Value(isSynced),
     );
   }
 
-  factory FarmCategory.fromJson(
+  factory Simulation.fromJson(
     Map<String, dynamic> json, {
     ValueSerializer? serializer,
   }) {
     serializer ??= driftRuntimeOptions.defaultSerializer;
-    return FarmCategory(
-      id: serializer.fromJson<int>(json['id']),
-      name: serializer.fromJson<String>(json['name']),
+    return Simulation(
+      uuid: serializer.fromJson<String>(json['uuid']),
       createdAt: serializer.fromJson<DateTime>(json['createdAt']),
       updatedAt: serializer.fromJson<DateTime>(json['updatedAt']),
       isDeleted: serializer.fromJson<bool>(json['isDeleted']),
+      id: serializer.fromJson<int>(json['id']),
+      producerName: serializer.fromJson<String>(json['producerName']),
+      principalAmountInCents: serializer.fromJson<int>(
+        json['principalAmountInCents'],
+      ),
+      interestRateBasisPoints: serializer.fromJson<int>(
+        json['interestRateBasisPoints'],
+      ),
+      periods: serializer.fromJson<int>(json['periods']),
+      totalAmountInCents: serializer.fromJson<int>(json['totalAmountInCents']),
+      isSynced: serializer.fromJson<bool>(json['isSynced']),
     );
   }
   @override
   Map<String, dynamic> toJson({ValueSerializer? serializer}) {
     serializer ??= driftRuntimeOptions.defaultSerializer;
     return <String, dynamic>{
-      'id': serializer.toJson<int>(id),
-      'name': serializer.toJson<String>(name),
+      'uuid': serializer.toJson<String>(uuid),
       'createdAt': serializer.toJson<DateTime>(createdAt),
       'updatedAt': serializer.toJson<DateTime>(updatedAt),
       'isDeleted': serializer.toJson<bool>(isDeleted),
+      'id': serializer.toJson<int>(id),
+      'producerName': serializer.toJson<String>(producerName),
+      'principalAmountInCents': serializer.toJson<int>(principalAmountInCents),
+      'interestRateBasisPoints': serializer.toJson<int>(
+        interestRateBasisPoints,
+      ),
+      'periods': serializer.toJson<int>(periods),
+      'totalAmountInCents': serializer.toJson<int>(totalAmountInCents),
+      'isSynced': serializer.toJson<bool>(isSynced),
     };
   }
 
-  FarmCategory copyWith({
-    int? id,
-    String? name,
+  Simulation copyWith({
+    String? uuid,
     DateTime? createdAt,
     DateTime? updatedAt,
     bool? isDeleted,
-  }) => FarmCategory(
-    id: id ?? this.id,
-    name: name ?? this.name,
+    int? id,
+    String? producerName,
+    int? principalAmountInCents,
+    int? interestRateBasisPoints,
+    int? periods,
+    int? totalAmountInCents,
+    bool? isSynced,
+  }) => Simulation(
+    uuid: uuid ?? this.uuid,
     createdAt: createdAt ?? this.createdAt,
     updatedAt: updatedAt ?? this.updatedAt,
     isDeleted: isDeleted ?? this.isDeleted,
+    id: id ?? this.id,
+    producerName: producerName ?? this.producerName,
+    principalAmountInCents:
+        principalAmountInCents ?? this.principalAmountInCents,
+    interestRateBasisPoints:
+        interestRateBasisPoints ?? this.interestRateBasisPoints,
+    periods: periods ?? this.periods,
+    totalAmountInCents: totalAmountInCents ?? this.totalAmountInCents,
+    isSynced: isSynced ?? this.isSynced,
   );
-  FarmCategory copyWithCompanion(FarmCategoriesCompanion data) {
-    return FarmCategory(
-      id: data.id.present ? data.id.value : this.id,
-      name: data.name.present ? data.name.value : this.name,
+  Simulation copyWithCompanion(SimulationsCompanion data) {
+    return Simulation(
+      uuid: data.uuid.present ? data.uuid.value : this.uuid,
       createdAt: data.createdAt.present ? data.createdAt.value : this.createdAt,
       updatedAt: data.updatedAt.present ? data.updatedAt.value : this.updatedAt,
       isDeleted: data.isDeleted.present ? data.isDeleted.value : this.isDeleted,
+      id: data.id.present ? data.id.value : this.id,
+      producerName: data.producerName.present
+          ? data.producerName.value
+          : this.producerName,
+      principalAmountInCents: data.principalAmountInCents.present
+          ? data.principalAmountInCents.value
+          : this.principalAmountInCents,
+      interestRateBasisPoints: data.interestRateBasisPoints.present
+          ? data.interestRateBasisPoints.value
+          : this.interestRateBasisPoints,
+      periods: data.periods.present ? data.periods.value : this.periods,
+      totalAmountInCents: data.totalAmountInCents.present
+          ? data.totalAmountInCents.value
+          : this.totalAmountInCents,
+      isSynced: data.isSynced.present ? data.isSynced.value : this.isSynced,
     );
   }
 
   @override
   String toString() {
-    return (StringBuffer('FarmCategory(')
-          ..write('id: $id, ')
-          ..write('name: $name, ')
+    return (StringBuffer('Simulation(')
+          ..write('uuid: $uuid, ')
           ..write('createdAt: $createdAt, ')
           ..write('updatedAt: $updatedAt, ')
-          ..write('isDeleted: $isDeleted')
+          ..write('isDeleted: $isDeleted, ')
+          ..write('id: $id, ')
+          ..write('producerName: $producerName, ')
+          ..write('principalAmountInCents: $principalAmountInCents, ')
+          ..write('interestRateBasisPoints: $interestRateBasisPoints, ')
+          ..write('periods: $periods, ')
+          ..write('totalAmountInCents: $totalAmountInCents, ')
+          ..write('isSynced: $isSynced')
           ..write(')'))
         .toString();
   }
 
   @override
-  int get hashCode => Object.hash(id, name, createdAt, updatedAt, isDeleted);
+  int get hashCode => Object.hash(
+    uuid,
+    createdAt,
+    updatedAt,
+    isDeleted,
+    id,
+    producerName,
+    principalAmountInCents,
+    interestRateBasisPoints,
+    periods,
+    totalAmountInCents,
+    isSynced,
+  );
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      (other is FarmCategory &&
-          other.id == this.id &&
-          other.name == this.name &&
+      (other is Simulation &&
+          other.uuid == this.uuid &&
           other.createdAt == this.createdAt &&
           other.updatedAt == this.updatedAt &&
-          other.isDeleted == this.isDeleted);
+          other.isDeleted == this.isDeleted &&
+          other.id == this.id &&
+          other.producerName == this.producerName &&
+          other.principalAmountInCents == this.principalAmountInCents &&
+          other.interestRateBasisPoints == this.interestRateBasisPoints &&
+          other.periods == this.periods &&
+          other.totalAmountInCents == this.totalAmountInCents &&
+          other.isSynced == this.isSynced);
 }
 
-class FarmCategoriesCompanion extends UpdateCompanion<FarmCategory> {
-  final Value<int> id;
-  final Value<String> name;
+class SimulationsCompanion extends UpdateCompanion<Simulation> {
+  final Value<String> uuid;
   final Value<DateTime> createdAt;
   final Value<DateTime> updatedAt;
   final Value<bool> isDeleted;
-  const FarmCategoriesCompanion({
-    this.id = const Value.absent(),
-    this.name = const Value.absent(),
+  final Value<int> id;
+  final Value<String> producerName;
+  final Value<int> principalAmountInCents;
+  final Value<int> interestRateBasisPoints;
+  final Value<int> periods;
+  final Value<int> totalAmountInCents;
+  final Value<bool> isSynced;
+  const SimulationsCompanion({
+    this.uuid = const Value.absent(),
     this.createdAt = const Value.absent(),
     this.updatedAt = const Value.absent(),
     this.isDeleted = const Value.absent(),
+    this.id = const Value.absent(),
+    this.producerName = const Value.absent(),
+    this.principalAmountInCents = const Value.absent(),
+    this.interestRateBasisPoints = const Value.absent(),
+    this.periods = const Value.absent(),
+    this.totalAmountInCents = const Value.absent(),
+    this.isSynced = const Value.absent(),
   });
-  FarmCategoriesCompanion.insert({
-    this.id = const Value.absent(),
-    required String name,
+  SimulationsCompanion.insert({
+    this.uuid = const Value.absent(),
     this.createdAt = const Value.absent(),
     this.updatedAt = const Value.absent(),
     this.isDeleted = const Value.absent(),
-  }) : name = Value(name);
-  static Insertable<FarmCategory> custom({
-    Expression<int>? id,
-    Expression<String>? name,
+    this.id = const Value.absent(),
+    required String producerName,
+    required int principalAmountInCents,
+    required int interestRateBasisPoints,
+    required int periods,
+    required int totalAmountInCents,
+    this.isSynced = const Value.absent(),
+  }) : producerName = Value(producerName),
+       principalAmountInCents = Value(principalAmountInCents),
+       interestRateBasisPoints = Value(interestRateBasisPoints),
+       periods = Value(periods),
+       totalAmountInCents = Value(totalAmountInCents);
+  static Insertable<Simulation> custom({
+    Expression<String>? uuid,
     Expression<DateTime>? createdAt,
     Expression<DateTime>? updatedAt,
     Expression<bool>? isDeleted,
+    Expression<int>? id,
+    Expression<String>? producerName,
+    Expression<int>? principalAmountInCents,
+    Expression<int>? interestRateBasisPoints,
+    Expression<int>? periods,
+    Expression<int>? totalAmountInCents,
+    Expression<bool>? isSynced,
   }) {
     return RawValuesInsertable({
-      if (id != null) 'id': id,
-      if (name != null) 'name': name,
+      if (uuid != null) 'uuid': uuid,
       if (createdAt != null) 'created_at': createdAt,
       if (updatedAt != null) 'updated_at': updatedAt,
       if (isDeleted != null) 'is_deleted': isDeleted,
+      if (id != null) 'id': id,
+      if (producerName != null) 'producer_name': producerName,
+      if (principalAmountInCents != null)
+        'principal_amount_in_cents': principalAmountInCents,
+      if (interestRateBasisPoints != null)
+        'interest_rate_basis_points': interestRateBasisPoints,
+      if (periods != null) 'periods': periods,
+      if (totalAmountInCents != null)
+        'total_amount_in_cents': totalAmountInCents,
+      if (isSynced != null) 'is_synced': isSynced,
     });
   }
 
-  FarmCategoriesCompanion copyWith({
-    Value<int>? id,
-    Value<String>? name,
+  SimulationsCompanion copyWith({
+    Value<String>? uuid,
     Value<DateTime>? createdAt,
     Value<DateTime>? updatedAt,
     Value<bool>? isDeleted,
+    Value<int>? id,
+    Value<String>? producerName,
+    Value<int>? principalAmountInCents,
+    Value<int>? interestRateBasisPoints,
+    Value<int>? periods,
+    Value<int>? totalAmountInCents,
+    Value<bool>? isSynced,
   }) {
-    return FarmCategoriesCompanion(
-      id: id ?? this.id,
-      name: name ?? this.name,
+    return SimulationsCompanion(
+      uuid: uuid ?? this.uuid,
       createdAt: createdAt ?? this.createdAt,
       updatedAt: updatedAt ?? this.updatedAt,
       isDeleted: isDeleted ?? this.isDeleted,
+      id: id ?? this.id,
+      producerName: producerName ?? this.producerName,
+      principalAmountInCents:
+          principalAmountInCents ?? this.principalAmountInCents,
+      interestRateBasisPoints:
+          interestRateBasisPoints ?? this.interestRateBasisPoints,
+      periods: periods ?? this.periods,
+      totalAmountInCents: totalAmountInCents ?? this.totalAmountInCents,
+      isSynced: isSynced ?? this.isSynced,
     );
   }
 
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
-    if (id.present) {
-      map['id'] = Variable<int>(id.value);
-    }
-    if (name.present) {
-      map['name'] = Variable<String>(name.value);
+    if (uuid.present) {
+      map['uuid'] = Variable<String>(uuid.value);
     }
     if (createdAt.present) {
       map['created_at'] = Variable<DateTime>(createdAt.value);
@@ -863,17 +635,443 @@ class FarmCategoriesCompanion extends UpdateCompanion<FarmCategory> {
     if (isDeleted.present) {
       map['is_deleted'] = Variable<bool>(isDeleted.value);
     }
+    if (id.present) {
+      map['id'] = Variable<int>(id.value);
+    }
+    if (producerName.present) {
+      map['producer_name'] = Variable<String>(producerName.value);
+    }
+    if (principalAmountInCents.present) {
+      map['principal_amount_in_cents'] = Variable<int>(
+        principalAmountInCents.value,
+      );
+    }
+    if (interestRateBasisPoints.present) {
+      map['interest_rate_basis_points'] = Variable<int>(
+        interestRateBasisPoints.value,
+      );
+    }
+    if (periods.present) {
+      map['periods'] = Variable<int>(periods.value);
+    }
+    if (totalAmountInCents.present) {
+      map['total_amount_in_cents'] = Variable<int>(totalAmountInCents.value);
+    }
+    if (isSynced.present) {
+      map['is_synced'] = Variable<bool>(isSynced.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('SimulationsCompanion(')
+          ..write('uuid: $uuid, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('updatedAt: $updatedAt, ')
+          ..write('isDeleted: $isDeleted, ')
+          ..write('id: $id, ')
+          ..write('producerName: $producerName, ')
+          ..write('principalAmountInCents: $principalAmountInCents, ')
+          ..write('interestRateBasisPoints: $interestRateBasisPoints, ')
+          ..write('periods: $periods, ')
+          ..write('totalAmountInCents: $totalAmountInCents, ')
+          ..write('isSynced: $isSynced')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $FarmCategoriesTable extends FarmCategories
+    with TableInfo<$FarmCategoriesTable, FarmCategory> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $FarmCategoriesTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _uuidMeta = const VerificationMeta('uuid');
+  @override
+  late final GeneratedColumn<String> uuid = GeneratedColumn<String>(
+    'uuid',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+    clientDefault: () => uuidGenerator.v4(),
+  );
+  static const VerificationMeta _createdAtMeta = const VerificationMeta(
+    'createdAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> createdAt = GeneratedColumn<DateTime>(
+    'created_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: false,
+    defaultValue: currentDateAndTime,
+  );
+  static const VerificationMeta _updatedAtMeta = const VerificationMeta(
+    'updatedAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> updatedAt = GeneratedColumn<DateTime>(
+    'updated_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: false,
+    defaultValue: currentDateAndTime,
+  );
+  static const VerificationMeta _isDeletedMeta = const VerificationMeta(
+    'isDeleted',
+  );
+  @override
+  late final GeneratedColumn<bool> isDeleted = GeneratedColumn<bool>(
+    'is_deleted',
+    aliasedName,
+    false,
+    type: DriftSqlType.bool,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'CHECK ("is_deleted" IN (0, 1))',
+    ),
+    defaultValue: const Constant(false),
+  );
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<int> id = GeneratedColumn<int>(
+    'id',
+    aliasedName,
+    false,
+    hasAutoIncrement: true,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'PRIMARY KEY AUTOINCREMENT',
+    ),
+  );
+  static const VerificationMeta _nameMeta = const VerificationMeta('name');
+  @override
+  late final GeneratedColumn<String> name = GeneratedColumn<String>(
+    'name',
+    aliasedName,
+    false,
+    additionalChecks: GeneratedColumn.checkTextLength(
+      minTextLength: 1,
+      maxTextLength: 100,
+    ),
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  @override
+  List<GeneratedColumn> get $columns => [
+    uuid,
+    createdAt,
+    updatedAt,
+    isDeleted,
+    id,
+    name,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'farm_categories';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<FarmCategory> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('uuid')) {
+      context.handle(
+        _uuidMeta,
+        uuid.isAcceptableOrUnknown(data['uuid']!, _uuidMeta),
+      );
+    }
+    if (data.containsKey('created_at')) {
+      context.handle(
+        _createdAtMeta,
+        createdAt.isAcceptableOrUnknown(data['created_at']!, _createdAtMeta),
+      );
+    }
+    if (data.containsKey('updated_at')) {
+      context.handle(
+        _updatedAtMeta,
+        updatedAt.isAcceptableOrUnknown(data['updated_at']!, _updatedAtMeta),
+      );
+    }
+    if (data.containsKey('is_deleted')) {
+      context.handle(
+        _isDeletedMeta,
+        isDeleted.isAcceptableOrUnknown(data['is_deleted']!, _isDeletedMeta),
+      );
+    }
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    }
+    if (data.containsKey('name')) {
+      context.handle(
+        _nameMeta,
+        name.isAcceptableOrUnknown(data['name']!, _nameMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_nameMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  FarmCategory map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return FarmCategory(
+      uuid: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}uuid'],
+      )!,
+      createdAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}created_at'],
+      )!,
+      updatedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}updated_at'],
+      )!,
+      isDeleted: attachedDatabase.typeMapping.read(
+        DriftSqlType.bool,
+        data['${effectivePrefix}is_deleted'],
+      )!,
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}id'],
+      )!,
+      name: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}name'],
+      )!,
+    );
+  }
+
+  @override
+  $FarmCategoriesTable createAlias(String alias) {
+    return $FarmCategoriesTable(attachedDatabase, alias);
+  }
+}
+
+class FarmCategory extends DataClass implements Insertable<FarmCategory> {
+  final String uuid;
+  final DateTime createdAt;
+  final DateTime updatedAt;
+  final bool isDeleted;
+  final int id;
+  final String name;
+  const FarmCategory({
+    required this.uuid,
+    required this.createdAt,
+    required this.updatedAt,
+    required this.isDeleted,
+    required this.id,
+    required this.name,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['uuid'] = Variable<String>(uuid);
+    map['created_at'] = Variable<DateTime>(createdAt);
+    map['updated_at'] = Variable<DateTime>(updatedAt);
+    map['is_deleted'] = Variable<bool>(isDeleted);
+    map['id'] = Variable<int>(id);
+    map['name'] = Variable<String>(name);
+    return map;
+  }
+
+  FarmCategoriesCompanion toCompanion(bool nullToAbsent) {
+    return FarmCategoriesCompanion(
+      uuid: Value(uuid),
+      createdAt: Value(createdAt),
+      updatedAt: Value(updatedAt),
+      isDeleted: Value(isDeleted),
+      id: Value(id),
+      name: Value(name),
+    );
+  }
+
+  factory FarmCategory.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return FarmCategory(
+      uuid: serializer.fromJson<String>(json['uuid']),
+      createdAt: serializer.fromJson<DateTime>(json['createdAt']),
+      updatedAt: serializer.fromJson<DateTime>(json['updatedAt']),
+      isDeleted: serializer.fromJson<bool>(json['isDeleted']),
+      id: serializer.fromJson<int>(json['id']),
+      name: serializer.fromJson<String>(json['name']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'uuid': serializer.toJson<String>(uuid),
+      'createdAt': serializer.toJson<DateTime>(createdAt),
+      'updatedAt': serializer.toJson<DateTime>(updatedAt),
+      'isDeleted': serializer.toJson<bool>(isDeleted),
+      'id': serializer.toJson<int>(id),
+      'name': serializer.toJson<String>(name),
+    };
+  }
+
+  FarmCategory copyWith({
+    String? uuid,
+    DateTime? createdAt,
+    DateTime? updatedAt,
+    bool? isDeleted,
+    int? id,
+    String? name,
+  }) => FarmCategory(
+    uuid: uuid ?? this.uuid,
+    createdAt: createdAt ?? this.createdAt,
+    updatedAt: updatedAt ?? this.updatedAt,
+    isDeleted: isDeleted ?? this.isDeleted,
+    id: id ?? this.id,
+    name: name ?? this.name,
+  );
+  FarmCategory copyWithCompanion(FarmCategoriesCompanion data) {
+    return FarmCategory(
+      uuid: data.uuid.present ? data.uuid.value : this.uuid,
+      createdAt: data.createdAt.present ? data.createdAt.value : this.createdAt,
+      updatedAt: data.updatedAt.present ? data.updatedAt.value : this.updatedAt,
+      isDeleted: data.isDeleted.present ? data.isDeleted.value : this.isDeleted,
+      id: data.id.present ? data.id.value : this.id,
+      name: data.name.present ? data.name.value : this.name,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('FarmCategory(')
+          ..write('uuid: $uuid, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('updatedAt: $updatedAt, ')
+          ..write('isDeleted: $isDeleted, ')
+          ..write('id: $id, ')
+          ..write('name: $name')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode =>
+      Object.hash(uuid, createdAt, updatedAt, isDeleted, id, name);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is FarmCategory &&
+          other.uuid == this.uuid &&
+          other.createdAt == this.createdAt &&
+          other.updatedAt == this.updatedAt &&
+          other.isDeleted == this.isDeleted &&
+          other.id == this.id &&
+          other.name == this.name);
+}
+
+class FarmCategoriesCompanion extends UpdateCompanion<FarmCategory> {
+  final Value<String> uuid;
+  final Value<DateTime> createdAt;
+  final Value<DateTime> updatedAt;
+  final Value<bool> isDeleted;
+  final Value<int> id;
+  final Value<String> name;
+  const FarmCategoriesCompanion({
+    this.uuid = const Value.absent(),
+    this.createdAt = const Value.absent(),
+    this.updatedAt = const Value.absent(),
+    this.isDeleted = const Value.absent(),
+    this.id = const Value.absent(),
+    this.name = const Value.absent(),
+  });
+  FarmCategoriesCompanion.insert({
+    this.uuid = const Value.absent(),
+    this.createdAt = const Value.absent(),
+    this.updatedAt = const Value.absent(),
+    this.isDeleted = const Value.absent(),
+    this.id = const Value.absent(),
+    required String name,
+  }) : name = Value(name);
+  static Insertable<FarmCategory> custom({
+    Expression<String>? uuid,
+    Expression<DateTime>? createdAt,
+    Expression<DateTime>? updatedAt,
+    Expression<bool>? isDeleted,
+    Expression<int>? id,
+    Expression<String>? name,
+  }) {
+    return RawValuesInsertable({
+      if (uuid != null) 'uuid': uuid,
+      if (createdAt != null) 'created_at': createdAt,
+      if (updatedAt != null) 'updated_at': updatedAt,
+      if (isDeleted != null) 'is_deleted': isDeleted,
+      if (id != null) 'id': id,
+      if (name != null) 'name': name,
+    });
+  }
+
+  FarmCategoriesCompanion copyWith({
+    Value<String>? uuid,
+    Value<DateTime>? createdAt,
+    Value<DateTime>? updatedAt,
+    Value<bool>? isDeleted,
+    Value<int>? id,
+    Value<String>? name,
+  }) {
+    return FarmCategoriesCompanion(
+      uuid: uuid ?? this.uuid,
+      createdAt: createdAt ?? this.createdAt,
+      updatedAt: updatedAt ?? this.updatedAt,
+      isDeleted: isDeleted ?? this.isDeleted,
+      id: id ?? this.id,
+      name: name ?? this.name,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (uuid.present) {
+      map['uuid'] = Variable<String>(uuid.value);
+    }
+    if (createdAt.present) {
+      map['created_at'] = Variable<DateTime>(createdAt.value);
+    }
+    if (updatedAt.present) {
+      map['updated_at'] = Variable<DateTime>(updatedAt.value);
+    }
+    if (isDeleted.present) {
+      map['is_deleted'] = Variable<bool>(isDeleted.value);
+    }
+    if (id.present) {
+      map['id'] = Variable<int>(id.value);
+    }
+    if (name.present) {
+      map['name'] = Variable<String>(name.value);
+    }
     return map;
   }
 
   @override
   String toString() {
     return (StringBuffer('FarmCategoriesCompanion(')
-          ..write('id: $id, ')
-          ..write('name: $name, ')
+          ..write('uuid: $uuid, ')
           ..write('createdAt: $createdAt, ')
           ..write('updatedAt: $updatedAt, ')
-          ..write('isDeleted: $isDeleted')
+          ..write('isDeleted: $isDeleted, ')
+          ..write('id: $id, ')
+          ..write('name: $name')
           ..write(')'))
         .toString();
   }
@@ -885,6 +1083,55 @@ class $FarmProductsTable extends FarmProducts
   final GeneratedDatabase attachedDatabase;
   final String? _alias;
   $FarmProductsTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _uuidMeta = const VerificationMeta('uuid');
+  @override
+  late final GeneratedColumn<String> uuid = GeneratedColumn<String>(
+    'uuid',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+    clientDefault: () => uuidGenerator.v4(),
+  );
+  static const VerificationMeta _createdAtMeta = const VerificationMeta(
+    'createdAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> createdAt = GeneratedColumn<DateTime>(
+    'created_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: false,
+    defaultValue: currentDateAndTime,
+  );
+  static const VerificationMeta _updatedAtMeta = const VerificationMeta(
+    'updatedAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> updatedAt = GeneratedColumn<DateTime>(
+    'updated_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: false,
+    defaultValue: currentDateAndTime,
+  );
+  static const VerificationMeta _isDeletedMeta = const VerificationMeta(
+    'isDeleted',
+  );
+  @override
+  late final GeneratedColumn<bool> isDeleted = GeneratedColumn<bool>(
+    'is_deleted',
+    aliasedName,
+    false,
+    type: DriftSqlType.bool,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'CHECK ("is_deleted" IN (0, 1))',
+    ),
+    defaultValue: const Constant(false),
+  );
   static const VerificationMeta _idMeta = const VerificationMeta('id');
   @override
   late final GeneratedColumn<int> id = GeneratedColumn<int>(
@@ -963,56 +1210,18 @@ class $FarmProductsTable extends FarmProducts
       'CHECK ("is_production" IN (0, 1))',
     ),
   );
-  static const VerificationMeta _createdAtMeta = const VerificationMeta(
-    'createdAt',
-  );
-  @override
-  late final GeneratedColumn<DateTime> createdAt = GeneratedColumn<DateTime>(
-    'created_at',
-    aliasedName,
-    false,
-    type: DriftSqlType.dateTime,
-    requiredDuringInsert: false,
-    defaultValue: currentDateAndTime,
-  );
-  static const VerificationMeta _updatedAtMeta = const VerificationMeta(
-    'updatedAt',
-  );
-  @override
-  late final GeneratedColumn<DateTime> updatedAt = GeneratedColumn<DateTime>(
-    'updated_at',
-    aliasedName,
-    false,
-    type: DriftSqlType.dateTime,
-    requiredDuringInsert: false,
-    defaultValue: currentDateAndTime,
-  );
-  static const VerificationMeta _isDeletedMeta = const VerificationMeta(
-    'isDeleted',
-  );
-  @override
-  late final GeneratedColumn<bool> isDeleted = GeneratedColumn<bool>(
-    'is_deleted',
-    aliasedName,
-    false,
-    type: DriftSqlType.bool,
-    requiredDuringInsert: false,
-    defaultConstraints: GeneratedColumn.constraintIsAlways(
-      'CHECK ("is_deleted" IN (0, 1))',
-    ),
-    defaultValue: const Constant(false),
-  );
   @override
   List<GeneratedColumn> get $columns => [
+    uuid,
+    createdAt,
+    updatedAt,
+    isDeleted,
     id,
     name,
     categoryId,
     description,
     unit,
     isProduction,
-    createdAt,
-    updatedAt,
-    isDeleted,
   ];
   @override
   String get aliasedName => _alias ?? actualTableName;
@@ -1026,6 +1235,30 @@ class $FarmProductsTable extends FarmProducts
   }) {
     final context = VerificationContext();
     final data = instance.toColumns(true);
+    if (data.containsKey('uuid')) {
+      context.handle(
+        _uuidMeta,
+        uuid.isAcceptableOrUnknown(data['uuid']!, _uuidMeta),
+      );
+    }
+    if (data.containsKey('created_at')) {
+      context.handle(
+        _createdAtMeta,
+        createdAt.isAcceptableOrUnknown(data['created_at']!, _createdAtMeta),
+      );
+    }
+    if (data.containsKey('updated_at')) {
+      context.handle(
+        _updatedAtMeta,
+        updatedAt.isAcceptableOrUnknown(data['updated_at']!, _updatedAtMeta),
+      );
+    }
+    if (data.containsKey('is_deleted')) {
+      context.handle(
+        _isDeletedMeta,
+        isDeleted.isAcceptableOrUnknown(data['is_deleted']!, _isDeletedMeta),
+      );
+    }
     if (data.containsKey('id')) {
       context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
     }
@@ -1073,24 +1306,6 @@ class $FarmProductsTable extends FarmProducts
     } else if (isInserting) {
       context.missing(_isProductionMeta);
     }
-    if (data.containsKey('created_at')) {
-      context.handle(
-        _createdAtMeta,
-        createdAt.isAcceptableOrUnknown(data['created_at']!, _createdAtMeta),
-      );
-    }
-    if (data.containsKey('updated_at')) {
-      context.handle(
-        _updatedAtMeta,
-        updatedAt.isAcceptableOrUnknown(data['updated_at']!, _updatedAtMeta),
-      );
-    }
-    if (data.containsKey('is_deleted')) {
-      context.handle(
-        _isDeletedMeta,
-        isDeleted.isAcceptableOrUnknown(data['is_deleted']!, _isDeletedMeta),
-      );
-    }
     return context;
   }
 
@@ -1100,6 +1315,22 @@ class $FarmProductsTable extends FarmProducts
   FarmProduct map(Map<String, dynamic> data, {String? tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
     return FarmProduct(
+      uuid: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}uuid'],
+      )!,
+      createdAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}created_at'],
+      )!,
+      updatedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}updated_at'],
+      )!,
+      isDeleted: attachedDatabase.typeMapping.read(
+        DriftSqlType.bool,
+        data['${effectivePrefix}is_deleted'],
+      )!,
       id: attachedDatabase.typeMapping.read(
         DriftSqlType.int,
         data['${effectivePrefix}id'],
@@ -1124,18 +1355,6 @@ class $FarmProductsTable extends FarmProducts
         DriftSqlType.bool,
         data['${effectivePrefix}is_production'],
       )!,
-      createdAt: attachedDatabase.typeMapping.read(
-        DriftSqlType.dateTime,
-        data['${effectivePrefix}created_at'],
-      )!,
-      updatedAt: attachedDatabase.typeMapping.read(
-        DriftSqlType.dateTime,
-        data['${effectivePrefix}updated_at'],
-      )!,
-      isDeleted: attachedDatabase.typeMapping.read(
-        DriftSqlType.bool,
-        data['${effectivePrefix}is_deleted'],
-      )!,
     );
   }
 
@@ -1146,29 +1365,35 @@ class $FarmProductsTable extends FarmProducts
 }
 
 class FarmProduct extends DataClass implements Insertable<FarmProduct> {
+  final String uuid;
+  final DateTime createdAt;
+  final DateTime updatedAt;
+  final bool isDeleted;
   final int id;
   final String name;
   final int categoryId;
   final String? description;
   final String unit;
   final bool isProduction;
-  final DateTime createdAt;
-  final DateTime updatedAt;
-  final bool isDeleted;
   const FarmProduct({
+    required this.uuid,
+    required this.createdAt,
+    required this.updatedAt,
+    required this.isDeleted,
     required this.id,
     required this.name,
     required this.categoryId,
     this.description,
     required this.unit,
     required this.isProduction,
-    required this.createdAt,
-    required this.updatedAt,
-    required this.isDeleted,
   });
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
+    map['uuid'] = Variable<String>(uuid);
+    map['created_at'] = Variable<DateTime>(createdAt);
+    map['updated_at'] = Variable<DateTime>(updatedAt);
+    map['is_deleted'] = Variable<bool>(isDeleted);
     map['id'] = Variable<int>(id);
     map['name'] = Variable<String>(name);
     map['category_id'] = Variable<int>(categoryId);
@@ -1177,14 +1402,15 @@ class FarmProduct extends DataClass implements Insertable<FarmProduct> {
     }
     map['unit'] = Variable<String>(unit);
     map['is_production'] = Variable<bool>(isProduction);
-    map['created_at'] = Variable<DateTime>(createdAt);
-    map['updated_at'] = Variable<DateTime>(updatedAt);
-    map['is_deleted'] = Variable<bool>(isDeleted);
     return map;
   }
 
   FarmProductsCompanion toCompanion(bool nullToAbsent) {
     return FarmProductsCompanion(
+      uuid: Value(uuid),
+      createdAt: Value(createdAt),
+      updatedAt: Value(updatedAt),
+      isDeleted: Value(isDeleted),
       id: Value(id),
       name: Value(name),
       categoryId: Value(categoryId),
@@ -1193,9 +1419,6 @@ class FarmProduct extends DataClass implements Insertable<FarmProduct> {
           : Value(description),
       unit: Value(unit),
       isProduction: Value(isProduction),
-      createdAt: Value(createdAt),
-      updatedAt: Value(updatedAt),
-      isDeleted: Value(isDeleted),
     );
   }
 
@@ -1205,56 +1428,64 @@ class FarmProduct extends DataClass implements Insertable<FarmProduct> {
   }) {
     serializer ??= driftRuntimeOptions.defaultSerializer;
     return FarmProduct(
+      uuid: serializer.fromJson<String>(json['uuid']),
+      createdAt: serializer.fromJson<DateTime>(json['createdAt']),
+      updatedAt: serializer.fromJson<DateTime>(json['updatedAt']),
+      isDeleted: serializer.fromJson<bool>(json['isDeleted']),
       id: serializer.fromJson<int>(json['id']),
       name: serializer.fromJson<String>(json['name']),
       categoryId: serializer.fromJson<int>(json['categoryId']),
       description: serializer.fromJson<String?>(json['description']),
       unit: serializer.fromJson<String>(json['unit']),
       isProduction: serializer.fromJson<bool>(json['isProduction']),
-      createdAt: serializer.fromJson<DateTime>(json['createdAt']),
-      updatedAt: serializer.fromJson<DateTime>(json['updatedAt']),
-      isDeleted: serializer.fromJson<bool>(json['isDeleted']),
     );
   }
   @override
   Map<String, dynamic> toJson({ValueSerializer? serializer}) {
     serializer ??= driftRuntimeOptions.defaultSerializer;
     return <String, dynamic>{
+      'uuid': serializer.toJson<String>(uuid),
+      'createdAt': serializer.toJson<DateTime>(createdAt),
+      'updatedAt': serializer.toJson<DateTime>(updatedAt),
+      'isDeleted': serializer.toJson<bool>(isDeleted),
       'id': serializer.toJson<int>(id),
       'name': serializer.toJson<String>(name),
       'categoryId': serializer.toJson<int>(categoryId),
       'description': serializer.toJson<String?>(description),
       'unit': serializer.toJson<String>(unit),
       'isProduction': serializer.toJson<bool>(isProduction),
-      'createdAt': serializer.toJson<DateTime>(createdAt),
-      'updatedAt': serializer.toJson<DateTime>(updatedAt),
-      'isDeleted': serializer.toJson<bool>(isDeleted),
     };
   }
 
   FarmProduct copyWith({
+    String? uuid,
+    DateTime? createdAt,
+    DateTime? updatedAt,
+    bool? isDeleted,
     int? id,
     String? name,
     int? categoryId,
     Value<String?> description = const Value.absent(),
     String? unit,
     bool? isProduction,
-    DateTime? createdAt,
-    DateTime? updatedAt,
-    bool? isDeleted,
   }) => FarmProduct(
+    uuid: uuid ?? this.uuid,
+    createdAt: createdAt ?? this.createdAt,
+    updatedAt: updatedAt ?? this.updatedAt,
+    isDeleted: isDeleted ?? this.isDeleted,
     id: id ?? this.id,
     name: name ?? this.name,
     categoryId: categoryId ?? this.categoryId,
     description: description.present ? description.value : this.description,
     unit: unit ?? this.unit,
     isProduction: isProduction ?? this.isProduction,
-    createdAt: createdAt ?? this.createdAt,
-    updatedAt: updatedAt ?? this.updatedAt,
-    isDeleted: isDeleted ?? this.isDeleted,
   );
   FarmProduct copyWithCompanion(FarmProductsCompanion data) {
     return FarmProduct(
+      uuid: data.uuid.present ? data.uuid.value : this.uuid,
+      createdAt: data.createdAt.present ? data.createdAt.value : this.createdAt,
+      updatedAt: data.updatedAt.present ? data.updatedAt.value : this.updatedAt,
+      isDeleted: data.isDeleted.present ? data.isDeleted.value : this.isDeleted,
       id: data.id.present ? data.id.value : this.id,
       name: data.name.present ? data.name.value : this.name,
       categoryId: data.categoryId.present
@@ -1267,141 +1498,160 @@ class FarmProduct extends DataClass implements Insertable<FarmProduct> {
       isProduction: data.isProduction.present
           ? data.isProduction.value
           : this.isProduction,
-      createdAt: data.createdAt.present ? data.createdAt.value : this.createdAt,
-      updatedAt: data.updatedAt.present ? data.updatedAt.value : this.updatedAt,
-      isDeleted: data.isDeleted.present ? data.isDeleted.value : this.isDeleted,
     );
   }
 
   @override
   String toString() {
     return (StringBuffer('FarmProduct(')
+          ..write('uuid: $uuid, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('updatedAt: $updatedAt, ')
+          ..write('isDeleted: $isDeleted, ')
           ..write('id: $id, ')
           ..write('name: $name, ')
           ..write('categoryId: $categoryId, ')
           ..write('description: $description, ')
           ..write('unit: $unit, ')
-          ..write('isProduction: $isProduction, ')
-          ..write('createdAt: $createdAt, ')
-          ..write('updatedAt: $updatedAt, ')
-          ..write('isDeleted: $isDeleted')
+          ..write('isProduction: $isProduction')
           ..write(')'))
         .toString();
   }
 
   @override
   int get hashCode => Object.hash(
+    uuid,
+    createdAt,
+    updatedAt,
+    isDeleted,
     id,
     name,
     categoryId,
     description,
     unit,
     isProduction,
-    createdAt,
-    updatedAt,
-    isDeleted,
   );
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
       (other is FarmProduct &&
+          other.uuid == this.uuid &&
+          other.createdAt == this.createdAt &&
+          other.updatedAt == this.updatedAt &&
+          other.isDeleted == this.isDeleted &&
           other.id == this.id &&
           other.name == this.name &&
           other.categoryId == this.categoryId &&
           other.description == this.description &&
           other.unit == this.unit &&
-          other.isProduction == this.isProduction &&
-          other.createdAt == this.createdAt &&
-          other.updatedAt == this.updatedAt &&
-          other.isDeleted == this.isDeleted);
+          other.isProduction == this.isProduction);
 }
 
 class FarmProductsCompanion extends UpdateCompanion<FarmProduct> {
+  final Value<String> uuid;
+  final Value<DateTime> createdAt;
+  final Value<DateTime> updatedAt;
+  final Value<bool> isDeleted;
   final Value<int> id;
   final Value<String> name;
   final Value<int> categoryId;
   final Value<String?> description;
   final Value<String> unit;
   final Value<bool> isProduction;
-  final Value<DateTime> createdAt;
-  final Value<DateTime> updatedAt;
-  final Value<bool> isDeleted;
   const FarmProductsCompanion({
+    this.uuid = const Value.absent(),
+    this.createdAt = const Value.absent(),
+    this.updatedAt = const Value.absent(),
+    this.isDeleted = const Value.absent(),
     this.id = const Value.absent(),
     this.name = const Value.absent(),
     this.categoryId = const Value.absent(),
     this.description = const Value.absent(),
     this.unit = const Value.absent(),
     this.isProduction = const Value.absent(),
+  });
+  FarmProductsCompanion.insert({
+    this.uuid = const Value.absent(),
     this.createdAt = const Value.absent(),
     this.updatedAt = const Value.absent(),
     this.isDeleted = const Value.absent(),
-  });
-  FarmProductsCompanion.insert({
     this.id = const Value.absent(),
     required String name,
     required int categoryId,
     this.description = const Value.absent(),
     required String unit,
     required bool isProduction,
-    this.createdAt = const Value.absent(),
-    this.updatedAt = const Value.absent(),
-    this.isDeleted = const Value.absent(),
   }) : name = Value(name),
        categoryId = Value(categoryId),
        unit = Value(unit),
        isProduction = Value(isProduction);
   static Insertable<FarmProduct> custom({
+    Expression<String>? uuid,
+    Expression<DateTime>? createdAt,
+    Expression<DateTime>? updatedAt,
+    Expression<bool>? isDeleted,
     Expression<int>? id,
     Expression<String>? name,
     Expression<int>? categoryId,
     Expression<String>? description,
     Expression<String>? unit,
     Expression<bool>? isProduction,
-    Expression<DateTime>? createdAt,
-    Expression<DateTime>? updatedAt,
-    Expression<bool>? isDeleted,
   }) {
     return RawValuesInsertable({
+      if (uuid != null) 'uuid': uuid,
+      if (createdAt != null) 'created_at': createdAt,
+      if (updatedAt != null) 'updated_at': updatedAt,
+      if (isDeleted != null) 'is_deleted': isDeleted,
       if (id != null) 'id': id,
       if (name != null) 'name': name,
       if (categoryId != null) 'category_id': categoryId,
       if (description != null) 'description': description,
       if (unit != null) 'unit': unit,
       if (isProduction != null) 'is_production': isProduction,
-      if (createdAt != null) 'created_at': createdAt,
-      if (updatedAt != null) 'updated_at': updatedAt,
-      if (isDeleted != null) 'is_deleted': isDeleted,
     });
   }
 
   FarmProductsCompanion copyWith({
+    Value<String>? uuid,
+    Value<DateTime>? createdAt,
+    Value<DateTime>? updatedAt,
+    Value<bool>? isDeleted,
     Value<int>? id,
     Value<String>? name,
     Value<int>? categoryId,
     Value<String?>? description,
     Value<String>? unit,
     Value<bool>? isProduction,
-    Value<DateTime>? createdAt,
-    Value<DateTime>? updatedAt,
-    Value<bool>? isDeleted,
   }) {
     return FarmProductsCompanion(
+      uuid: uuid ?? this.uuid,
+      createdAt: createdAt ?? this.createdAt,
+      updatedAt: updatedAt ?? this.updatedAt,
+      isDeleted: isDeleted ?? this.isDeleted,
       id: id ?? this.id,
       name: name ?? this.name,
       categoryId: categoryId ?? this.categoryId,
       description: description ?? this.description,
       unit: unit ?? this.unit,
       isProduction: isProduction ?? this.isProduction,
-      createdAt: createdAt ?? this.createdAt,
-      updatedAt: updatedAt ?? this.updatedAt,
-      isDeleted: isDeleted ?? this.isDeleted,
     );
   }
 
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
+    if (uuid.present) {
+      map['uuid'] = Variable<String>(uuid.value);
+    }
+    if (createdAt.present) {
+      map['created_at'] = Variable<DateTime>(createdAt.value);
+    }
+    if (updatedAt.present) {
+      map['updated_at'] = Variable<DateTime>(updatedAt.value);
+    }
+    if (isDeleted.present) {
+      map['is_deleted'] = Variable<bool>(isDeleted.value);
+    }
     if (id.present) {
       map['id'] = Variable<int>(id.value);
     }
@@ -1420,30 +1670,22 @@ class FarmProductsCompanion extends UpdateCompanion<FarmProduct> {
     if (isProduction.present) {
       map['is_production'] = Variable<bool>(isProduction.value);
     }
-    if (createdAt.present) {
-      map['created_at'] = Variable<DateTime>(createdAt.value);
-    }
-    if (updatedAt.present) {
-      map['updated_at'] = Variable<DateTime>(updatedAt.value);
-    }
-    if (isDeleted.present) {
-      map['is_deleted'] = Variable<bool>(isDeleted.value);
-    }
     return map;
   }
 
   @override
   String toString() {
     return (StringBuffer('FarmProductsCompanion(')
+          ..write('uuid: $uuid, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('updatedAt: $updatedAt, ')
+          ..write('isDeleted: $isDeleted, ')
           ..write('id: $id, ')
           ..write('name: $name, ')
           ..write('categoryId: $categoryId, ')
           ..write('description: $description, ')
           ..write('unit: $unit, ')
-          ..write('isProduction: $isProduction, ')
-          ..write('createdAt: $createdAt, ')
-          ..write('updatedAt: $updatedAt, ')
-          ..write('isDeleted: $isDeleted')
+          ..write('isProduction: $isProduction')
           ..write(')'))
         .toString();
   }
@@ -1455,6 +1697,55 @@ class $FarmStockTable extends FarmStock
   final GeneratedDatabase attachedDatabase;
   final String? _alias;
   $FarmStockTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _uuidMeta = const VerificationMeta('uuid');
+  @override
+  late final GeneratedColumn<String> uuid = GeneratedColumn<String>(
+    'uuid',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+    clientDefault: () => uuidGenerator.v4(),
+  );
+  static const VerificationMeta _createdAtMeta = const VerificationMeta(
+    'createdAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> createdAt = GeneratedColumn<DateTime>(
+    'created_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: false,
+    defaultValue: currentDateAndTime,
+  );
+  static const VerificationMeta _updatedAtMeta = const VerificationMeta(
+    'updatedAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> updatedAt = GeneratedColumn<DateTime>(
+    'updated_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: false,
+    defaultValue: currentDateAndTime,
+  );
+  static const VerificationMeta _isDeletedMeta = const VerificationMeta(
+    'isDeleted',
+  );
+  @override
+  late final GeneratedColumn<bool> isDeleted = GeneratedColumn<bool>(
+    'is_deleted',
+    aliasedName,
+    false,
+    type: DriftSqlType.bool,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'CHECK ("is_deleted" IN (0, 1))',
+    ),
+    defaultValue: const Constant(false),
+  );
   static const VerificationMeta _idMeta = const VerificationMeta('id');
   @override
   late final GeneratedColumn<int> id = GeneratedColumn<int>(
@@ -1538,47 +1829,12 @@ class $FarmStockTable extends FarmStock
         type: DriftSqlType.dateTime,
         requiredDuringInsert: false,
       );
-  static const VerificationMeta _createdAtMeta = const VerificationMeta(
-    'createdAt',
-  );
-  @override
-  late final GeneratedColumn<DateTime> createdAt = GeneratedColumn<DateTime>(
-    'created_at',
-    aliasedName,
-    false,
-    type: DriftSqlType.dateTime,
-    requiredDuringInsert: false,
-    defaultValue: currentDateAndTime,
-  );
-  static const VerificationMeta _updatedAtMeta = const VerificationMeta(
-    'updatedAt',
-  );
-  @override
-  late final GeneratedColumn<DateTime> updatedAt = GeneratedColumn<DateTime>(
-    'updated_at',
-    aliasedName,
-    false,
-    type: DriftSqlType.dateTime,
-    requiredDuringInsert: false,
-    defaultValue: currentDateAndTime,
-  );
-  static const VerificationMeta _isDeletedMeta = const VerificationMeta(
-    'isDeleted',
-  );
-  @override
-  late final GeneratedColumn<bool> isDeleted = GeneratedColumn<bool>(
-    'is_deleted',
-    aliasedName,
-    false,
-    type: DriftSqlType.bool,
-    requiredDuringInsert: false,
-    defaultConstraints: GeneratedColumn.constraintIsAlways(
-      'CHECK ("is_deleted" IN (0, 1))',
-    ),
-    defaultValue: const Constant(false),
-  );
   @override
   List<GeneratedColumn> get $columns => [
+    uuid,
+    createdAt,
+    updatedAt,
+    isDeleted,
     id,
     productId,
     quantity,
@@ -1586,9 +1842,6 @@ class $FarmStockTable extends FarmStock
     location,
     lotNumber,
     expirationDate,
-    createdAt,
-    updatedAt,
-    isDeleted,
   ];
   @override
   String get aliasedName => _alias ?? actualTableName;
@@ -1602,6 +1855,30 @@ class $FarmStockTable extends FarmStock
   }) {
     final context = VerificationContext();
     final data = instance.toColumns(true);
+    if (data.containsKey('uuid')) {
+      context.handle(
+        _uuidMeta,
+        uuid.isAcceptableOrUnknown(data['uuid']!, _uuidMeta),
+      );
+    }
+    if (data.containsKey('created_at')) {
+      context.handle(
+        _createdAtMeta,
+        createdAt.isAcceptableOrUnknown(data['created_at']!, _createdAtMeta),
+      );
+    }
+    if (data.containsKey('updated_at')) {
+      context.handle(
+        _updatedAtMeta,
+        updatedAt.isAcceptableOrUnknown(data['updated_at']!, _updatedAtMeta),
+      );
+    }
+    if (data.containsKey('is_deleted')) {
+      context.handle(
+        _isDeletedMeta,
+        isDeleted.isAcceptableOrUnknown(data['is_deleted']!, _isDeletedMeta),
+      );
+    }
     if (data.containsKey('id')) {
       context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
     }
@@ -1651,24 +1928,6 @@ class $FarmStockTable extends FarmStock
         ),
       );
     }
-    if (data.containsKey('created_at')) {
-      context.handle(
-        _createdAtMeta,
-        createdAt.isAcceptableOrUnknown(data['created_at']!, _createdAtMeta),
-      );
-    }
-    if (data.containsKey('updated_at')) {
-      context.handle(
-        _updatedAtMeta,
-        updatedAt.isAcceptableOrUnknown(data['updated_at']!, _updatedAtMeta),
-      );
-    }
-    if (data.containsKey('is_deleted')) {
-      context.handle(
-        _isDeletedMeta,
-        isDeleted.isAcceptableOrUnknown(data['is_deleted']!, _isDeletedMeta),
-      );
-    }
     return context;
   }
 
@@ -1678,6 +1937,22 @@ class $FarmStockTable extends FarmStock
   FarmStockData map(Map<String, dynamic> data, {String? tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
     return FarmStockData(
+      uuid: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}uuid'],
+      )!,
+      createdAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}created_at'],
+      )!,
+      updatedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}updated_at'],
+      )!,
+      isDeleted: attachedDatabase.typeMapping.read(
+        DriftSqlType.bool,
+        data['${effectivePrefix}is_deleted'],
+      )!,
       id: attachedDatabase.typeMapping.read(
         DriftSqlType.int,
         data['${effectivePrefix}id'],
@@ -1706,18 +1981,6 @@ class $FarmStockTable extends FarmStock
         DriftSqlType.dateTime,
         data['${effectivePrefix}expiration_date'],
       ),
-      createdAt: attachedDatabase.typeMapping.read(
-        DriftSqlType.dateTime,
-        data['${effectivePrefix}created_at'],
-      )!,
-      updatedAt: attachedDatabase.typeMapping.read(
-        DriftSqlType.dateTime,
-        data['${effectivePrefix}updated_at'],
-      )!,
-      isDeleted: attachedDatabase.typeMapping.read(
-        DriftSqlType.bool,
-        data['${effectivePrefix}is_deleted'],
-      )!,
     );
   }
 
@@ -1728,6 +1991,10 @@ class $FarmStockTable extends FarmStock
 }
 
 class FarmStockData extends DataClass implements Insertable<FarmStockData> {
+  final String uuid;
+  final DateTime createdAt;
+  final DateTime updatedAt;
+  final bool isDeleted;
   final int id;
   final int productId;
   final double quantity;
@@ -1735,10 +2002,11 @@ class FarmStockData extends DataClass implements Insertable<FarmStockData> {
   final String? location;
   final String? lotNumber;
   final DateTime? expirationDate;
-  final DateTime createdAt;
-  final DateTime updatedAt;
-  final bool isDeleted;
   const FarmStockData({
+    required this.uuid,
+    required this.createdAt,
+    required this.updatedAt,
+    required this.isDeleted,
     required this.id,
     required this.productId,
     required this.quantity,
@@ -1746,13 +2014,14 @@ class FarmStockData extends DataClass implements Insertable<FarmStockData> {
     this.location,
     this.lotNumber,
     this.expirationDate,
-    required this.createdAt,
-    required this.updatedAt,
-    required this.isDeleted,
   });
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
+    map['uuid'] = Variable<String>(uuid);
+    map['created_at'] = Variable<DateTime>(createdAt);
+    map['updated_at'] = Variable<DateTime>(updatedAt);
+    map['is_deleted'] = Variable<bool>(isDeleted);
     map['id'] = Variable<int>(id);
     map['product_id'] = Variable<int>(productId);
     map['quantity'] = Variable<double>(quantity);
@@ -1768,14 +2037,15 @@ class FarmStockData extends DataClass implements Insertable<FarmStockData> {
     if (!nullToAbsent || expirationDate != null) {
       map['expiration_date'] = Variable<DateTime>(expirationDate);
     }
-    map['created_at'] = Variable<DateTime>(createdAt);
-    map['updated_at'] = Variable<DateTime>(updatedAt);
-    map['is_deleted'] = Variable<bool>(isDeleted);
     return map;
   }
 
   FarmStockCompanion toCompanion(bool nullToAbsent) {
     return FarmStockCompanion(
+      uuid: Value(uuid),
+      createdAt: Value(createdAt),
+      updatedAt: Value(updatedAt),
+      isDeleted: Value(isDeleted),
       id: Value(id),
       productId: Value(productId),
       quantity: Value(quantity),
@@ -1791,9 +2061,6 @@ class FarmStockData extends DataClass implements Insertable<FarmStockData> {
       expirationDate: expirationDate == null && nullToAbsent
           ? const Value.absent()
           : Value(expirationDate),
-      createdAt: Value(createdAt),
-      updatedAt: Value(updatedAt),
-      isDeleted: Value(isDeleted),
     );
   }
 
@@ -1803,6 +2070,10 @@ class FarmStockData extends DataClass implements Insertable<FarmStockData> {
   }) {
     serializer ??= driftRuntimeOptions.defaultSerializer;
     return FarmStockData(
+      uuid: serializer.fromJson<String>(json['uuid']),
+      createdAt: serializer.fromJson<DateTime>(json['createdAt']),
+      updatedAt: serializer.fromJson<DateTime>(json['updatedAt']),
+      isDeleted: serializer.fromJson<bool>(json['isDeleted']),
       id: serializer.fromJson<int>(json['id']),
       productId: serializer.fromJson<int>(json['productId']),
       quantity: serializer.fromJson<double>(json['quantity']),
@@ -1810,15 +2081,16 @@ class FarmStockData extends DataClass implements Insertable<FarmStockData> {
       location: serializer.fromJson<String?>(json['location']),
       lotNumber: serializer.fromJson<String?>(json['lotNumber']),
       expirationDate: serializer.fromJson<DateTime?>(json['expirationDate']),
-      createdAt: serializer.fromJson<DateTime>(json['createdAt']),
-      updatedAt: serializer.fromJson<DateTime>(json['updatedAt']),
-      isDeleted: serializer.fromJson<bool>(json['isDeleted']),
     );
   }
   @override
   Map<String, dynamic> toJson({ValueSerializer? serializer}) {
     serializer ??= driftRuntimeOptions.defaultSerializer;
     return <String, dynamic>{
+      'uuid': serializer.toJson<String>(uuid),
+      'createdAt': serializer.toJson<DateTime>(createdAt),
+      'updatedAt': serializer.toJson<DateTime>(updatedAt),
+      'isDeleted': serializer.toJson<bool>(isDeleted),
       'id': serializer.toJson<int>(id),
       'productId': serializer.toJson<int>(productId),
       'quantity': serializer.toJson<double>(quantity),
@@ -1826,13 +2098,14 @@ class FarmStockData extends DataClass implements Insertable<FarmStockData> {
       'location': serializer.toJson<String?>(location),
       'lotNumber': serializer.toJson<String?>(lotNumber),
       'expirationDate': serializer.toJson<DateTime?>(expirationDate),
-      'createdAt': serializer.toJson<DateTime>(createdAt),
-      'updatedAt': serializer.toJson<DateTime>(updatedAt),
-      'isDeleted': serializer.toJson<bool>(isDeleted),
     };
   }
 
   FarmStockData copyWith({
+    String? uuid,
+    DateTime? createdAt,
+    DateTime? updatedAt,
+    bool? isDeleted,
     int? id,
     int? productId,
     double? quantity,
@@ -1840,10 +2113,11 @@ class FarmStockData extends DataClass implements Insertable<FarmStockData> {
     Value<String?> location = const Value.absent(),
     Value<String?> lotNumber = const Value.absent(),
     Value<DateTime?> expirationDate = const Value.absent(),
-    DateTime? createdAt,
-    DateTime? updatedAt,
-    bool? isDeleted,
   }) => FarmStockData(
+    uuid: uuid ?? this.uuid,
+    createdAt: createdAt ?? this.createdAt,
+    updatedAt: updatedAt ?? this.updatedAt,
+    isDeleted: isDeleted ?? this.isDeleted,
     id: id ?? this.id,
     productId: productId ?? this.productId,
     quantity: quantity ?? this.quantity,
@@ -1853,12 +2127,13 @@ class FarmStockData extends DataClass implements Insertable<FarmStockData> {
     expirationDate: expirationDate.present
         ? expirationDate.value
         : this.expirationDate,
-    createdAt: createdAt ?? this.createdAt,
-    updatedAt: updatedAt ?? this.updatedAt,
-    isDeleted: isDeleted ?? this.isDeleted,
   );
   FarmStockData copyWithCompanion(FarmStockCompanion data) {
     return FarmStockData(
+      uuid: data.uuid.present ? data.uuid.value : this.uuid,
+      createdAt: data.createdAt.present ? data.createdAt.value : this.createdAt,
+      updatedAt: data.updatedAt.present ? data.updatedAt.value : this.updatedAt,
+      isDeleted: data.isDeleted.present ? data.isDeleted.value : this.isDeleted,
       id: data.id.present ? data.id.value : this.id,
       productId: data.productId.present ? data.productId.value : this.productId,
       quantity: data.quantity.present ? data.quantity.value : this.quantity,
@@ -1870,31 +2145,33 @@ class FarmStockData extends DataClass implements Insertable<FarmStockData> {
       expirationDate: data.expirationDate.present
           ? data.expirationDate.value
           : this.expirationDate,
-      createdAt: data.createdAt.present ? data.createdAt.value : this.createdAt,
-      updatedAt: data.updatedAt.present ? data.updatedAt.value : this.updatedAt,
-      isDeleted: data.isDeleted.present ? data.isDeleted.value : this.isDeleted,
     );
   }
 
   @override
   String toString() {
     return (StringBuffer('FarmStockData(')
+          ..write('uuid: $uuid, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('updatedAt: $updatedAt, ')
+          ..write('isDeleted: $isDeleted, ')
           ..write('id: $id, ')
           ..write('productId: $productId, ')
           ..write('quantity: $quantity, ')
           ..write('minimumStock: $minimumStock, ')
           ..write('location: $location, ')
           ..write('lotNumber: $lotNumber, ')
-          ..write('expirationDate: $expirationDate, ')
-          ..write('createdAt: $createdAt, ')
-          ..write('updatedAt: $updatedAt, ')
-          ..write('isDeleted: $isDeleted')
+          ..write('expirationDate: $expirationDate')
           ..write(')'))
         .toString();
   }
 
   @override
   int get hashCode => Object.hash(
+    uuid,
+    createdAt,
+    updatedAt,
+    isDeleted,
     id,
     productId,
     quantity,
@@ -1902,27 +2179,29 @@ class FarmStockData extends DataClass implements Insertable<FarmStockData> {
     location,
     lotNumber,
     expirationDate,
-    createdAt,
-    updatedAt,
-    isDeleted,
   );
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
       (other is FarmStockData &&
+          other.uuid == this.uuid &&
+          other.createdAt == this.createdAt &&
+          other.updatedAt == this.updatedAt &&
+          other.isDeleted == this.isDeleted &&
           other.id == this.id &&
           other.productId == this.productId &&
           other.quantity == this.quantity &&
           other.minimumStock == this.minimumStock &&
           other.location == this.location &&
           other.lotNumber == this.lotNumber &&
-          other.expirationDate == this.expirationDate &&
-          other.createdAt == this.createdAt &&
-          other.updatedAt == this.updatedAt &&
-          other.isDeleted == this.isDeleted);
+          other.expirationDate == this.expirationDate);
 }
 
 class FarmStockCompanion extends UpdateCompanion<FarmStockData> {
+  final Value<String> uuid;
+  final Value<DateTime> createdAt;
+  final Value<DateTime> updatedAt;
+  final Value<bool> isDeleted;
   final Value<int> id;
   final Value<int> productId;
   final Value<double> quantity;
@@ -1930,10 +2209,11 @@ class FarmStockCompanion extends UpdateCompanion<FarmStockData> {
   final Value<String?> location;
   final Value<String?> lotNumber;
   final Value<DateTime?> expirationDate;
-  final Value<DateTime> createdAt;
-  final Value<DateTime> updatedAt;
-  final Value<bool> isDeleted;
   const FarmStockCompanion({
+    this.uuid = const Value.absent(),
+    this.createdAt = const Value.absent(),
+    this.updatedAt = const Value.absent(),
+    this.isDeleted = const Value.absent(),
     this.id = const Value.absent(),
     this.productId = const Value.absent(),
     this.quantity = const Value.absent(),
@@ -1941,11 +2221,12 @@ class FarmStockCompanion extends UpdateCompanion<FarmStockData> {
     this.location = const Value.absent(),
     this.lotNumber = const Value.absent(),
     this.expirationDate = const Value.absent(),
+  });
+  FarmStockCompanion.insert({
+    this.uuid = const Value.absent(),
     this.createdAt = const Value.absent(),
     this.updatedAt = const Value.absent(),
     this.isDeleted = const Value.absent(),
-  });
-  FarmStockCompanion.insert({
     this.id = const Value.absent(),
     required int productId,
     required double quantity,
@@ -1953,12 +2234,13 @@ class FarmStockCompanion extends UpdateCompanion<FarmStockData> {
     this.location = const Value.absent(),
     this.lotNumber = const Value.absent(),
     this.expirationDate = const Value.absent(),
-    this.createdAt = const Value.absent(),
-    this.updatedAt = const Value.absent(),
-    this.isDeleted = const Value.absent(),
   }) : productId = Value(productId),
        quantity = Value(quantity);
   static Insertable<FarmStockData> custom({
+    Expression<String>? uuid,
+    Expression<DateTime>? createdAt,
+    Expression<DateTime>? updatedAt,
+    Expression<bool>? isDeleted,
     Expression<int>? id,
     Expression<int>? productId,
     Expression<double>? quantity,
@@ -1966,11 +2248,12 @@ class FarmStockCompanion extends UpdateCompanion<FarmStockData> {
     Expression<String>? location,
     Expression<String>? lotNumber,
     Expression<DateTime>? expirationDate,
-    Expression<DateTime>? createdAt,
-    Expression<DateTime>? updatedAt,
-    Expression<bool>? isDeleted,
   }) {
     return RawValuesInsertable({
+      if (uuid != null) 'uuid': uuid,
+      if (createdAt != null) 'created_at': createdAt,
+      if (updatedAt != null) 'updated_at': updatedAt,
+      if (isDeleted != null) 'is_deleted': isDeleted,
       if (id != null) 'id': id,
       if (productId != null) 'product_id': productId,
       if (quantity != null) 'quantity': quantity,
@@ -1978,13 +2261,14 @@ class FarmStockCompanion extends UpdateCompanion<FarmStockData> {
       if (location != null) 'location': location,
       if (lotNumber != null) 'lot_number': lotNumber,
       if (expirationDate != null) 'expiration_date': expirationDate,
-      if (createdAt != null) 'created_at': createdAt,
-      if (updatedAt != null) 'updated_at': updatedAt,
-      if (isDeleted != null) 'is_deleted': isDeleted,
     });
   }
 
   FarmStockCompanion copyWith({
+    Value<String>? uuid,
+    Value<DateTime>? createdAt,
+    Value<DateTime>? updatedAt,
+    Value<bool>? isDeleted,
     Value<int>? id,
     Value<int>? productId,
     Value<double>? quantity,
@@ -1992,11 +2276,12 @@ class FarmStockCompanion extends UpdateCompanion<FarmStockData> {
     Value<String?>? location,
     Value<String?>? lotNumber,
     Value<DateTime?>? expirationDate,
-    Value<DateTime>? createdAt,
-    Value<DateTime>? updatedAt,
-    Value<bool>? isDeleted,
   }) {
     return FarmStockCompanion(
+      uuid: uuid ?? this.uuid,
+      createdAt: createdAt ?? this.createdAt,
+      updatedAt: updatedAt ?? this.updatedAt,
+      isDeleted: isDeleted ?? this.isDeleted,
       id: id ?? this.id,
       productId: productId ?? this.productId,
       quantity: quantity ?? this.quantity,
@@ -2004,15 +2289,24 @@ class FarmStockCompanion extends UpdateCompanion<FarmStockData> {
       location: location ?? this.location,
       lotNumber: lotNumber ?? this.lotNumber,
       expirationDate: expirationDate ?? this.expirationDate,
-      createdAt: createdAt ?? this.createdAt,
-      updatedAt: updatedAt ?? this.updatedAt,
-      isDeleted: isDeleted ?? this.isDeleted,
     );
   }
 
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
+    if (uuid.present) {
+      map['uuid'] = Variable<String>(uuid.value);
+    }
+    if (createdAt.present) {
+      map['created_at'] = Variable<DateTime>(createdAt.value);
+    }
+    if (updatedAt.present) {
+      map['updated_at'] = Variable<DateTime>(updatedAt.value);
+    }
+    if (isDeleted.present) {
+      map['is_deleted'] = Variable<bool>(isDeleted.value);
+    }
     if (id.present) {
       map['id'] = Variable<int>(id.value);
     }
@@ -2034,31 +2328,23 @@ class FarmStockCompanion extends UpdateCompanion<FarmStockData> {
     if (expirationDate.present) {
       map['expiration_date'] = Variable<DateTime>(expirationDate.value);
     }
-    if (createdAt.present) {
-      map['created_at'] = Variable<DateTime>(createdAt.value);
-    }
-    if (updatedAt.present) {
-      map['updated_at'] = Variable<DateTime>(updatedAt.value);
-    }
-    if (isDeleted.present) {
-      map['is_deleted'] = Variable<bool>(isDeleted.value);
-    }
     return map;
   }
 
   @override
   String toString() {
     return (StringBuffer('FarmStockCompanion(')
+          ..write('uuid: $uuid, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('updatedAt: $updatedAt, ')
+          ..write('isDeleted: $isDeleted, ')
           ..write('id: $id, ')
           ..write('productId: $productId, ')
           ..write('quantity: $quantity, ')
           ..write('minimumStock: $minimumStock, ')
           ..write('location: $location, ')
           ..write('lotNumber: $lotNumber, ')
-          ..write('expirationDate: $expirationDate, ')
-          ..write('createdAt: $createdAt, ')
-          ..write('updatedAt: $updatedAt, ')
-          ..write('isDeleted: $isDeleted')
+          ..write('expirationDate: $expirationDate')
           ..write(')'))
         .toString();
   }
@@ -2070,6 +2356,55 @@ class $FarmStockMovementsTable extends FarmStockMovements
   final GeneratedDatabase attachedDatabase;
   final String? _alias;
   $FarmStockMovementsTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _uuidMeta = const VerificationMeta('uuid');
+  @override
+  late final GeneratedColumn<String> uuid = GeneratedColumn<String>(
+    'uuid',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+    clientDefault: () => uuidGenerator.v4(),
+  );
+  static const VerificationMeta _createdAtMeta = const VerificationMeta(
+    'createdAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> createdAt = GeneratedColumn<DateTime>(
+    'created_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: false,
+    defaultValue: currentDateAndTime,
+  );
+  static const VerificationMeta _updatedAtMeta = const VerificationMeta(
+    'updatedAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> updatedAt = GeneratedColumn<DateTime>(
+    'updated_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: false,
+    defaultValue: currentDateAndTime,
+  );
+  static const VerificationMeta _isDeletedMeta = const VerificationMeta(
+    'isDeleted',
+  );
+  @override
+  late final GeneratedColumn<bool> isDeleted = GeneratedColumn<bool>(
+    'is_deleted',
+    aliasedName,
+    false,
+    type: DriftSqlType.bool,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'CHECK ("is_deleted" IN (0, 1))',
+    ),
+    defaultValue: const Constant(false),
+  );
   static const VerificationMeta _idMeta = const VerificationMeta('id');
   @override
   late final GeneratedColumn<int> id = GeneratedColumn<int>(
@@ -2083,18 +2418,18 @@ class $FarmStockMovementsTable extends FarmStockMovements
       'PRIMARY KEY AUTOINCREMENT',
     ),
   );
-  static const VerificationMeta _productIdMeta = const VerificationMeta(
-    'productId',
+  static const VerificationMeta _stockIdMeta = const VerificationMeta(
+    'stockId',
   );
   @override
-  late final GeneratedColumn<int> productId = GeneratedColumn<int>(
-    'product_id',
+  late final GeneratedColumn<int> stockId = GeneratedColumn<int>(
+    'stock_id',
     aliasedName,
     false,
     type: DriftSqlType.int,
     requiredDuringInsert: true,
     defaultConstraints: GeneratedColumn.constraintIsAlways(
-      'REFERENCES farm_products (id)',
+      'REFERENCES farm_stock (id)',
     ),
   );
   @override
@@ -2141,6 +2476,568 @@ class $FarmStockMovementsTable extends FarmStockMovements
     type: DriftSqlType.string,
     requiredDuringInsert: false,
   );
+  static const VerificationMeta _referenceIdMeta = const VerificationMeta(
+    'referenceId',
+  );
+  @override
+  late final GeneratedColumn<String> referenceId = GeneratedColumn<String>(
+    'reference_id',
+    aliasedName,
+    true,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+  );
+  @override
+  List<GeneratedColumn> get $columns => [
+    uuid,
+    createdAt,
+    updatedAt,
+    isDeleted,
+    id,
+    stockId,
+    type,
+    quantity,
+    unitCostInCents,
+    referenceType,
+    referenceId,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'farm_stock_movements';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<FarmStockMovement> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('uuid')) {
+      context.handle(
+        _uuidMeta,
+        uuid.isAcceptableOrUnknown(data['uuid']!, _uuidMeta),
+      );
+    }
+    if (data.containsKey('created_at')) {
+      context.handle(
+        _createdAtMeta,
+        createdAt.isAcceptableOrUnknown(data['created_at']!, _createdAtMeta),
+      );
+    }
+    if (data.containsKey('updated_at')) {
+      context.handle(
+        _updatedAtMeta,
+        updatedAt.isAcceptableOrUnknown(data['updated_at']!, _updatedAtMeta),
+      );
+    }
+    if (data.containsKey('is_deleted')) {
+      context.handle(
+        _isDeletedMeta,
+        isDeleted.isAcceptableOrUnknown(data['is_deleted']!, _isDeletedMeta),
+      );
+    }
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    }
+    if (data.containsKey('stock_id')) {
+      context.handle(
+        _stockIdMeta,
+        stockId.isAcceptableOrUnknown(data['stock_id']!, _stockIdMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_stockIdMeta);
+    }
+    if (data.containsKey('quantity')) {
+      context.handle(
+        _quantityMeta,
+        quantity.isAcceptableOrUnknown(data['quantity']!, _quantityMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_quantityMeta);
+    }
+    if (data.containsKey('unit_cost_in_cents')) {
+      context.handle(
+        _unitCostInCentsMeta,
+        unitCostInCents.isAcceptableOrUnknown(
+          data['unit_cost_in_cents']!,
+          _unitCostInCentsMeta,
+        ),
+      );
+    }
+    if (data.containsKey('reference_type')) {
+      context.handle(
+        _referenceTypeMeta,
+        referenceType.isAcceptableOrUnknown(
+          data['reference_type']!,
+          _referenceTypeMeta,
+        ),
+      );
+    }
+    if (data.containsKey('reference_id')) {
+      context.handle(
+        _referenceIdMeta,
+        referenceId.isAcceptableOrUnknown(
+          data['reference_id']!,
+          _referenceIdMeta,
+        ),
+      );
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  FarmStockMovement map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return FarmStockMovement(
+      uuid: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}uuid'],
+      )!,
+      createdAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}created_at'],
+      )!,
+      updatedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}updated_at'],
+      )!,
+      isDeleted: attachedDatabase.typeMapping.read(
+        DriftSqlType.bool,
+        data['${effectivePrefix}is_deleted'],
+      )!,
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}id'],
+      )!,
+      stockId: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}stock_id'],
+      )!,
+      type: $FarmStockMovementsTable.$convertertype.fromSql(
+        attachedDatabase.typeMapping.read(
+          DriftSqlType.int,
+          data['${effectivePrefix}type'],
+        )!,
+      ),
+      quantity: attachedDatabase.typeMapping.read(
+        DriftSqlType.double,
+        data['${effectivePrefix}quantity'],
+      )!,
+      unitCostInCents: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}unit_cost_in_cents'],
+      ),
+      referenceType: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}reference_type'],
+      ),
+      referenceId: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}reference_id'],
+      ),
+    );
+  }
+
+  @override
+  $FarmStockMovementsTable createAlias(String alias) {
+    return $FarmStockMovementsTable(attachedDatabase, alias);
+  }
+
+  static JsonTypeConverter2<StockMovementType, int, int> $convertertype =
+      const EnumIndexConverter<StockMovementType>(StockMovementType.values);
+}
+
+class FarmStockMovement extends DataClass
+    implements Insertable<FarmStockMovement> {
+  final String uuid;
+  final DateTime createdAt;
+  final DateTime updatedAt;
+  final bool isDeleted;
+  final int id;
+  final int stockId;
+  final StockMovementType type;
+  final double quantity;
+  final int? unitCostInCents;
+  final String? referenceType;
+  final String? referenceId;
+  const FarmStockMovement({
+    required this.uuid,
+    required this.createdAt,
+    required this.updatedAt,
+    required this.isDeleted,
+    required this.id,
+    required this.stockId,
+    required this.type,
+    required this.quantity,
+    this.unitCostInCents,
+    this.referenceType,
+    this.referenceId,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['uuid'] = Variable<String>(uuid);
+    map['created_at'] = Variable<DateTime>(createdAt);
+    map['updated_at'] = Variable<DateTime>(updatedAt);
+    map['is_deleted'] = Variable<bool>(isDeleted);
+    map['id'] = Variable<int>(id);
+    map['stock_id'] = Variable<int>(stockId);
+    {
+      map['type'] = Variable<int>(
+        $FarmStockMovementsTable.$convertertype.toSql(type),
+      );
+    }
+    map['quantity'] = Variable<double>(quantity);
+    if (!nullToAbsent || unitCostInCents != null) {
+      map['unit_cost_in_cents'] = Variable<int>(unitCostInCents);
+    }
+    if (!nullToAbsent || referenceType != null) {
+      map['reference_type'] = Variable<String>(referenceType);
+    }
+    if (!nullToAbsent || referenceId != null) {
+      map['reference_id'] = Variable<String>(referenceId);
+    }
+    return map;
+  }
+
+  FarmStockMovementsCompanion toCompanion(bool nullToAbsent) {
+    return FarmStockMovementsCompanion(
+      uuid: Value(uuid),
+      createdAt: Value(createdAt),
+      updatedAt: Value(updatedAt),
+      isDeleted: Value(isDeleted),
+      id: Value(id),
+      stockId: Value(stockId),
+      type: Value(type),
+      quantity: Value(quantity),
+      unitCostInCents: unitCostInCents == null && nullToAbsent
+          ? const Value.absent()
+          : Value(unitCostInCents),
+      referenceType: referenceType == null && nullToAbsent
+          ? const Value.absent()
+          : Value(referenceType),
+      referenceId: referenceId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(referenceId),
+    );
+  }
+
+  factory FarmStockMovement.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return FarmStockMovement(
+      uuid: serializer.fromJson<String>(json['uuid']),
+      createdAt: serializer.fromJson<DateTime>(json['createdAt']),
+      updatedAt: serializer.fromJson<DateTime>(json['updatedAt']),
+      isDeleted: serializer.fromJson<bool>(json['isDeleted']),
+      id: serializer.fromJson<int>(json['id']),
+      stockId: serializer.fromJson<int>(json['stockId']),
+      type: $FarmStockMovementsTable.$convertertype.fromJson(
+        serializer.fromJson<int>(json['type']),
+      ),
+      quantity: serializer.fromJson<double>(json['quantity']),
+      unitCostInCents: serializer.fromJson<int?>(json['unitCostInCents']),
+      referenceType: serializer.fromJson<String?>(json['referenceType']),
+      referenceId: serializer.fromJson<String?>(json['referenceId']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'uuid': serializer.toJson<String>(uuid),
+      'createdAt': serializer.toJson<DateTime>(createdAt),
+      'updatedAt': serializer.toJson<DateTime>(updatedAt),
+      'isDeleted': serializer.toJson<bool>(isDeleted),
+      'id': serializer.toJson<int>(id),
+      'stockId': serializer.toJson<int>(stockId),
+      'type': serializer.toJson<int>(
+        $FarmStockMovementsTable.$convertertype.toJson(type),
+      ),
+      'quantity': serializer.toJson<double>(quantity),
+      'unitCostInCents': serializer.toJson<int?>(unitCostInCents),
+      'referenceType': serializer.toJson<String?>(referenceType),
+      'referenceId': serializer.toJson<String?>(referenceId),
+    };
+  }
+
+  FarmStockMovement copyWith({
+    String? uuid,
+    DateTime? createdAt,
+    DateTime? updatedAt,
+    bool? isDeleted,
+    int? id,
+    int? stockId,
+    StockMovementType? type,
+    double? quantity,
+    Value<int?> unitCostInCents = const Value.absent(),
+    Value<String?> referenceType = const Value.absent(),
+    Value<String?> referenceId = const Value.absent(),
+  }) => FarmStockMovement(
+    uuid: uuid ?? this.uuid,
+    createdAt: createdAt ?? this.createdAt,
+    updatedAt: updatedAt ?? this.updatedAt,
+    isDeleted: isDeleted ?? this.isDeleted,
+    id: id ?? this.id,
+    stockId: stockId ?? this.stockId,
+    type: type ?? this.type,
+    quantity: quantity ?? this.quantity,
+    unitCostInCents: unitCostInCents.present
+        ? unitCostInCents.value
+        : this.unitCostInCents,
+    referenceType: referenceType.present
+        ? referenceType.value
+        : this.referenceType,
+    referenceId: referenceId.present ? referenceId.value : this.referenceId,
+  );
+  FarmStockMovement copyWithCompanion(FarmStockMovementsCompanion data) {
+    return FarmStockMovement(
+      uuid: data.uuid.present ? data.uuid.value : this.uuid,
+      createdAt: data.createdAt.present ? data.createdAt.value : this.createdAt,
+      updatedAt: data.updatedAt.present ? data.updatedAt.value : this.updatedAt,
+      isDeleted: data.isDeleted.present ? data.isDeleted.value : this.isDeleted,
+      id: data.id.present ? data.id.value : this.id,
+      stockId: data.stockId.present ? data.stockId.value : this.stockId,
+      type: data.type.present ? data.type.value : this.type,
+      quantity: data.quantity.present ? data.quantity.value : this.quantity,
+      unitCostInCents: data.unitCostInCents.present
+          ? data.unitCostInCents.value
+          : this.unitCostInCents,
+      referenceType: data.referenceType.present
+          ? data.referenceType.value
+          : this.referenceType,
+      referenceId: data.referenceId.present
+          ? data.referenceId.value
+          : this.referenceId,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('FarmStockMovement(')
+          ..write('uuid: $uuid, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('updatedAt: $updatedAt, ')
+          ..write('isDeleted: $isDeleted, ')
+          ..write('id: $id, ')
+          ..write('stockId: $stockId, ')
+          ..write('type: $type, ')
+          ..write('quantity: $quantity, ')
+          ..write('unitCostInCents: $unitCostInCents, ')
+          ..write('referenceType: $referenceType, ')
+          ..write('referenceId: $referenceId')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(
+    uuid,
+    createdAt,
+    updatedAt,
+    isDeleted,
+    id,
+    stockId,
+    type,
+    quantity,
+    unitCostInCents,
+    referenceType,
+    referenceId,
+  );
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is FarmStockMovement &&
+          other.uuid == this.uuid &&
+          other.createdAt == this.createdAt &&
+          other.updatedAt == this.updatedAt &&
+          other.isDeleted == this.isDeleted &&
+          other.id == this.id &&
+          other.stockId == this.stockId &&
+          other.type == this.type &&
+          other.quantity == this.quantity &&
+          other.unitCostInCents == this.unitCostInCents &&
+          other.referenceType == this.referenceType &&
+          other.referenceId == this.referenceId);
+}
+
+class FarmStockMovementsCompanion extends UpdateCompanion<FarmStockMovement> {
+  final Value<String> uuid;
+  final Value<DateTime> createdAt;
+  final Value<DateTime> updatedAt;
+  final Value<bool> isDeleted;
+  final Value<int> id;
+  final Value<int> stockId;
+  final Value<StockMovementType> type;
+  final Value<double> quantity;
+  final Value<int?> unitCostInCents;
+  final Value<String?> referenceType;
+  final Value<String?> referenceId;
+  const FarmStockMovementsCompanion({
+    this.uuid = const Value.absent(),
+    this.createdAt = const Value.absent(),
+    this.updatedAt = const Value.absent(),
+    this.isDeleted = const Value.absent(),
+    this.id = const Value.absent(),
+    this.stockId = const Value.absent(),
+    this.type = const Value.absent(),
+    this.quantity = const Value.absent(),
+    this.unitCostInCents = const Value.absent(),
+    this.referenceType = const Value.absent(),
+    this.referenceId = const Value.absent(),
+  });
+  FarmStockMovementsCompanion.insert({
+    this.uuid = const Value.absent(),
+    this.createdAt = const Value.absent(),
+    this.updatedAt = const Value.absent(),
+    this.isDeleted = const Value.absent(),
+    this.id = const Value.absent(),
+    required int stockId,
+    required StockMovementType type,
+    required double quantity,
+    this.unitCostInCents = const Value.absent(),
+    this.referenceType = const Value.absent(),
+    this.referenceId = const Value.absent(),
+  }) : stockId = Value(stockId),
+       type = Value(type),
+       quantity = Value(quantity);
+  static Insertable<FarmStockMovement> custom({
+    Expression<String>? uuid,
+    Expression<DateTime>? createdAt,
+    Expression<DateTime>? updatedAt,
+    Expression<bool>? isDeleted,
+    Expression<int>? id,
+    Expression<int>? stockId,
+    Expression<int>? type,
+    Expression<double>? quantity,
+    Expression<int>? unitCostInCents,
+    Expression<String>? referenceType,
+    Expression<String>? referenceId,
+  }) {
+    return RawValuesInsertable({
+      if (uuid != null) 'uuid': uuid,
+      if (createdAt != null) 'created_at': createdAt,
+      if (updatedAt != null) 'updated_at': updatedAt,
+      if (isDeleted != null) 'is_deleted': isDeleted,
+      if (id != null) 'id': id,
+      if (stockId != null) 'stock_id': stockId,
+      if (type != null) 'type': type,
+      if (quantity != null) 'quantity': quantity,
+      if (unitCostInCents != null) 'unit_cost_in_cents': unitCostInCents,
+      if (referenceType != null) 'reference_type': referenceType,
+      if (referenceId != null) 'reference_id': referenceId,
+    });
+  }
+
+  FarmStockMovementsCompanion copyWith({
+    Value<String>? uuid,
+    Value<DateTime>? createdAt,
+    Value<DateTime>? updatedAt,
+    Value<bool>? isDeleted,
+    Value<int>? id,
+    Value<int>? stockId,
+    Value<StockMovementType>? type,
+    Value<double>? quantity,
+    Value<int?>? unitCostInCents,
+    Value<String?>? referenceType,
+    Value<String?>? referenceId,
+  }) {
+    return FarmStockMovementsCompanion(
+      uuid: uuid ?? this.uuid,
+      createdAt: createdAt ?? this.createdAt,
+      updatedAt: updatedAt ?? this.updatedAt,
+      isDeleted: isDeleted ?? this.isDeleted,
+      id: id ?? this.id,
+      stockId: stockId ?? this.stockId,
+      type: type ?? this.type,
+      quantity: quantity ?? this.quantity,
+      unitCostInCents: unitCostInCents ?? this.unitCostInCents,
+      referenceType: referenceType ?? this.referenceType,
+      referenceId: referenceId ?? this.referenceId,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (uuid.present) {
+      map['uuid'] = Variable<String>(uuid.value);
+    }
+    if (createdAt.present) {
+      map['created_at'] = Variable<DateTime>(createdAt.value);
+    }
+    if (updatedAt.present) {
+      map['updated_at'] = Variable<DateTime>(updatedAt.value);
+    }
+    if (isDeleted.present) {
+      map['is_deleted'] = Variable<bool>(isDeleted.value);
+    }
+    if (id.present) {
+      map['id'] = Variable<int>(id.value);
+    }
+    if (stockId.present) {
+      map['stock_id'] = Variable<int>(stockId.value);
+    }
+    if (type.present) {
+      map['type'] = Variable<int>(
+        $FarmStockMovementsTable.$convertertype.toSql(type.value),
+      );
+    }
+    if (quantity.present) {
+      map['quantity'] = Variable<double>(quantity.value);
+    }
+    if (unitCostInCents.present) {
+      map['unit_cost_in_cents'] = Variable<int>(unitCostInCents.value);
+    }
+    if (referenceType.present) {
+      map['reference_type'] = Variable<String>(referenceType.value);
+    }
+    if (referenceId.present) {
+      map['reference_id'] = Variable<String>(referenceId.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('FarmStockMovementsCompanion(')
+          ..write('uuid: $uuid, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('updatedAt: $updatedAt, ')
+          ..write('isDeleted: $isDeleted, ')
+          ..write('id: $id, ')
+          ..write('stockId: $stockId, ')
+          ..write('type: $type, ')
+          ..write('quantity: $quantity, ')
+          ..write('unitCostInCents: $unitCostInCents, ')
+          ..write('referenceType: $referenceType, ')
+          ..write('referenceId: $referenceId')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $FarmSuppliersTable extends FarmSuppliers
+    with TableInfo<$FarmSuppliersTable, FarmSupplier> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $FarmSuppliersTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _uuidMeta = const VerificationMeta('uuid');
+  @override
+  late final GeneratedColumn<String> uuid = GeneratedColumn<String>(
+    'uuid',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+    clientDefault: () => uuidGenerator.v4(),
+  );
   static const VerificationMeta _createdAtMeta = const VerificationMeta(
     'createdAt',
   );
@@ -2180,470 +3077,6 @@ class $FarmStockMovementsTable extends FarmStockMovements
     ),
     defaultValue: const Constant(false),
   );
-  @override
-  List<GeneratedColumn> get $columns => [
-    id,
-    productId,
-    type,
-    quantity,
-    unitCostInCents,
-    referenceType,
-    createdAt,
-    updatedAt,
-    isDeleted,
-  ];
-  @override
-  String get aliasedName => _alias ?? actualTableName;
-  @override
-  String get actualTableName => $name;
-  static const String $name = 'farm_stock_movements';
-  @override
-  VerificationContext validateIntegrity(
-    Insertable<FarmStockMovement> instance, {
-    bool isInserting = false,
-  }) {
-    final context = VerificationContext();
-    final data = instance.toColumns(true);
-    if (data.containsKey('id')) {
-      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
-    }
-    if (data.containsKey('product_id')) {
-      context.handle(
-        _productIdMeta,
-        productId.isAcceptableOrUnknown(data['product_id']!, _productIdMeta),
-      );
-    } else if (isInserting) {
-      context.missing(_productIdMeta);
-    }
-    if (data.containsKey('quantity')) {
-      context.handle(
-        _quantityMeta,
-        quantity.isAcceptableOrUnknown(data['quantity']!, _quantityMeta),
-      );
-    } else if (isInserting) {
-      context.missing(_quantityMeta);
-    }
-    if (data.containsKey('unit_cost_in_cents')) {
-      context.handle(
-        _unitCostInCentsMeta,
-        unitCostInCents.isAcceptableOrUnknown(
-          data['unit_cost_in_cents']!,
-          _unitCostInCentsMeta,
-        ),
-      );
-    }
-    if (data.containsKey('reference_type')) {
-      context.handle(
-        _referenceTypeMeta,
-        referenceType.isAcceptableOrUnknown(
-          data['reference_type']!,
-          _referenceTypeMeta,
-        ),
-      );
-    }
-    if (data.containsKey('created_at')) {
-      context.handle(
-        _createdAtMeta,
-        createdAt.isAcceptableOrUnknown(data['created_at']!, _createdAtMeta),
-      );
-    }
-    if (data.containsKey('updated_at')) {
-      context.handle(
-        _updatedAtMeta,
-        updatedAt.isAcceptableOrUnknown(data['updated_at']!, _updatedAtMeta),
-      );
-    }
-    if (data.containsKey('is_deleted')) {
-      context.handle(
-        _isDeletedMeta,
-        isDeleted.isAcceptableOrUnknown(data['is_deleted']!, _isDeletedMeta),
-      );
-    }
-    return context;
-  }
-
-  @override
-  Set<GeneratedColumn> get $primaryKey => {id};
-  @override
-  FarmStockMovement map(Map<String, dynamic> data, {String? tablePrefix}) {
-    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
-    return FarmStockMovement(
-      id: attachedDatabase.typeMapping.read(
-        DriftSqlType.int,
-        data['${effectivePrefix}id'],
-      )!,
-      productId: attachedDatabase.typeMapping.read(
-        DriftSqlType.int,
-        data['${effectivePrefix}product_id'],
-      )!,
-      type: $FarmStockMovementsTable.$convertertype.fromSql(
-        attachedDatabase.typeMapping.read(
-          DriftSqlType.int,
-          data['${effectivePrefix}type'],
-        )!,
-      ),
-      quantity: attachedDatabase.typeMapping.read(
-        DriftSqlType.double,
-        data['${effectivePrefix}quantity'],
-      )!,
-      unitCostInCents: attachedDatabase.typeMapping.read(
-        DriftSqlType.int,
-        data['${effectivePrefix}unit_cost_in_cents'],
-      ),
-      referenceType: attachedDatabase.typeMapping.read(
-        DriftSqlType.string,
-        data['${effectivePrefix}reference_type'],
-      ),
-      createdAt: attachedDatabase.typeMapping.read(
-        DriftSqlType.dateTime,
-        data['${effectivePrefix}created_at'],
-      )!,
-      updatedAt: attachedDatabase.typeMapping.read(
-        DriftSqlType.dateTime,
-        data['${effectivePrefix}updated_at'],
-      )!,
-      isDeleted: attachedDatabase.typeMapping.read(
-        DriftSqlType.bool,
-        data['${effectivePrefix}is_deleted'],
-      )!,
-    );
-  }
-
-  @override
-  $FarmStockMovementsTable createAlias(String alias) {
-    return $FarmStockMovementsTable(attachedDatabase, alias);
-  }
-
-  static JsonTypeConverter2<StockMovementType, int, int> $convertertype =
-      const EnumIndexConverter<StockMovementType>(StockMovementType.values);
-}
-
-class FarmStockMovement extends DataClass
-    implements Insertable<FarmStockMovement> {
-  final int id;
-  final int productId;
-  final StockMovementType type;
-  final double quantity;
-  final int? unitCostInCents;
-  final String? referenceType;
-  final DateTime createdAt;
-  final DateTime updatedAt;
-  final bool isDeleted;
-  const FarmStockMovement({
-    required this.id,
-    required this.productId,
-    required this.type,
-    required this.quantity,
-    this.unitCostInCents,
-    this.referenceType,
-    required this.createdAt,
-    required this.updatedAt,
-    required this.isDeleted,
-  });
-  @override
-  Map<String, Expression> toColumns(bool nullToAbsent) {
-    final map = <String, Expression>{};
-    map['id'] = Variable<int>(id);
-    map['product_id'] = Variable<int>(productId);
-    {
-      map['type'] = Variable<int>(
-        $FarmStockMovementsTable.$convertertype.toSql(type),
-      );
-    }
-    map['quantity'] = Variable<double>(quantity);
-    if (!nullToAbsent || unitCostInCents != null) {
-      map['unit_cost_in_cents'] = Variable<int>(unitCostInCents);
-    }
-    if (!nullToAbsent || referenceType != null) {
-      map['reference_type'] = Variable<String>(referenceType);
-    }
-    map['created_at'] = Variable<DateTime>(createdAt);
-    map['updated_at'] = Variable<DateTime>(updatedAt);
-    map['is_deleted'] = Variable<bool>(isDeleted);
-    return map;
-  }
-
-  FarmStockMovementsCompanion toCompanion(bool nullToAbsent) {
-    return FarmStockMovementsCompanion(
-      id: Value(id),
-      productId: Value(productId),
-      type: Value(type),
-      quantity: Value(quantity),
-      unitCostInCents: unitCostInCents == null && nullToAbsent
-          ? const Value.absent()
-          : Value(unitCostInCents),
-      referenceType: referenceType == null && nullToAbsent
-          ? const Value.absent()
-          : Value(referenceType),
-      createdAt: Value(createdAt),
-      updatedAt: Value(updatedAt),
-      isDeleted: Value(isDeleted),
-    );
-  }
-
-  factory FarmStockMovement.fromJson(
-    Map<String, dynamic> json, {
-    ValueSerializer? serializer,
-  }) {
-    serializer ??= driftRuntimeOptions.defaultSerializer;
-    return FarmStockMovement(
-      id: serializer.fromJson<int>(json['id']),
-      productId: serializer.fromJson<int>(json['productId']),
-      type: $FarmStockMovementsTable.$convertertype.fromJson(
-        serializer.fromJson<int>(json['type']),
-      ),
-      quantity: serializer.fromJson<double>(json['quantity']),
-      unitCostInCents: serializer.fromJson<int?>(json['unitCostInCents']),
-      referenceType: serializer.fromJson<String?>(json['referenceType']),
-      createdAt: serializer.fromJson<DateTime>(json['createdAt']),
-      updatedAt: serializer.fromJson<DateTime>(json['updatedAt']),
-      isDeleted: serializer.fromJson<bool>(json['isDeleted']),
-    );
-  }
-  @override
-  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
-    serializer ??= driftRuntimeOptions.defaultSerializer;
-    return <String, dynamic>{
-      'id': serializer.toJson<int>(id),
-      'productId': serializer.toJson<int>(productId),
-      'type': serializer.toJson<int>(
-        $FarmStockMovementsTable.$convertertype.toJson(type),
-      ),
-      'quantity': serializer.toJson<double>(quantity),
-      'unitCostInCents': serializer.toJson<int?>(unitCostInCents),
-      'referenceType': serializer.toJson<String?>(referenceType),
-      'createdAt': serializer.toJson<DateTime>(createdAt),
-      'updatedAt': serializer.toJson<DateTime>(updatedAt),
-      'isDeleted': serializer.toJson<bool>(isDeleted),
-    };
-  }
-
-  FarmStockMovement copyWith({
-    int? id,
-    int? productId,
-    StockMovementType? type,
-    double? quantity,
-    Value<int?> unitCostInCents = const Value.absent(),
-    Value<String?> referenceType = const Value.absent(),
-    DateTime? createdAt,
-    DateTime? updatedAt,
-    bool? isDeleted,
-  }) => FarmStockMovement(
-    id: id ?? this.id,
-    productId: productId ?? this.productId,
-    type: type ?? this.type,
-    quantity: quantity ?? this.quantity,
-    unitCostInCents: unitCostInCents.present
-        ? unitCostInCents.value
-        : this.unitCostInCents,
-    referenceType: referenceType.present
-        ? referenceType.value
-        : this.referenceType,
-    createdAt: createdAt ?? this.createdAt,
-    updatedAt: updatedAt ?? this.updatedAt,
-    isDeleted: isDeleted ?? this.isDeleted,
-  );
-  FarmStockMovement copyWithCompanion(FarmStockMovementsCompanion data) {
-    return FarmStockMovement(
-      id: data.id.present ? data.id.value : this.id,
-      productId: data.productId.present ? data.productId.value : this.productId,
-      type: data.type.present ? data.type.value : this.type,
-      quantity: data.quantity.present ? data.quantity.value : this.quantity,
-      unitCostInCents: data.unitCostInCents.present
-          ? data.unitCostInCents.value
-          : this.unitCostInCents,
-      referenceType: data.referenceType.present
-          ? data.referenceType.value
-          : this.referenceType,
-      createdAt: data.createdAt.present ? data.createdAt.value : this.createdAt,
-      updatedAt: data.updatedAt.present ? data.updatedAt.value : this.updatedAt,
-      isDeleted: data.isDeleted.present ? data.isDeleted.value : this.isDeleted,
-    );
-  }
-
-  @override
-  String toString() {
-    return (StringBuffer('FarmStockMovement(')
-          ..write('id: $id, ')
-          ..write('productId: $productId, ')
-          ..write('type: $type, ')
-          ..write('quantity: $quantity, ')
-          ..write('unitCostInCents: $unitCostInCents, ')
-          ..write('referenceType: $referenceType, ')
-          ..write('createdAt: $createdAt, ')
-          ..write('updatedAt: $updatedAt, ')
-          ..write('isDeleted: $isDeleted')
-          ..write(')'))
-        .toString();
-  }
-
-  @override
-  int get hashCode => Object.hash(
-    id,
-    productId,
-    type,
-    quantity,
-    unitCostInCents,
-    referenceType,
-    createdAt,
-    updatedAt,
-    isDeleted,
-  );
-  @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      (other is FarmStockMovement &&
-          other.id == this.id &&
-          other.productId == this.productId &&
-          other.type == this.type &&
-          other.quantity == this.quantity &&
-          other.unitCostInCents == this.unitCostInCents &&
-          other.referenceType == this.referenceType &&
-          other.createdAt == this.createdAt &&
-          other.updatedAt == this.updatedAt &&
-          other.isDeleted == this.isDeleted);
-}
-
-class FarmStockMovementsCompanion extends UpdateCompanion<FarmStockMovement> {
-  final Value<int> id;
-  final Value<int> productId;
-  final Value<StockMovementType> type;
-  final Value<double> quantity;
-  final Value<int?> unitCostInCents;
-  final Value<String?> referenceType;
-  final Value<DateTime> createdAt;
-  final Value<DateTime> updatedAt;
-  final Value<bool> isDeleted;
-  const FarmStockMovementsCompanion({
-    this.id = const Value.absent(),
-    this.productId = const Value.absent(),
-    this.type = const Value.absent(),
-    this.quantity = const Value.absent(),
-    this.unitCostInCents = const Value.absent(),
-    this.referenceType = const Value.absent(),
-    this.createdAt = const Value.absent(),
-    this.updatedAt = const Value.absent(),
-    this.isDeleted = const Value.absent(),
-  });
-  FarmStockMovementsCompanion.insert({
-    this.id = const Value.absent(),
-    required int productId,
-    required StockMovementType type,
-    required double quantity,
-    this.unitCostInCents = const Value.absent(),
-    this.referenceType = const Value.absent(),
-    this.createdAt = const Value.absent(),
-    this.updatedAt = const Value.absent(),
-    this.isDeleted = const Value.absent(),
-  }) : productId = Value(productId),
-       type = Value(type),
-       quantity = Value(quantity);
-  static Insertable<FarmStockMovement> custom({
-    Expression<int>? id,
-    Expression<int>? productId,
-    Expression<int>? type,
-    Expression<double>? quantity,
-    Expression<int>? unitCostInCents,
-    Expression<String>? referenceType,
-    Expression<DateTime>? createdAt,
-    Expression<DateTime>? updatedAt,
-    Expression<bool>? isDeleted,
-  }) {
-    return RawValuesInsertable({
-      if (id != null) 'id': id,
-      if (productId != null) 'product_id': productId,
-      if (type != null) 'type': type,
-      if (quantity != null) 'quantity': quantity,
-      if (unitCostInCents != null) 'unit_cost_in_cents': unitCostInCents,
-      if (referenceType != null) 'reference_type': referenceType,
-      if (createdAt != null) 'created_at': createdAt,
-      if (updatedAt != null) 'updated_at': updatedAt,
-      if (isDeleted != null) 'is_deleted': isDeleted,
-    });
-  }
-
-  FarmStockMovementsCompanion copyWith({
-    Value<int>? id,
-    Value<int>? productId,
-    Value<StockMovementType>? type,
-    Value<double>? quantity,
-    Value<int?>? unitCostInCents,
-    Value<String?>? referenceType,
-    Value<DateTime>? createdAt,
-    Value<DateTime>? updatedAt,
-    Value<bool>? isDeleted,
-  }) {
-    return FarmStockMovementsCompanion(
-      id: id ?? this.id,
-      productId: productId ?? this.productId,
-      type: type ?? this.type,
-      quantity: quantity ?? this.quantity,
-      unitCostInCents: unitCostInCents ?? this.unitCostInCents,
-      referenceType: referenceType ?? this.referenceType,
-      createdAt: createdAt ?? this.createdAt,
-      updatedAt: updatedAt ?? this.updatedAt,
-      isDeleted: isDeleted ?? this.isDeleted,
-    );
-  }
-
-  @override
-  Map<String, Expression> toColumns(bool nullToAbsent) {
-    final map = <String, Expression>{};
-    if (id.present) {
-      map['id'] = Variable<int>(id.value);
-    }
-    if (productId.present) {
-      map['product_id'] = Variable<int>(productId.value);
-    }
-    if (type.present) {
-      map['type'] = Variable<int>(
-        $FarmStockMovementsTable.$convertertype.toSql(type.value),
-      );
-    }
-    if (quantity.present) {
-      map['quantity'] = Variable<double>(quantity.value);
-    }
-    if (unitCostInCents.present) {
-      map['unit_cost_in_cents'] = Variable<int>(unitCostInCents.value);
-    }
-    if (referenceType.present) {
-      map['reference_type'] = Variable<String>(referenceType.value);
-    }
-    if (createdAt.present) {
-      map['created_at'] = Variable<DateTime>(createdAt.value);
-    }
-    if (updatedAt.present) {
-      map['updated_at'] = Variable<DateTime>(updatedAt.value);
-    }
-    if (isDeleted.present) {
-      map['is_deleted'] = Variable<bool>(isDeleted.value);
-    }
-    return map;
-  }
-
-  @override
-  String toString() {
-    return (StringBuffer('FarmStockMovementsCompanion(')
-          ..write('id: $id, ')
-          ..write('productId: $productId, ')
-          ..write('type: $type, ')
-          ..write('quantity: $quantity, ')
-          ..write('unitCostInCents: $unitCostInCents, ')
-          ..write('referenceType: $referenceType, ')
-          ..write('createdAt: $createdAt, ')
-          ..write('updatedAt: $updatedAt, ')
-          ..write('isDeleted: $isDeleted')
-          ..write(')'))
-        .toString();
-  }
-}
-
-class $FarmSupplyersTable extends FarmSupplyers
-    with TableInfo<$FarmSupplyersTable, FarmSupplyer> {
-  @override
-  final GeneratedDatabase attachedDatabase;
-  final String? _alias;
-  $FarmSupplyersTable(this.attachedDatabase, [this._alias]);
   static const VerificationMeta _idMeta = const VerificationMeta('id');
   @override
   late final GeneratedColumn<int> id = GeneratedColumn<int>(
@@ -2681,6 +3114,378 @@ class $FarmSupplyersTable extends FarmSupplyers
     type: DriftSqlType.string,
     requiredDuringInsert: false,
   );
+  @override
+  List<GeneratedColumn> get $columns => [
+    uuid,
+    createdAt,
+    updatedAt,
+    isDeleted,
+    id,
+    name,
+    contactInfo,
+  ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'farm_suppliers';
+  @override
+  VerificationContext validateIntegrity(
+    Insertable<FarmSupplier> instance, {
+    bool isInserting = false,
+  }) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('uuid')) {
+      context.handle(
+        _uuidMeta,
+        uuid.isAcceptableOrUnknown(data['uuid']!, _uuidMeta),
+      );
+    }
+    if (data.containsKey('created_at')) {
+      context.handle(
+        _createdAtMeta,
+        createdAt.isAcceptableOrUnknown(data['created_at']!, _createdAtMeta),
+      );
+    }
+    if (data.containsKey('updated_at')) {
+      context.handle(
+        _updatedAtMeta,
+        updatedAt.isAcceptableOrUnknown(data['updated_at']!, _updatedAtMeta),
+      );
+    }
+    if (data.containsKey('is_deleted')) {
+      context.handle(
+        _isDeletedMeta,
+        isDeleted.isAcceptableOrUnknown(data['is_deleted']!, _isDeletedMeta),
+      );
+    }
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    }
+    if (data.containsKey('name')) {
+      context.handle(
+        _nameMeta,
+        name.isAcceptableOrUnknown(data['name']!, _nameMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_nameMeta);
+    }
+    if (data.containsKey('contact_info')) {
+      context.handle(
+        _contactInfoMeta,
+        contactInfo.isAcceptableOrUnknown(
+          data['contact_info']!,
+          _contactInfoMeta,
+        ),
+      );
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  FarmSupplier map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return FarmSupplier(
+      uuid: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}uuid'],
+      )!,
+      createdAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}created_at'],
+      )!,
+      updatedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}updated_at'],
+      )!,
+      isDeleted: attachedDatabase.typeMapping.read(
+        DriftSqlType.bool,
+        data['${effectivePrefix}is_deleted'],
+      )!,
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}id'],
+      )!,
+      name: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}name'],
+      )!,
+      contactInfo: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}contact_info'],
+      ),
+    );
+  }
+
+  @override
+  $FarmSuppliersTable createAlias(String alias) {
+    return $FarmSuppliersTable(attachedDatabase, alias);
+  }
+}
+
+class FarmSupplier extends DataClass implements Insertable<FarmSupplier> {
+  final String uuid;
+  final DateTime createdAt;
+  final DateTime updatedAt;
+  final bool isDeleted;
+  final int id;
+  final String name;
+  final String? contactInfo;
+  const FarmSupplier({
+    required this.uuid,
+    required this.createdAt,
+    required this.updatedAt,
+    required this.isDeleted,
+    required this.id,
+    required this.name,
+    this.contactInfo,
+  });
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['uuid'] = Variable<String>(uuid);
+    map['created_at'] = Variable<DateTime>(createdAt);
+    map['updated_at'] = Variable<DateTime>(updatedAt);
+    map['is_deleted'] = Variable<bool>(isDeleted);
+    map['id'] = Variable<int>(id);
+    map['name'] = Variable<String>(name);
+    if (!nullToAbsent || contactInfo != null) {
+      map['contact_info'] = Variable<String>(contactInfo);
+    }
+    return map;
+  }
+
+  FarmSuppliersCompanion toCompanion(bool nullToAbsent) {
+    return FarmSuppliersCompanion(
+      uuid: Value(uuid),
+      createdAt: Value(createdAt),
+      updatedAt: Value(updatedAt),
+      isDeleted: Value(isDeleted),
+      id: Value(id),
+      name: Value(name),
+      contactInfo: contactInfo == null && nullToAbsent
+          ? const Value.absent()
+          : Value(contactInfo),
+    );
+  }
+
+  factory FarmSupplier.fromJson(
+    Map<String, dynamic> json, {
+    ValueSerializer? serializer,
+  }) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return FarmSupplier(
+      uuid: serializer.fromJson<String>(json['uuid']),
+      createdAt: serializer.fromJson<DateTime>(json['createdAt']),
+      updatedAt: serializer.fromJson<DateTime>(json['updatedAt']),
+      isDeleted: serializer.fromJson<bool>(json['isDeleted']),
+      id: serializer.fromJson<int>(json['id']),
+      name: serializer.fromJson<String>(json['name']),
+      contactInfo: serializer.fromJson<String?>(json['contactInfo']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'uuid': serializer.toJson<String>(uuid),
+      'createdAt': serializer.toJson<DateTime>(createdAt),
+      'updatedAt': serializer.toJson<DateTime>(updatedAt),
+      'isDeleted': serializer.toJson<bool>(isDeleted),
+      'id': serializer.toJson<int>(id),
+      'name': serializer.toJson<String>(name),
+      'contactInfo': serializer.toJson<String?>(contactInfo),
+    };
+  }
+
+  FarmSupplier copyWith({
+    String? uuid,
+    DateTime? createdAt,
+    DateTime? updatedAt,
+    bool? isDeleted,
+    int? id,
+    String? name,
+    Value<String?> contactInfo = const Value.absent(),
+  }) => FarmSupplier(
+    uuid: uuid ?? this.uuid,
+    createdAt: createdAt ?? this.createdAt,
+    updatedAt: updatedAt ?? this.updatedAt,
+    isDeleted: isDeleted ?? this.isDeleted,
+    id: id ?? this.id,
+    name: name ?? this.name,
+    contactInfo: contactInfo.present ? contactInfo.value : this.contactInfo,
+  );
+  FarmSupplier copyWithCompanion(FarmSuppliersCompanion data) {
+    return FarmSupplier(
+      uuid: data.uuid.present ? data.uuid.value : this.uuid,
+      createdAt: data.createdAt.present ? data.createdAt.value : this.createdAt,
+      updatedAt: data.updatedAt.present ? data.updatedAt.value : this.updatedAt,
+      isDeleted: data.isDeleted.present ? data.isDeleted.value : this.isDeleted,
+      id: data.id.present ? data.id.value : this.id,
+      name: data.name.present ? data.name.value : this.name,
+      contactInfo: data.contactInfo.present
+          ? data.contactInfo.value
+          : this.contactInfo,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('FarmSupplier(')
+          ..write('uuid: $uuid, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('updatedAt: $updatedAt, ')
+          ..write('isDeleted: $isDeleted, ')
+          ..write('id: $id, ')
+          ..write('name: $name, ')
+          ..write('contactInfo: $contactInfo')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode =>
+      Object.hash(uuid, createdAt, updatedAt, isDeleted, id, name, contactInfo);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is FarmSupplier &&
+          other.uuid == this.uuid &&
+          other.createdAt == this.createdAt &&
+          other.updatedAt == this.updatedAt &&
+          other.isDeleted == this.isDeleted &&
+          other.id == this.id &&
+          other.name == this.name &&
+          other.contactInfo == this.contactInfo);
+}
+
+class FarmSuppliersCompanion extends UpdateCompanion<FarmSupplier> {
+  final Value<String> uuid;
+  final Value<DateTime> createdAt;
+  final Value<DateTime> updatedAt;
+  final Value<bool> isDeleted;
+  final Value<int> id;
+  final Value<String> name;
+  final Value<String?> contactInfo;
+  const FarmSuppliersCompanion({
+    this.uuid = const Value.absent(),
+    this.createdAt = const Value.absent(),
+    this.updatedAt = const Value.absent(),
+    this.isDeleted = const Value.absent(),
+    this.id = const Value.absent(),
+    this.name = const Value.absent(),
+    this.contactInfo = const Value.absent(),
+  });
+  FarmSuppliersCompanion.insert({
+    this.uuid = const Value.absent(),
+    this.createdAt = const Value.absent(),
+    this.updatedAt = const Value.absent(),
+    this.isDeleted = const Value.absent(),
+    this.id = const Value.absent(),
+    required String name,
+    this.contactInfo = const Value.absent(),
+  }) : name = Value(name);
+  static Insertable<FarmSupplier> custom({
+    Expression<String>? uuid,
+    Expression<DateTime>? createdAt,
+    Expression<DateTime>? updatedAt,
+    Expression<bool>? isDeleted,
+    Expression<int>? id,
+    Expression<String>? name,
+    Expression<String>? contactInfo,
+  }) {
+    return RawValuesInsertable({
+      if (uuid != null) 'uuid': uuid,
+      if (createdAt != null) 'created_at': createdAt,
+      if (updatedAt != null) 'updated_at': updatedAt,
+      if (isDeleted != null) 'is_deleted': isDeleted,
+      if (id != null) 'id': id,
+      if (name != null) 'name': name,
+      if (contactInfo != null) 'contact_info': contactInfo,
+    });
+  }
+
+  FarmSuppliersCompanion copyWith({
+    Value<String>? uuid,
+    Value<DateTime>? createdAt,
+    Value<DateTime>? updatedAt,
+    Value<bool>? isDeleted,
+    Value<int>? id,
+    Value<String>? name,
+    Value<String?>? contactInfo,
+  }) {
+    return FarmSuppliersCompanion(
+      uuid: uuid ?? this.uuid,
+      createdAt: createdAt ?? this.createdAt,
+      updatedAt: updatedAt ?? this.updatedAt,
+      isDeleted: isDeleted ?? this.isDeleted,
+      id: id ?? this.id,
+      name: name ?? this.name,
+      contactInfo: contactInfo ?? this.contactInfo,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (uuid.present) {
+      map['uuid'] = Variable<String>(uuid.value);
+    }
+    if (createdAt.present) {
+      map['created_at'] = Variable<DateTime>(createdAt.value);
+    }
+    if (updatedAt.present) {
+      map['updated_at'] = Variable<DateTime>(updatedAt.value);
+    }
+    if (isDeleted.present) {
+      map['is_deleted'] = Variable<bool>(isDeleted.value);
+    }
+    if (id.present) {
+      map['id'] = Variable<int>(id.value);
+    }
+    if (name.present) {
+      map['name'] = Variable<String>(name.value);
+    }
+    if (contactInfo.present) {
+      map['contact_info'] = Variable<String>(contactInfo.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('FarmSuppliersCompanion(')
+          ..write('uuid: $uuid, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('updatedAt: $updatedAt, ')
+          ..write('isDeleted: $isDeleted, ')
+          ..write('id: $id, ')
+          ..write('name: $name, ')
+          ..write('contactInfo: $contactInfo')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $FarmPurchasesTable extends FarmPurchases
+    with TableInfo<$FarmPurchasesTable, FarmPurchase> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $FarmPurchasesTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _uuidMeta = const VerificationMeta('uuid');
+  @override
+  late final GeneratedColumn<String> uuid = GeneratedColumn<String>(
+    'uuid',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+    clientDefault: () => uuidGenerator.v4(),
+  );
   static const VerificationMeta _createdAtMeta = const VerificationMeta(
     'createdAt',
   );
@@ -2720,335 +3525,6 @@ class $FarmSupplyersTable extends FarmSupplyers
     ),
     defaultValue: const Constant(false),
   );
-  @override
-  List<GeneratedColumn> get $columns => [
-    id,
-    name,
-    contactInfo,
-    createdAt,
-    updatedAt,
-    isDeleted,
-  ];
-  @override
-  String get aliasedName => _alias ?? actualTableName;
-  @override
-  String get actualTableName => $name;
-  static const String $name = 'farm_supplyers';
-  @override
-  VerificationContext validateIntegrity(
-    Insertable<FarmSupplyer> instance, {
-    bool isInserting = false,
-  }) {
-    final context = VerificationContext();
-    final data = instance.toColumns(true);
-    if (data.containsKey('id')) {
-      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
-    }
-    if (data.containsKey('name')) {
-      context.handle(
-        _nameMeta,
-        name.isAcceptableOrUnknown(data['name']!, _nameMeta),
-      );
-    } else if (isInserting) {
-      context.missing(_nameMeta);
-    }
-    if (data.containsKey('contact_info')) {
-      context.handle(
-        _contactInfoMeta,
-        contactInfo.isAcceptableOrUnknown(
-          data['contact_info']!,
-          _contactInfoMeta,
-        ),
-      );
-    }
-    if (data.containsKey('created_at')) {
-      context.handle(
-        _createdAtMeta,
-        createdAt.isAcceptableOrUnknown(data['created_at']!, _createdAtMeta),
-      );
-    }
-    if (data.containsKey('updated_at')) {
-      context.handle(
-        _updatedAtMeta,
-        updatedAt.isAcceptableOrUnknown(data['updated_at']!, _updatedAtMeta),
-      );
-    }
-    if (data.containsKey('is_deleted')) {
-      context.handle(
-        _isDeletedMeta,
-        isDeleted.isAcceptableOrUnknown(data['is_deleted']!, _isDeletedMeta),
-      );
-    }
-    return context;
-  }
-
-  @override
-  Set<GeneratedColumn> get $primaryKey => {id};
-  @override
-  FarmSupplyer map(Map<String, dynamic> data, {String? tablePrefix}) {
-    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
-    return FarmSupplyer(
-      id: attachedDatabase.typeMapping.read(
-        DriftSqlType.int,
-        data['${effectivePrefix}id'],
-      )!,
-      name: attachedDatabase.typeMapping.read(
-        DriftSqlType.string,
-        data['${effectivePrefix}name'],
-      )!,
-      contactInfo: attachedDatabase.typeMapping.read(
-        DriftSqlType.string,
-        data['${effectivePrefix}contact_info'],
-      ),
-      createdAt: attachedDatabase.typeMapping.read(
-        DriftSqlType.dateTime,
-        data['${effectivePrefix}created_at'],
-      )!,
-      updatedAt: attachedDatabase.typeMapping.read(
-        DriftSqlType.dateTime,
-        data['${effectivePrefix}updated_at'],
-      )!,
-      isDeleted: attachedDatabase.typeMapping.read(
-        DriftSqlType.bool,
-        data['${effectivePrefix}is_deleted'],
-      )!,
-    );
-  }
-
-  @override
-  $FarmSupplyersTable createAlias(String alias) {
-    return $FarmSupplyersTable(attachedDatabase, alias);
-  }
-}
-
-class FarmSupplyer extends DataClass implements Insertable<FarmSupplyer> {
-  final int id;
-  final String name;
-  final String? contactInfo;
-  final DateTime createdAt;
-  final DateTime updatedAt;
-  final bool isDeleted;
-  const FarmSupplyer({
-    required this.id,
-    required this.name,
-    this.contactInfo,
-    required this.createdAt,
-    required this.updatedAt,
-    required this.isDeleted,
-  });
-  @override
-  Map<String, Expression> toColumns(bool nullToAbsent) {
-    final map = <String, Expression>{};
-    map['id'] = Variable<int>(id);
-    map['name'] = Variable<String>(name);
-    if (!nullToAbsent || contactInfo != null) {
-      map['contact_info'] = Variable<String>(contactInfo);
-    }
-    map['created_at'] = Variable<DateTime>(createdAt);
-    map['updated_at'] = Variable<DateTime>(updatedAt);
-    map['is_deleted'] = Variable<bool>(isDeleted);
-    return map;
-  }
-
-  FarmSupplyersCompanion toCompanion(bool nullToAbsent) {
-    return FarmSupplyersCompanion(
-      id: Value(id),
-      name: Value(name),
-      contactInfo: contactInfo == null && nullToAbsent
-          ? const Value.absent()
-          : Value(contactInfo),
-      createdAt: Value(createdAt),
-      updatedAt: Value(updatedAt),
-      isDeleted: Value(isDeleted),
-    );
-  }
-
-  factory FarmSupplyer.fromJson(
-    Map<String, dynamic> json, {
-    ValueSerializer? serializer,
-  }) {
-    serializer ??= driftRuntimeOptions.defaultSerializer;
-    return FarmSupplyer(
-      id: serializer.fromJson<int>(json['id']),
-      name: serializer.fromJson<String>(json['name']),
-      contactInfo: serializer.fromJson<String?>(json['contactInfo']),
-      createdAt: serializer.fromJson<DateTime>(json['createdAt']),
-      updatedAt: serializer.fromJson<DateTime>(json['updatedAt']),
-      isDeleted: serializer.fromJson<bool>(json['isDeleted']),
-    );
-  }
-  @override
-  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
-    serializer ??= driftRuntimeOptions.defaultSerializer;
-    return <String, dynamic>{
-      'id': serializer.toJson<int>(id),
-      'name': serializer.toJson<String>(name),
-      'contactInfo': serializer.toJson<String?>(contactInfo),
-      'createdAt': serializer.toJson<DateTime>(createdAt),
-      'updatedAt': serializer.toJson<DateTime>(updatedAt),
-      'isDeleted': serializer.toJson<bool>(isDeleted),
-    };
-  }
-
-  FarmSupplyer copyWith({
-    int? id,
-    String? name,
-    Value<String?> contactInfo = const Value.absent(),
-    DateTime? createdAt,
-    DateTime? updatedAt,
-    bool? isDeleted,
-  }) => FarmSupplyer(
-    id: id ?? this.id,
-    name: name ?? this.name,
-    contactInfo: contactInfo.present ? contactInfo.value : this.contactInfo,
-    createdAt: createdAt ?? this.createdAt,
-    updatedAt: updatedAt ?? this.updatedAt,
-    isDeleted: isDeleted ?? this.isDeleted,
-  );
-  FarmSupplyer copyWithCompanion(FarmSupplyersCompanion data) {
-    return FarmSupplyer(
-      id: data.id.present ? data.id.value : this.id,
-      name: data.name.present ? data.name.value : this.name,
-      contactInfo: data.contactInfo.present
-          ? data.contactInfo.value
-          : this.contactInfo,
-      createdAt: data.createdAt.present ? data.createdAt.value : this.createdAt,
-      updatedAt: data.updatedAt.present ? data.updatedAt.value : this.updatedAt,
-      isDeleted: data.isDeleted.present ? data.isDeleted.value : this.isDeleted,
-    );
-  }
-
-  @override
-  String toString() {
-    return (StringBuffer('FarmSupplyer(')
-          ..write('id: $id, ')
-          ..write('name: $name, ')
-          ..write('contactInfo: $contactInfo, ')
-          ..write('createdAt: $createdAt, ')
-          ..write('updatedAt: $updatedAt, ')
-          ..write('isDeleted: $isDeleted')
-          ..write(')'))
-        .toString();
-  }
-
-  @override
-  int get hashCode =>
-      Object.hash(id, name, contactInfo, createdAt, updatedAt, isDeleted);
-  @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      (other is FarmSupplyer &&
-          other.id == this.id &&
-          other.name == this.name &&
-          other.contactInfo == this.contactInfo &&
-          other.createdAt == this.createdAt &&
-          other.updatedAt == this.updatedAt &&
-          other.isDeleted == this.isDeleted);
-}
-
-class FarmSupplyersCompanion extends UpdateCompanion<FarmSupplyer> {
-  final Value<int> id;
-  final Value<String> name;
-  final Value<String?> contactInfo;
-  final Value<DateTime> createdAt;
-  final Value<DateTime> updatedAt;
-  final Value<bool> isDeleted;
-  const FarmSupplyersCompanion({
-    this.id = const Value.absent(),
-    this.name = const Value.absent(),
-    this.contactInfo = const Value.absent(),
-    this.createdAt = const Value.absent(),
-    this.updatedAt = const Value.absent(),
-    this.isDeleted = const Value.absent(),
-  });
-  FarmSupplyersCompanion.insert({
-    this.id = const Value.absent(),
-    required String name,
-    this.contactInfo = const Value.absent(),
-    this.createdAt = const Value.absent(),
-    this.updatedAt = const Value.absent(),
-    this.isDeleted = const Value.absent(),
-  }) : name = Value(name);
-  static Insertable<FarmSupplyer> custom({
-    Expression<int>? id,
-    Expression<String>? name,
-    Expression<String>? contactInfo,
-    Expression<DateTime>? createdAt,
-    Expression<DateTime>? updatedAt,
-    Expression<bool>? isDeleted,
-  }) {
-    return RawValuesInsertable({
-      if (id != null) 'id': id,
-      if (name != null) 'name': name,
-      if (contactInfo != null) 'contact_info': contactInfo,
-      if (createdAt != null) 'created_at': createdAt,
-      if (updatedAt != null) 'updated_at': updatedAt,
-      if (isDeleted != null) 'is_deleted': isDeleted,
-    });
-  }
-
-  FarmSupplyersCompanion copyWith({
-    Value<int>? id,
-    Value<String>? name,
-    Value<String?>? contactInfo,
-    Value<DateTime>? createdAt,
-    Value<DateTime>? updatedAt,
-    Value<bool>? isDeleted,
-  }) {
-    return FarmSupplyersCompanion(
-      id: id ?? this.id,
-      name: name ?? this.name,
-      contactInfo: contactInfo ?? this.contactInfo,
-      createdAt: createdAt ?? this.createdAt,
-      updatedAt: updatedAt ?? this.updatedAt,
-      isDeleted: isDeleted ?? this.isDeleted,
-    );
-  }
-
-  @override
-  Map<String, Expression> toColumns(bool nullToAbsent) {
-    final map = <String, Expression>{};
-    if (id.present) {
-      map['id'] = Variable<int>(id.value);
-    }
-    if (name.present) {
-      map['name'] = Variable<String>(name.value);
-    }
-    if (contactInfo.present) {
-      map['contact_info'] = Variable<String>(contactInfo.value);
-    }
-    if (createdAt.present) {
-      map['created_at'] = Variable<DateTime>(createdAt.value);
-    }
-    if (updatedAt.present) {
-      map['updated_at'] = Variable<DateTime>(updatedAt.value);
-    }
-    if (isDeleted.present) {
-      map['is_deleted'] = Variable<bool>(isDeleted.value);
-    }
-    return map;
-  }
-
-  @override
-  String toString() {
-    return (StringBuffer('FarmSupplyersCompanion(')
-          ..write('id: $id, ')
-          ..write('name: $name, ')
-          ..write('contactInfo: $contactInfo, ')
-          ..write('createdAt: $createdAt, ')
-          ..write('updatedAt: $updatedAt, ')
-          ..write('isDeleted: $isDeleted')
-          ..write(')'))
-        .toString();
-  }
-}
-
-class $FarmPurchasesTable extends FarmPurchases
-    with TableInfo<$FarmPurchasesTable, FarmPurchase> {
-  @override
-  final GeneratedDatabase attachedDatabase;
-  final String? _alias;
-  $FarmPurchasesTable(this.attachedDatabase, [this._alias]);
   static const VerificationMeta _idMeta = const VerificationMeta('id');
   @override
   late final GeneratedColumn<int> id = GeneratedColumn<int>(
@@ -3073,7 +3549,7 @@ class $FarmPurchasesTable extends FarmPurchases
     type: DriftSqlType.int,
     requiredDuringInsert: true,
     defaultConstraints: GeneratedColumn.constraintIsAlways(
-      'REFERENCES farm_supplyers (id)',
+      'REFERENCES farm_suppliers (id)',
     ),
   );
   static const VerificationMeta _purchaseDateMeta = const VerificationMeta(
@@ -3144,47 +3620,12 @@ class $FarmPurchasesTable extends FarmPurchases
     type: DriftSqlType.string,
     requiredDuringInsert: false,
   );
-  static const VerificationMeta _createdAtMeta = const VerificationMeta(
-    'createdAt',
-  );
-  @override
-  late final GeneratedColumn<DateTime> createdAt = GeneratedColumn<DateTime>(
-    'created_at',
-    aliasedName,
-    false,
-    type: DriftSqlType.dateTime,
-    requiredDuringInsert: false,
-    defaultValue: currentDateAndTime,
-  );
-  static const VerificationMeta _updatedAtMeta = const VerificationMeta(
-    'updatedAt',
-  );
-  @override
-  late final GeneratedColumn<DateTime> updatedAt = GeneratedColumn<DateTime>(
-    'updated_at',
-    aliasedName,
-    false,
-    type: DriftSqlType.dateTime,
-    requiredDuringInsert: false,
-    defaultValue: currentDateAndTime,
-  );
-  static const VerificationMeta _isDeletedMeta = const VerificationMeta(
-    'isDeleted',
-  );
-  @override
-  late final GeneratedColumn<bool> isDeleted = GeneratedColumn<bool>(
-    'is_deleted',
-    aliasedName,
-    false,
-    type: DriftSqlType.bool,
-    requiredDuringInsert: false,
-    defaultConstraints: GeneratedColumn.constraintIsAlways(
-      'CHECK ("is_deleted" IN (0, 1))',
-    ),
-    defaultValue: const Constant(false),
-  );
   @override
   List<GeneratedColumn> get $columns => [
+    uuid,
+    createdAt,
+    updatedAt,
+    isDeleted,
     id,
     supplierId,
     purchaseDate,
@@ -3193,9 +3634,6 @@ class $FarmPurchasesTable extends FarmPurchases
     isPaid,
     paymentDate,
     description,
-    createdAt,
-    updatedAt,
-    isDeleted,
   ];
   @override
   String get aliasedName => _alias ?? actualTableName;
@@ -3209,6 +3647,30 @@ class $FarmPurchasesTable extends FarmPurchases
   }) {
     final context = VerificationContext();
     final data = instance.toColumns(true);
+    if (data.containsKey('uuid')) {
+      context.handle(
+        _uuidMeta,
+        uuid.isAcceptableOrUnknown(data['uuid']!, _uuidMeta),
+      );
+    }
+    if (data.containsKey('created_at')) {
+      context.handle(
+        _createdAtMeta,
+        createdAt.isAcceptableOrUnknown(data['created_at']!, _createdAtMeta),
+      );
+    }
+    if (data.containsKey('updated_at')) {
+      context.handle(
+        _updatedAtMeta,
+        updatedAt.isAcceptableOrUnknown(data['updated_at']!, _updatedAtMeta),
+      );
+    }
+    if (data.containsKey('is_deleted')) {
+      context.handle(
+        _isDeletedMeta,
+        isDeleted.isAcceptableOrUnknown(data['is_deleted']!, _isDeletedMeta),
+      );
+    }
     if (data.containsKey('id')) {
       context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
     }
@@ -3272,24 +3734,6 @@ class $FarmPurchasesTable extends FarmPurchases
         ),
       );
     }
-    if (data.containsKey('created_at')) {
-      context.handle(
-        _createdAtMeta,
-        createdAt.isAcceptableOrUnknown(data['created_at']!, _createdAtMeta),
-      );
-    }
-    if (data.containsKey('updated_at')) {
-      context.handle(
-        _updatedAtMeta,
-        updatedAt.isAcceptableOrUnknown(data['updated_at']!, _updatedAtMeta),
-      );
-    }
-    if (data.containsKey('is_deleted')) {
-      context.handle(
-        _isDeletedMeta,
-        isDeleted.isAcceptableOrUnknown(data['is_deleted']!, _isDeletedMeta),
-      );
-    }
     return context;
   }
 
@@ -3299,6 +3743,22 @@ class $FarmPurchasesTable extends FarmPurchases
   FarmPurchase map(Map<String, dynamic> data, {String? tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
     return FarmPurchase(
+      uuid: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}uuid'],
+      )!,
+      createdAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}created_at'],
+      )!,
+      updatedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}updated_at'],
+      )!,
+      isDeleted: attachedDatabase.typeMapping.read(
+        DriftSqlType.bool,
+        data['${effectivePrefix}is_deleted'],
+      )!,
       id: attachedDatabase.typeMapping.read(
         DriftSqlType.int,
         data['${effectivePrefix}id'],
@@ -3331,18 +3791,6 @@ class $FarmPurchasesTable extends FarmPurchases
         DriftSqlType.string,
         data['${effectivePrefix}description'],
       ),
-      createdAt: attachedDatabase.typeMapping.read(
-        DriftSqlType.dateTime,
-        data['${effectivePrefix}created_at'],
-      )!,
-      updatedAt: attachedDatabase.typeMapping.read(
-        DriftSqlType.dateTime,
-        data['${effectivePrefix}updated_at'],
-      )!,
-      isDeleted: attachedDatabase.typeMapping.read(
-        DriftSqlType.bool,
-        data['${effectivePrefix}is_deleted'],
-      )!,
     );
   }
 
@@ -3353,6 +3801,10 @@ class $FarmPurchasesTable extends FarmPurchases
 }
 
 class FarmPurchase extends DataClass implements Insertable<FarmPurchase> {
+  final String uuid;
+  final DateTime createdAt;
+  final DateTime updatedAt;
+  final bool isDeleted;
   final int id;
   final int supplierId;
   final DateTime purchaseDate;
@@ -3361,10 +3813,11 @@ class FarmPurchase extends DataClass implements Insertable<FarmPurchase> {
   final bool isPaid;
   final DateTime? paymentDate;
   final String? description;
-  final DateTime createdAt;
-  final DateTime updatedAt;
-  final bool isDeleted;
   const FarmPurchase({
+    required this.uuid,
+    required this.createdAt,
+    required this.updatedAt,
+    required this.isDeleted,
     required this.id,
     required this.supplierId,
     required this.purchaseDate,
@@ -3373,13 +3826,14 @@ class FarmPurchase extends DataClass implements Insertable<FarmPurchase> {
     required this.isPaid,
     this.paymentDate,
     this.description,
-    required this.createdAt,
-    required this.updatedAt,
-    required this.isDeleted,
   });
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
+    map['uuid'] = Variable<String>(uuid);
+    map['created_at'] = Variable<DateTime>(createdAt);
+    map['updated_at'] = Variable<DateTime>(updatedAt);
+    map['is_deleted'] = Variable<bool>(isDeleted);
     map['id'] = Variable<int>(id);
     map['supplier_id'] = Variable<int>(supplierId);
     map['purchase_date'] = Variable<DateTime>(purchaseDate);
@@ -3394,14 +3848,15 @@ class FarmPurchase extends DataClass implements Insertable<FarmPurchase> {
     if (!nullToAbsent || description != null) {
       map['description'] = Variable<String>(description);
     }
-    map['created_at'] = Variable<DateTime>(createdAt);
-    map['updated_at'] = Variable<DateTime>(updatedAt);
-    map['is_deleted'] = Variable<bool>(isDeleted);
     return map;
   }
 
   FarmPurchasesCompanion toCompanion(bool nullToAbsent) {
     return FarmPurchasesCompanion(
+      uuid: Value(uuid),
+      createdAt: Value(createdAt),
+      updatedAt: Value(updatedAt),
+      isDeleted: Value(isDeleted),
       id: Value(id),
       supplierId: Value(supplierId),
       purchaseDate: Value(purchaseDate),
@@ -3416,9 +3871,6 @@ class FarmPurchase extends DataClass implements Insertable<FarmPurchase> {
       description: description == null && nullToAbsent
           ? const Value.absent()
           : Value(description),
-      createdAt: Value(createdAt),
-      updatedAt: Value(updatedAt),
-      isDeleted: Value(isDeleted),
     );
   }
 
@@ -3428,6 +3880,10 @@ class FarmPurchase extends DataClass implements Insertable<FarmPurchase> {
   }) {
     serializer ??= driftRuntimeOptions.defaultSerializer;
     return FarmPurchase(
+      uuid: serializer.fromJson<String>(json['uuid']),
+      createdAt: serializer.fromJson<DateTime>(json['createdAt']),
+      updatedAt: serializer.fromJson<DateTime>(json['updatedAt']),
+      isDeleted: serializer.fromJson<bool>(json['isDeleted']),
       id: serializer.fromJson<int>(json['id']),
       supplierId: serializer.fromJson<int>(json['supplierId']),
       purchaseDate: serializer.fromJson<DateTime>(json['purchaseDate']),
@@ -3436,15 +3892,16 @@ class FarmPurchase extends DataClass implements Insertable<FarmPurchase> {
       isPaid: serializer.fromJson<bool>(json['isPaid']),
       paymentDate: serializer.fromJson<DateTime?>(json['paymentDate']),
       description: serializer.fromJson<String?>(json['description']),
-      createdAt: serializer.fromJson<DateTime>(json['createdAt']),
-      updatedAt: serializer.fromJson<DateTime>(json['updatedAt']),
-      isDeleted: serializer.fromJson<bool>(json['isDeleted']),
     );
   }
   @override
   Map<String, dynamic> toJson({ValueSerializer? serializer}) {
     serializer ??= driftRuntimeOptions.defaultSerializer;
     return <String, dynamic>{
+      'uuid': serializer.toJson<String>(uuid),
+      'createdAt': serializer.toJson<DateTime>(createdAt),
+      'updatedAt': serializer.toJson<DateTime>(updatedAt),
+      'isDeleted': serializer.toJson<bool>(isDeleted),
       'id': serializer.toJson<int>(id),
       'supplierId': serializer.toJson<int>(supplierId),
       'purchaseDate': serializer.toJson<DateTime>(purchaseDate),
@@ -3453,13 +3910,14 @@ class FarmPurchase extends DataClass implements Insertable<FarmPurchase> {
       'isPaid': serializer.toJson<bool>(isPaid),
       'paymentDate': serializer.toJson<DateTime?>(paymentDate),
       'description': serializer.toJson<String?>(description),
-      'createdAt': serializer.toJson<DateTime>(createdAt),
-      'updatedAt': serializer.toJson<DateTime>(updatedAt),
-      'isDeleted': serializer.toJson<bool>(isDeleted),
     };
   }
 
   FarmPurchase copyWith({
+    String? uuid,
+    DateTime? createdAt,
+    DateTime? updatedAt,
+    bool? isDeleted,
     int? id,
     int? supplierId,
     DateTime? purchaseDate,
@@ -3468,10 +3926,11 @@ class FarmPurchase extends DataClass implements Insertable<FarmPurchase> {
     bool? isPaid,
     Value<DateTime?> paymentDate = const Value.absent(),
     Value<String?> description = const Value.absent(),
-    DateTime? createdAt,
-    DateTime? updatedAt,
-    bool? isDeleted,
   }) => FarmPurchase(
+    uuid: uuid ?? this.uuid,
+    createdAt: createdAt ?? this.createdAt,
+    updatedAt: updatedAt ?? this.updatedAt,
+    isDeleted: isDeleted ?? this.isDeleted,
     id: id ?? this.id,
     supplierId: supplierId ?? this.supplierId,
     purchaseDate: purchaseDate ?? this.purchaseDate,
@@ -3480,12 +3939,13 @@ class FarmPurchase extends DataClass implements Insertable<FarmPurchase> {
     isPaid: isPaid ?? this.isPaid,
     paymentDate: paymentDate.present ? paymentDate.value : this.paymentDate,
     description: description.present ? description.value : this.description,
-    createdAt: createdAt ?? this.createdAt,
-    updatedAt: updatedAt ?? this.updatedAt,
-    isDeleted: isDeleted ?? this.isDeleted,
   );
   FarmPurchase copyWithCompanion(FarmPurchasesCompanion data) {
     return FarmPurchase(
+      uuid: data.uuid.present ? data.uuid.value : this.uuid,
+      createdAt: data.createdAt.present ? data.createdAt.value : this.createdAt,
+      updatedAt: data.updatedAt.present ? data.updatedAt.value : this.updatedAt,
+      isDeleted: data.isDeleted.present ? data.isDeleted.value : this.isDeleted,
       id: data.id.present ? data.id.value : this.id,
       supplierId: data.supplierId.present
           ? data.supplierId.value
@@ -3504,15 +3964,16 @@ class FarmPurchase extends DataClass implements Insertable<FarmPurchase> {
       description: data.description.present
           ? data.description.value
           : this.description,
-      createdAt: data.createdAt.present ? data.createdAt.value : this.createdAt,
-      updatedAt: data.updatedAt.present ? data.updatedAt.value : this.updatedAt,
-      isDeleted: data.isDeleted.present ? data.isDeleted.value : this.isDeleted,
     );
   }
 
   @override
   String toString() {
     return (StringBuffer('FarmPurchase(')
+          ..write('uuid: $uuid, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('updatedAt: $updatedAt, ')
+          ..write('isDeleted: $isDeleted, ')
           ..write('id: $id, ')
           ..write('supplierId: $supplierId, ')
           ..write('purchaseDate: $purchaseDate, ')
@@ -3520,16 +3981,17 @@ class FarmPurchase extends DataClass implements Insertable<FarmPurchase> {
           ..write('dueDate: $dueDate, ')
           ..write('isPaid: $isPaid, ')
           ..write('paymentDate: $paymentDate, ')
-          ..write('description: $description, ')
-          ..write('createdAt: $createdAt, ')
-          ..write('updatedAt: $updatedAt, ')
-          ..write('isDeleted: $isDeleted')
+          ..write('description: $description')
           ..write(')'))
         .toString();
   }
 
   @override
   int get hashCode => Object.hash(
+    uuid,
+    createdAt,
+    updatedAt,
+    isDeleted,
     id,
     supplierId,
     purchaseDate,
@@ -3538,14 +4000,15 @@ class FarmPurchase extends DataClass implements Insertable<FarmPurchase> {
     isPaid,
     paymentDate,
     description,
-    createdAt,
-    updatedAt,
-    isDeleted,
   );
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
       (other is FarmPurchase &&
+          other.uuid == this.uuid &&
+          other.createdAt == this.createdAt &&
+          other.updatedAt == this.updatedAt &&
+          other.isDeleted == this.isDeleted &&
           other.id == this.id &&
           other.supplierId == this.supplierId &&
           other.purchaseDate == this.purchaseDate &&
@@ -3553,13 +4016,14 @@ class FarmPurchase extends DataClass implements Insertable<FarmPurchase> {
           other.dueDate == this.dueDate &&
           other.isPaid == this.isPaid &&
           other.paymentDate == this.paymentDate &&
-          other.description == this.description &&
-          other.createdAt == this.createdAt &&
-          other.updatedAt == this.updatedAt &&
-          other.isDeleted == this.isDeleted);
+          other.description == this.description);
 }
 
 class FarmPurchasesCompanion extends UpdateCompanion<FarmPurchase> {
+  final Value<String> uuid;
+  final Value<DateTime> createdAt;
+  final Value<DateTime> updatedAt;
+  final Value<bool> isDeleted;
   final Value<int> id;
   final Value<int> supplierId;
   final Value<DateTime> purchaseDate;
@@ -3568,10 +4032,11 @@ class FarmPurchasesCompanion extends UpdateCompanion<FarmPurchase> {
   final Value<bool> isPaid;
   final Value<DateTime?> paymentDate;
   final Value<String?> description;
-  final Value<DateTime> createdAt;
-  final Value<DateTime> updatedAt;
-  final Value<bool> isDeleted;
   const FarmPurchasesCompanion({
+    this.uuid = const Value.absent(),
+    this.createdAt = const Value.absent(),
+    this.updatedAt = const Value.absent(),
+    this.isDeleted = const Value.absent(),
     this.id = const Value.absent(),
     this.supplierId = const Value.absent(),
     this.purchaseDate = const Value.absent(),
@@ -3580,11 +4045,12 @@ class FarmPurchasesCompanion extends UpdateCompanion<FarmPurchase> {
     this.isPaid = const Value.absent(),
     this.paymentDate = const Value.absent(),
     this.description = const Value.absent(),
+  });
+  FarmPurchasesCompanion.insert({
+    this.uuid = const Value.absent(),
     this.createdAt = const Value.absent(),
     this.updatedAt = const Value.absent(),
     this.isDeleted = const Value.absent(),
-  });
-  FarmPurchasesCompanion.insert({
     this.id = const Value.absent(),
     required int supplierId,
     required DateTime purchaseDate,
@@ -3593,13 +4059,14 @@ class FarmPurchasesCompanion extends UpdateCompanion<FarmPurchase> {
     this.isPaid = const Value.absent(),
     this.paymentDate = const Value.absent(),
     this.description = const Value.absent(),
-    this.createdAt = const Value.absent(),
-    this.updatedAt = const Value.absent(),
-    this.isDeleted = const Value.absent(),
   }) : supplierId = Value(supplierId),
        purchaseDate = Value(purchaseDate),
        totalValueInCents = Value(totalValueInCents);
   static Insertable<FarmPurchase> custom({
+    Expression<String>? uuid,
+    Expression<DateTime>? createdAt,
+    Expression<DateTime>? updatedAt,
+    Expression<bool>? isDeleted,
     Expression<int>? id,
     Expression<int>? supplierId,
     Expression<DateTime>? purchaseDate,
@@ -3608,11 +4075,12 @@ class FarmPurchasesCompanion extends UpdateCompanion<FarmPurchase> {
     Expression<bool>? isPaid,
     Expression<DateTime>? paymentDate,
     Expression<String>? description,
-    Expression<DateTime>? createdAt,
-    Expression<DateTime>? updatedAt,
-    Expression<bool>? isDeleted,
   }) {
     return RawValuesInsertable({
+      if (uuid != null) 'uuid': uuid,
+      if (createdAt != null) 'created_at': createdAt,
+      if (updatedAt != null) 'updated_at': updatedAt,
+      if (isDeleted != null) 'is_deleted': isDeleted,
       if (id != null) 'id': id,
       if (supplierId != null) 'supplier_id': supplierId,
       if (purchaseDate != null) 'purchase_date': purchaseDate,
@@ -3621,13 +4089,14 @@ class FarmPurchasesCompanion extends UpdateCompanion<FarmPurchase> {
       if (isPaid != null) 'is_paid': isPaid,
       if (paymentDate != null) 'payment_date': paymentDate,
       if (description != null) 'description': description,
-      if (createdAt != null) 'created_at': createdAt,
-      if (updatedAt != null) 'updated_at': updatedAt,
-      if (isDeleted != null) 'is_deleted': isDeleted,
     });
   }
 
   FarmPurchasesCompanion copyWith({
+    Value<String>? uuid,
+    Value<DateTime>? createdAt,
+    Value<DateTime>? updatedAt,
+    Value<bool>? isDeleted,
     Value<int>? id,
     Value<int>? supplierId,
     Value<DateTime>? purchaseDate,
@@ -3636,11 +4105,12 @@ class FarmPurchasesCompanion extends UpdateCompanion<FarmPurchase> {
     Value<bool>? isPaid,
     Value<DateTime?>? paymentDate,
     Value<String?>? description,
-    Value<DateTime>? createdAt,
-    Value<DateTime>? updatedAt,
-    Value<bool>? isDeleted,
   }) {
     return FarmPurchasesCompanion(
+      uuid: uuid ?? this.uuid,
+      createdAt: createdAt ?? this.createdAt,
+      updatedAt: updatedAt ?? this.updatedAt,
+      isDeleted: isDeleted ?? this.isDeleted,
       id: id ?? this.id,
       supplierId: supplierId ?? this.supplierId,
       purchaseDate: purchaseDate ?? this.purchaseDate,
@@ -3649,15 +4119,24 @@ class FarmPurchasesCompanion extends UpdateCompanion<FarmPurchase> {
       isPaid: isPaid ?? this.isPaid,
       paymentDate: paymentDate ?? this.paymentDate,
       description: description ?? this.description,
-      createdAt: createdAt ?? this.createdAt,
-      updatedAt: updatedAt ?? this.updatedAt,
-      isDeleted: isDeleted ?? this.isDeleted,
     );
   }
 
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
+    if (uuid.present) {
+      map['uuid'] = Variable<String>(uuid.value);
+    }
+    if (createdAt.present) {
+      map['created_at'] = Variable<DateTime>(createdAt.value);
+    }
+    if (updatedAt.present) {
+      map['updated_at'] = Variable<DateTime>(updatedAt.value);
+    }
+    if (isDeleted.present) {
+      map['is_deleted'] = Variable<bool>(isDeleted.value);
+    }
     if (id.present) {
       map['id'] = Variable<int>(id.value);
     }
@@ -3682,21 +4161,16 @@ class FarmPurchasesCompanion extends UpdateCompanion<FarmPurchase> {
     if (description.present) {
       map['description'] = Variable<String>(description.value);
     }
-    if (createdAt.present) {
-      map['created_at'] = Variable<DateTime>(createdAt.value);
-    }
-    if (updatedAt.present) {
-      map['updated_at'] = Variable<DateTime>(updatedAt.value);
-    }
-    if (isDeleted.present) {
-      map['is_deleted'] = Variable<bool>(isDeleted.value);
-    }
     return map;
   }
 
   @override
   String toString() {
     return (StringBuffer('FarmPurchasesCompanion(')
+          ..write('uuid: $uuid, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('updatedAt: $updatedAt, ')
+          ..write('isDeleted: $isDeleted, ')
           ..write('id: $id, ')
           ..write('supplierId: $supplierId, ')
           ..write('purchaseDate: $purchaseDate, ')
@@ -3704,10 +4178,7 @@ class FarmPurchasesCompanion extends UpdateCompanion<FarmPurchase> {
           ..write('dueDate: $dueDate, ')
           ..write('isPaid: $isPaid, ')
           ..write('paymentDate: $paymentDate, ')
-          ..write('description: $description, ')
-          ..write('createdAt: $createdAt, ')
-          ..write('updatedAt: $updatedAt, ')
-          ..write('isDeleted: $isDeleted')
+          ..write('description: $description')
           ..write(')'))
         .toString();
   }
@@ -3719,6 +4190,55 @@ class $FarmPurchaseItemsTable extends FarmPurchaseItems
   final GeneratedDatabase attachedDatabase;
   final String? _alias;
   $FarmPurchaseItemsTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _uuidMeta = const VerificationMeta('uuid');
+  @override
+  late final GeneratedColumn<String> uuid = GeneratedColumn<String>(
+    'uuid',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+    clientDefault: () => uuidGenerator.v4(),
+  );
+  static const VerificationMeta _createdAtMeta = const VerificationMeta(
+    'createdAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> createdAt = GeneratedColumn<DateTime>(
+    'created_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: false,
+    defaultValue: currentDateAndTime,
+  );
+  static const VerificationMeta _updatedAtMeta = const VerificationMeta(
+    'updatedAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> updatedAt = GeneratedColumn<DateTime>(
+    'updated_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: false,
+    defaultValue: currentDateAndTime,
+  );
+  static const VerificationMeta _isDeletedMeta = const VerificationMeta(
+    'isDeleted',
+  );
+  @override
+  late final GeneratedColumn<bool> isDeleted = GeneratedColumn<bool>(
+    'is_deleted',
+    aliasedName,
+    false,
+    type: DriftSqlType.bool,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'CHECK ("is_deleted" IN (0, 1))',
+    ),
+    defaultValue: const Constant(false),
+  );
   static const VerificationMeta _idMeta = const VerificationMeta('id');
   @override
   late final GeneratedColumn<int> id = GeneratedColumn<int>(
@@ -3782,55 +4302,17 @@ class $FarmPurchaseItemsTable extends FarmPurchaseItems
     type: DriftSqlType.int,
     requiredDuringInsert: true,
   );
-  static const VerificationMeta _createdAtMeta = const VerificationMeta(
-    'createdAt',
-  );
-  @override
-  late final GeneratedColumn<DateTime> createdAt = GeneratedColumn<DateTime>(
-    'created_at',
-    aliasedName,
-    false,
-    type: DriftSqlType.dateTime,
-    requiredDuringInsert: false,
-    defaultValue: currentDateAndTime,
-  );
-  static const VerificationMeta _updatedAtMeta = const VerificationMeta(
-    'updatedAt',
-  );
-  @override
-  late final GeneratedColumn<DateTime> updatedAt = GeneratedColumn<DateTime>(
-    'updated_at',
-    aliasedName,
-    false,
-    type: DriftSqlType.dateTime,
-    requiredDuringInsert: false,
-    defaultValue: currentDateAndTime,
-  );
-  static const VerificationMeta _isDeletedMeta = const VerificationMeta(
-    'isDeleted',
-  );
-  @override
-  late final GeneratedColumn<bool> isDeleted = GeneratedColumn<bool>(
-    'is_deleted',
-    aliasedName,
-    false,
-    type: DriftSqlType.bool,
-    requiredDuringInsert: false,
-    defaultConstraints: GeneratedColumn.constraintIsAlways(
-      'CHECK ("is_deleted" IN (0, 1))',
-    ),
-    defaultValue: const Constant(false),
-  );
   @override
   List<GeneratedColumn> get $columns => [
+    uuid,
+    createdAt,
+    updatedAt,
+    isDeleted,
     id,
     purchaseId,
     productId,
     quantity,
     unitCostInCents,
-    createdAt,
-    updatedAt,
-    isDeleted,
   ];
   @override
   String get aliasedName => _alias ?? actualTableName;
@@ -3844,6 +4326,30 @@ class $FarmPurchaseItemsTable extends FarmPurchaseItems
   }) {
     final context = VerificationContext();
     final data = instance.toColumns(true);
+    if (data.containsKey('uuid')) {
+      context.handle(
+        _uuidMeta,
+        uuid.isAcceptableOrUnknown(data['uuid']!, _uuidMeta),
+      );
+    }
+    if (data.containsKey('created_at')) {
+      context.handle(
+        _createdAtMeta,
+        createdAt.isAcceptableOrUnknown(data['created_at']!, _createdAtMeta),
+      );
+    }
+    if (data.containsKey('updated_at')) {
+      context.handle(
+        _updatedAtMeta,
+        updatedAt.isAcceptableOrUnknown(data['updated_at']!, _updatedAtMeta),
+      );
+    }
+    if (data.containsKey('is_deleted')) {
+      context.handle(
+        _isDeletedMeta,
+        isDeleted.isAcceptableOrUnknown(data['is_deleted']!, _isDeletedMeta),
+      );
+    }
     if (data.containsKey('id')) {
       context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
     }
@@ -3882,24 +4388,6 @@ class $FarmPurchaseItemsTable extends FarmPurchaseItems
     } else if (isInserting) {
       context.missing(_unitCostInCentsMeta);
     }
-    if (data.containsKey('created_at')) {
-      context.handle(
-        _createdAtMeta,
-        createdAt.isAcceptableOrUnknown(data['created_at']!, _createdAtMeta),
-      );
-    }
-    if (data.containsKey('updated_at')) {
-      context.handle(
-        _updatedAtMeta,
-        updatedAt.isAcceptableOrUnknown(data['updated_at']!, _updatedAtMeta),
-      );
-    }
-    if (data.containsKey('is_deleted')) {
-      context.handle(
-        _isDeletedMeta,
-        isDeleted.isAcceptableOrUnknown(data['is_deleted']!, _isDeletedMeta),
-      );
-    }
     return context;
   }
 
@@ -3909,6 +4397,22 @@ class $FarmPurchaseItemsTable extends FarmPurchaseItems
   FarmPurchaseItem map(Map<String, dynamic> data, {String? tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
     return FarmPurchaseItem(
+      uuid: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}uuid'],
+      )!,
+      createdAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}created_at'],
+      )!,
+      updatedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}updated_at'],
+      )!,
+      isDeleted: attachedDatabase.typeMapping.read(
+        DriftSqlType.bool,
+        data['${effectivePrefix}is_deleted'],
+      )!,
       id: attachedDatabase.typeMapping.read(
         DriftSqlType.int,
         data['${effectivePrefix}id'],
@@ -3929,18 +4433,6 @@ class $FarmPurchaseItemsTable extends FarmPurchaseItems
         DriftSqlType.int,
         data['${effectivePrefix}unit_cost_in_cents'],
       )!,
-      createdAt: attachedDatabase.typeMapping.read(
-        DriftSqlType.dateTime,
-        data['${effectivePrefix}created_at'],
-      )!,
-      updatedAt: attachedDatabase.typeMapping.read(
-        DriftSqlType.dateTime,
-        data['${effectivePrefix}updated_at'],
-      )!,
-      isDeleted: attachedDatabase.typeMapping.read(
-        DriftSqlType.bool,
-        data['${effectivePrefix}is_deleted'],
-      )!,
     );
   }
 
@@ -3952,48 +4444,52 @@ class $FarmPurchaseItemsTable extends FarmPurchaseItems
 
 class FarmPurchaseItem extends DataClass
     implements Insertable<FarmPurchaseItem> {
+  final String uuid;
+  final DateTime createdAt;
+  final DateTime updatedAt;
+  final bool isDeleted;
   final int id;
   final int purchaseId;
   final int productId;
   final double quantity;
   final int unitCostInCents;
-  final DateTime createdAt;
-  final DateTime updatedAt;
-  final bool isDeleted;
   const FarmPurchaseItem({
+    required this.uuid,
+    required this.createdAt,
+    required this.updatedAt,
+    required this.isDeleted,
     required this.id,
     required this.purchaseId,
     required this.productId,
     required this.quantity,
     required this.unitCostInCents,
-    required this.createdAt,
-    required this.updatedAt,
-    required this.isDeleted,
   });
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
+    map['uuid'] = Variable<String>(uuid);
+    map['created_at'] = Variable<DateTime>(createdAt);
+    map['updated_at'] = Variable<DateTime>(updatedAt);
+    map['is_deleted'] = Variable<bool>(isDeleted);
     map['id'] = Variable<int>(id);
     map['purchase_id'] = Variable<int>(purchaseId);
     map['product_id'] = Variable<int>(productId);
     map['quantity'] = Variable<double>(quantity);
     map['unit_cost_in_cents'] = Variable<int>(unitCostInCents);
-    map['created_at'] = Variable<DateTime>(createdAt);
-    map['updated_at'] = Variable<DateTime>(updatedAt);
-    map['is_deleted'] = Variable<bool>(isDeleted);
     return map;
   }
 
   FarmPurchaseItemsCompanion toCompanion(bool nullToAbsent) {
     return FarmPurchaseItemsCompanion(
+      uuid: Value(uuid),
+      createdAt: Value(createdAt),
+      updatedAt: Value(updatedAt),
+      isDeleted: Value(isDeleted),
       id: Value(id),
       purchaseId: Value(purchaseId),
       productId: Value(productId),
       quantity: Value(quantity),
       unitCostInCents: Value(unitCostInCents),
-      createdAt: Value(createdAt),
-      updatedAt: Value(updatedAt),
-      isDeleted: Value(isDeleted),
     );
   }
 
@@ -4003,52 +4499,60 @@ class FarmPurchaseItem extends DataClass
   }) {
     serializer ??= driftRuntimeOptions.defaultSerializer;
     return FarmPurchaseItem(
+      uuid: serializer.fromJson<String>(json['uuid']),
+      createdAt: serializer.fromJson<DateTime>(json['createdAt']),
+      updatedAt: serializer.fromJson<DateTime>(json['updatedAt']),
+      isDeleted: serializer.fromJson<bool>(json['isDeleted']),
       id: serializer.fromJson<int>(json['id']),
       purchaseId: serializer.fromJson<int>(json['purchaseId']),
       productId: serializer.fromJson<int>(json['productId']),
       quantity: serializer.fromJson<double>(json['quantity']),
       unitCostInCents: serializer.fromJson<int>(json['unitCostInCents']),
-      createdAt: serializer.fromJson<DateTime>(json['createdAt']),
-      updatedAt: serializer.fromJson<DateTime>(json['updatedAt']),
-      isDeleted: serializer.fromJson<bool>(json['isDeleted']),
     );
   }
   @override
   Map<String, dynamic> toJson({ValueSerializer? serializer}) {
     serializer ??= driftRuntimeOptions.defaultSerializer;
     return <String, dynamic>{
+      'uuid': serializer.toJson<String>(uuid),
+      'createdAt': serializer.toJson<DateTime>(createdAt),
+      'updatedAt': serializer.toJson<DateTime>(updatedAt),
+      'isDeleted': serializer.toJson<bool>(isDeleted),
       'id': serializer.toJson<int>(id),
       'purchaseId': serializer.toJson<int>(purchaseId),
       'productId': serializer.toJson<int>(productId),
       'quantity': serializer.toJson<double>(quantity),
       'unitCostInCents': serializer.toJson<int>(unitCostInCents),
-      'createdAt': serializer.toJson<DateTime>(createdAt),
-      'updatedAt': serializer.toJson<DateTime>(updatedAt),
-      'isDeleted': serializer.toJson<bool>(isDeleted),
     };
   }
 
   FarmPurchaseItem copyWith({
+    String? uuid,
+    DateTime? createdAt,
+    DateTime? updatedAt,
+    bool? isDeleted,
     int? id,
     int? purchaseId,
     int? productId,
     double? quantity,
     int? unitCostInCents,
-    DateTime? createdAt,
-    DateTime? updatedAt,
-    bool? isDeleted,
   }) => FarmPurchaseItem(
+    uuid: uuid ?? this.uuid,
+    createdAt: createdAt ?? this.createdAt,
+    updatedAt: updatedAt ?? this.updatedAt,
+    isDeleted: isDeleted ?? this.isDeleted,
     id: id ?? this.id,
     purchaseId: purchaseId ?? this.purchaseId,
     productId: productId ?? this.productId,
     quantity: quantity ?? this.quantity,
     unitCostInCents: unitCostInCents ?? this.unitCostInCents,
-    createdAt: createdAt ?? this.createdAt,
-    updatedAt: updatedAt ?? this.updatedAt,
-    isDeleted: isDeleted ?? this.isDeleted,
   );
   FarmPurchaseItem copyWithCompanion(FarmPurchaseItemsCompanion data) {
     return FarmPurchaseItem(
+      uuid: data.uuid.present ? data.uuid.value : this.uuid,
+      createdAt: data.createdAt.present ? data.createdAt.value : this.createdAt,
+      updatedAt: data.updatedAt.present ? data.updatedAt.value : this.updatedAt,
+      isDeleted: data.isDeleted.present ? data.isDeleted.value : this.isDeleted,
       id: data.id.present ? data.id.value : this.id,
       purchaseId: data.purchaseId.present
           ? data.purchaseId.value
@@ -4058,131 +4562,150 @@ class FarmPurchaseItem extends DataClass
       unitCostInCents: data.unitCostInCents.present
           ? data.unitCostInCents.value
           : this.unitCostInCents,
-      createdAt: data.createdAt.present ? data.createdAt.value : this.createdAt,
-      updatedAt: data.updatedAt.present ? data.updatedAt.value : this.updatedAt,
-      isDeleted: data.isDeleted.present ? data.isDeleted.value : this.isDeleted,
     );
   }
 
   @override
   String toString() {
     return (StringBuffer('FarmPurchaseItem(')
+          ..write('uuid: $uuid, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('updatedAt: $updatedAt, ')
+          ..write('isDeleted: $isDeleted, ')
           ..write('id: $id, ')
           ..write('purchaseId: $purchaseId, ')
           ..write('productId: $productId, ')
           ..write('quantity: $quantity, ')
-          ..write('unitCostInCents: $unitCostInCents, ')
-          ..write('createdAt: $createdAt, ')
-          ..write('updatedAt: $updatedAt, ')
-          ..write('isDeleted: $isDeleted')
+          ..write('unitCostInCents: $unitCostInCents')
           ..write(')'))
         .toString();
   }
 
   @override
   int get hashCode => Object.hash(
+    uuid,
+    createdAt,
+    updatedAt,
+    isDeleted,
     id,
     purchaseId,
     productId,
     quantity,
     unitCostInCents,
-    createdAt,
-    updatedAt,
-    isDeleted,
   );
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
       (other is FarmPurchaseItem &&
+          other.uuid == this.uuid &&
+          other.createdAt == this.createdAt &&
+          other.updatedAt == this.updatedAt &&
+          other.isDeleted == this.isDeleted &&
           other.id == this.id &&
           other.purchaseId == this.purchaseId &&
           other.productId == this.productId &&
           other.quantity == this.quantity &&
-          other.unitCostInCents == this.unitCostInCents &&
-          other.createdAt == this.createdAt &&
-          other.updatedAt == this.updatedAt &&
-          other.isDeleted == this.isDeleted);
+          other.unitCostInCents == this.unitCostInCents);
 }
 
 class FarmPurchaseItemsCompanion extends UpdateCompanion<FarmPurchaseItem> {
+  final Value<String> uuid;
+  final Value<DateTime> createdAt;
+  final Value<DateTime> updatedAt;
+  final Value<bool> isDeleted;
   final Value<int> id;
   final Value<int> purchaseId;
   final Value<int> productId;
   final Value<double> quantity;
   final Value<int> unitCostInCents;
-  final Value<DateTime> createdAt;
-  final Value<DateTime> updatedAt;
-  final Value<bool> isDeleted;
   const FarmPurchaseItemsCompanion({
+    this.uuid = const Value.absent(),
+    this.createdAt = const Value.absent(),
+    this.updatedAt = const Value.absent(),
+    this.isDeleted = const Value.absent(),
     this.id = const Value.absent(),
     this.purchaseId = const Value.absent(),
     this.productId = const Value.absent(),
     this.quantity = const Value.absent(),
     this.unitCostInCents = const Value.absent(),
+  });
+  FarmPurchaseItemsCompanion.insert({
+    this.uuid = const Value.absent(),
     this.createdAt = const Value.absent(),
     this.updatedAt = const Value.absent(),
     this.isDeleted = const Value.absent(),
-  });
-  FarmPurchaseItemsCompanion.insert({
     this.id = const Value.absent(),
     required int purchaseId,
     required int productId,
     required double quantity,
     required int unitCostInCents,
-    this.createdAt = const Value.absent(),
-    this.updatedAt = const Value.absent(),
-    this.isDeleted = const Value.absent(),
   }) : purchaseId = Value(purchaseId),
        productId = Value(productId),
        quantity = Value(quantity),
        unitCostInCents = Value(unitCostInCents);
   static Insertable<FarmPurchaseItem> custom({
+    Expression<String>? uuid,
+    Expression<DateTime>? createdAt,
+    Expression<DateTime>? updatedAt,
+    Expression<bool>? isDeleted,
     Expression<int>? id,
     Expression<int>? purchaseId,
     Expression<int>? productId,
     Expression<double>? quantity,
     Expression<int>? unitCostInCents,
-    Expression<DateTime>? createdAt,
-    Expression<DateTime>? updatedAt,
-    Expression<bool>? isDeleted,
   }) {
     return RawValuesInsertable({
+      if (uuid != null) 'uuid': uuid,
+      if (createdAt != null) 'created_at': createdAt,
+      if (updatedAt != null) 'updated_at': updatedAt,
+      if (isDeleted != null) 'is_deleted': isDeleted,
       if (id != null) 'id': id,
       if (purchaseId != null) 'purchase_id': purchaseId,
       if (productId != null) 'product_id': productId,
       if (quantity != null) 'quantity': quantity,
       if (unitCostInCents != null) 'unit_cost_in_cents': unitCostInCents,
-      if (createdAt != null) 'created_at': createdAt,
-      if (updatedAt != null) 'updated_at': updatedAt,
-      if (isDeleted != null) 'is_deleted': isDeleted,
     });
   }
 
   FarmPurchaseItemsCompanion copyWith({
+    Value<String>? uuid,
+    Value<DateTime>? createdAt,
+    Value<DateTime>? updatedAt,
+    Value<bool>? isDeleted,
     Value<int>? id,
     Value<int>? purchaseId,
     Value<int>? productId,
     Value<double>? quantity,
     Value<int>? unitCostInCents,
-    Value<DateTime>? createdAt,
-    Value<DateTime>? updatedAt,
-    Value<bool>? isDeleted,
   }) {
     return FarmPurchaseItemsCompanion(
+      uuid: uuid ?? this.uuid,
+      createdAt: createdAt ?? this.createdAt,
+      updatedAt: updatedAt ?? this.updatedAt,
+      isDeleted: isDeleted ?? this.isDeleted,
       id: id ?? this.id,
       purchaseId: purchaseId ?? this.purchaseId,
       productId: productId ?? this.productId,
       quantity: quantity ?? this.quantity,
       unitCostInCents: unitCostInCents ?? this.unitCostInCents,
-      createdAt: createdAt ?? this.createdAt,
-      updatedAt: updatedAt ?? this.updatedAt,
-      isDeleted: isDeleted ?? this.isDeleted,
     );
   }
 
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
+    if (uuid.present) {
+      map['uuid'] = Variable<String>(uuid.value);
+    }
+    if (createdAt.present) {
+      map['created_at'] = Variable<DateTime>(createdAt.value);
+    }
+    if (updatedAt.present) {
+      map['updated_at'] = Variable<DateTime>(updatedAt.value);
+    }
+    if (isDeleted.present) {
+      map['is_deleted'] = Variable<bool>(isDeleted.value);
+    }
     if (id.present) {
       map['id'] = Variable<int>(id.value);
     }
@@ -4198,29 +4721,21 @@ class FarmPurchaseItemsCompanion extends UpdateCompanion<FarmPurchaseItem> {
     if (unitCostInCents.present) {
       map['unit_cost_in_cents'] = Variable<int>(unitCostInCents.value);
     }
-    if (createdAt.present) {
-      map['created_at'] = Variable<DateTime>(createdAt.value);
-    }
-    if (updatedAt.present) {
-      map['updated_at'] = Variable<DateTime>(updatedAt.value);
-    }
-    if (isDeleted.present) {
-      map['is_deleted'] = Variable<bool>(isDeleted.value);
-    }
     return map;
   }
 
   @override
   String toString() {
     return (StringBuffer('FarmPurchaseItemsCompanion(')
+          ..write('uuid: $uuid, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('updatedAt: $updatedAt, ')
+          ..write('isDeleted: $isDeleted, ')
           ..write('id: $id, ')
           ..write('purchaseId: $purchaseId, ')
           ..write('productId: $productId, ')
           ..write('quantity: $quantity, ')
-          ..write('unitCostInCents: $unitCostInCents, ')
-          ..write('createdAt: $createdAt, ')
-          ..write('updatedAt: $updatedAt, ')
-          ..write('isDeleted: $isDeleted')
+          ..write('unitCostInCents: $unitCostInCents')
           ..write(')'))
         .toString();
   }
@@ -4232,42 +4747,15 @@ class $FarmAreasTable extends FarmAreas
   final GeneratedDatabase attachedDatabase;
   final String? _alias;
   $FarmAreasTable(this.attachedDatabase, [this._alias]);
-  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  static const VerificationMeta _uuidMeta = const VerificationMeta('uuid');
   @override
-  late final GeneratedColumn<int> id = GeneratedColumn<int>(
-    'id',
+  late final GeneratedColumn<String> uuid = GeneratedColumn<String>(
+    'uuid',
     aliasedName,
     false,
-    hasAutoIncrement: true,
-    type: DriftSqlType.int,
-    requiredDuringInsert: false,
-    defaultConstraints: GeneratedColumn.constraintIsAlways(
-      'PRIMARY KEY AUTOINCREMENT',
-    ),
-  );
-  static const VerificationMeta _nameMeta = const VerificationMeta('name');
-  @override
-  late final GeneratedColumn<String> name = GeneratedColumn<String>(
-    'name',
-    aliasedName,
-    false,
-    additionalChecks: GeneratedColumn.checkTextLength(
-      minTextLength: 1,
-      maxTextLength: 100,
-    ),
     type: DriftSqlType.string,
-    requiredDuringInsert: true,
-  );
-  static const VerificationMeta _sizeInHectaresMeta = const VerificationMeta(
-    'sizeInHectares',
-  );
-  @override
-  late final GeneratedColumn<double> sizeInHectares = GeneratedColumn<double>(
-    'size_in_hectares',
-    aliasedName,
-    true,
-    type: DriftSqlType.double,
     requiredDuringInsert: false,
+    clientDefault: () => uuidGenerator.v4(),
   );
   static const VerificationMeta _createdAtMeta = const VerificationMeta(
     'createdAt',
@@ -4308,14 +4796,52 @@ class $FarmAreasTable extends FarmAreas
     ),
     defaultValue: const Constant(false),
   );
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<int> id = GeneratedColumn<int>(
+    'id',
+    aliasedName,
+    false,
+    hasAutoIncrement: true,
+    type: DriftSqlType.int,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'PRIMARY KEY AUTOINCREMENT',
+    ),
+  );
+  static const VerificationMeta _nameMeta = const VerificationMeta('name');
+  @override
+  late final GeneratedColumn<String> name = GeneratedColumn<String>(
+    'name',
+    aliasedName,
+    false,
+    additionalChecks: GeneratedColumn.checkTextLength(
+      minTextLength: 1,
+      maxTextLength: 100,
+    ),
+    type: DriftSqlType.string,
+    requiredDuringInsert: true,
+  );
+  static const VerificationMeta _sizeInHectaresMeta = const VerificationMeta(
+    'sizeInHectares',
+  );
+  @override
+  late final GeneratedColumn<double> sizeInHectares = GeneratedColumn<double>(
+    'size_in_hectares',
+    aliasedName,
+    true,
+    type: DriftSqlType.double,
+    requiredDuringInsert: false,
+  );
   @override
   List<GeneratedColumn> get $columns => [
-    id,
-    name,
-    sizeInHectares,
+    uuid,
     createdAt,
     updatedAt,
     isDeleted,
+    id,
+    name,
+    sizeInHectares,
   ];
   @override
   String get aliasedName => _alias ?? actualTableName;
@@ -4329,24 +4855,10 @@ class $FarmAreasTable extends FarmAreas
   }) {
     final context = VerificationContext();
     final data = instance.toColumns(true);
-    if (data.containsKey('id')) {
-      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
-    }
-    if (data.containsKey('name')) {
+    if (data.containsKey('uuid')) {
       context.handle(
-        _nameMeta,
-        name.isAcceptableOrUnknown(data['name']!, _nameMeta),
-      );
-    } else if (isInserting) {
-      context.missing(_nameMeta);
-    }
-    if (data.containsKey('size_in_hectares')) {
-      context.handle(
-        _sizeInHectaresMeta,
-        sizeInHectares.isAcceptableOrUnknown(
-          data['size_in_hectares']!,
-          _sizeInHectaresMeta,
-        ),
+        _uuidMeta,
+        uuid.isAcceptableOrUnknown(data['uuid']!, _uuidMeta),
       );
     }
     if (data.containsKey('created_at')) {
@@ -4367,6 +4879,26 @@ class $FarmAreasTable extends FarmAreas
         isDeleted.isAcceptableOrUnknown(data['is_deleted']!, _isDeletedMeta),
       );
     }
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    }
+    if (data.containsKey('name')) {
+      context.handle(
+        _nameMeta,
+        name.isAcceptableOrUnknown(data['name']!, _nameMeta),
+      );
+    } else if (isInserting) {
+      context.missing(_nameMeta);
+    }
+    if (data.containsKey('size_in_hectares')) {
+      context.handle(
+        _sizeInHectaresMeta,
+        sizeInHectares.isAcceptableOrUnknown(
+          data['size_in_hectares']!,
+          _sizeInHectaresMeta,
+        ),
+      );
+    }
     return context;
   }
 
@@ -4376,18 +4908,10 @@ class $FarmAreasTable extends FarmAreas
   FarmArea map(Map<String, dynamic> data, {String? tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
     return FarmArea(
-      id: attachedDatabase.typeMapping.read(
-        DriftSqlType.int,
-        data['${effectivePrefix}id'],
-      )!,
-      name: attachedDatabase.typeMapping.read(
+      uuid: attachedDatabase.typeMapping.read(
         DriftSqlType.string,
-        data['${effectivePrefix}name'],
+        data['${effectivePrefix}uuid'],
       )!,
-      sizeInHectares: attachedDatabase.typeMapping.read(
-        DriftSqlType.double,
-        data['${effectivePrefix}size_in_hectares'],
-      ),
       createdAt: attachedDatabase.typeMapping.read(
         DriftSqlType.dateTime,
         data['${effectivePrefix}created_at'],
@@ -4400,6 +4924,18 @@ class $FarmAreasTable extends FarmAreas
         DriftSqlType.bool,
         data['${effectivePrefix}is_deleted'],
       )!,
+      id: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}id'],
+      )!,
+      name: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}name'],
+      )!,
+      sizeInHectares: attachedDatabase.typeMapping.read(
+        DriftSqlType.double,
+        data['${effectivePrefix}size_in_hectares'],
+      ),
     );
   }
 
@@ -4410,44 +4946,48 @@ class $FarmAreasTable extends FarmAreas
 }
 
 class FarmArea extends DataClass implements Insertable<FarmArea> {
-  final int id;
-  final String name;
-  final double? sizeInHectares;
+  final String uuid;
   final DateTime createdAt;
   final DateTime updatedAt;
   final bool isDeleted;
+  final int id;
+  final String name;
+  final double? sizeInHectares;
   const FarmArea({
-    required this.id,
-    required this.name,
-    this.sizeInHectares,
+    required this.uuid,
     required this.createdAt,
     required this.updatedAt,
     required this.isDeleted,
+    required this.id,
+    required this.name,
+    this.sizeInHectares,
   });
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
+    map['uuid'] = Variable<String>(uuid);
+    map['created_at'] = Variable<DateTime>(createdAt);
+    map['updated_at'] = Variable<DateTime>(updatedAt);
+    map['is_deleted'] = Variable<bool>(isDeleted);
     map['id'] = Variable<int>(id);
     map['name'] = Variable<String>(name);
     if (!nullToAbsent || sizeInHectares != null) {
       map['size_in_hectares'] = Variable<double>(sizeInHectares);
     }
-    map['created_at'] = Variable<DateTime>(createdAt);
-    map['updated_at'] = Variable<DateTime>(updatedAt);
-    map['is_deleted'] = Variable<bool>(isDeleted);
     return map;
   }
 
   FarmAreasCompanion toCompanion(bool nullToAbsent) {
     return FarmAreasCompanion(
+      uuid: Value(uuid),
+      createdAt: Value(createdAt),
+      updatedAt: Value(updatedAt),
+      isDeleted: Value(isDeleted),
       id: Value(id),
       name: Value(name),
       sizeInHectares: sizeInHectares == null && nullToAbsent
           ? const Value.absent()
           : Value(sizeInHectares),
-      createdAt: Value(createdAt),
-      updatedAt: Value(updatedAt),
-      isDeleted: Value(isDeleted),
     );
   }
 
@@ -4457,155 +4997,170 @@ class FarmArea extends DataClass implements Insertable<FarmArea> {
   }) {
     serializer ??= driftRuntimeOptions.defaultSerializer;
     return FarmArea(
-      id: serializer.fromJson<int>(json['id']),
-      name: serializer.fromJson<String>(json['name']),
-      sizeInHectares: serializer.fromJson<double?>(json['sizeInHectares']),
+      uuid: serializer.fromJson<String>(json['uuid']),
       createdAt: serializer.fromJson<DateTime>(json['createdAt']),
       updatedAt: serializer.fromJson<DateTime>(json['updatedAt']),
       isDeleted: serializer.fromJson<bool>(json['isDeleted']),
+      id: serializer.fromJson<int>(json['id']),
+      name: serializer.fromJson<String>(json['name']),
+      sizeInHectares: serializer.fromJson<double?>(json['sizeInHectares']),
     );
   }
   @override
   Map<String, dynamic> toJson({ValueSerializer? serializer}) {
     serializer ??= driftRuntimeOptions.defaultSerializer;
     return <String, dynamic>{
-      'id': serializer.toJson<int>(id),
-      'name': serializer.toJson<String>(name),
-      'sizeInHectares': serializer.toJson<double?>(sizeInHectares),
+      'uuid': serializer.toJson<String>(uuid),
       'createdAt': serializer.toJson<DateTime>(createdAt),
       'updatedAt': serializer.toJson<DateTime>(updatedAt),
       'isDeleted': serializer.toJson<bool>(isDeleted),
+      'id': serializer.toJson<int>(id),
+      'name': serializer.toJson<String>(name),
+      'sizeInHectares': serializer.toJson<double?>(sizeInHectares),
     };
   }
 
   FarmArea copyWith({
-    int? id,
-    String? name,
-    Value<double?> sizeInHectares = const Value.absent(),
+    String? uuid,
     DateTime? createdAt,
     DateTime? updatedAt,
     bool? isDeleted,
+    int? id,
+    String? name,
+    Value<double?> sizeInHectares = const Value.absent(),
   }) => FarmArea(
+    uuid: uuid ?? this.uuid,
+    createdAt: createdAt ?? this.createdAt,
+    updatedAt: updatedAt ?? this.updatedAt,
+    isDeleted: isDeleted ?? this.isDeleted,
     id: id ?? this.id,
     name: name ?? this.name,
     sizeInHectares: sizeInHectares.present
         ? sizeInHectares.value
         : this.sizeInHectares,
-    createdAt: createdAt ?? this.createdAt,
-    updatedAt: updatedAt ?? this.updatedAt,
-    isDeleted: isDeleted ?? this.isDeleted,
   );
   FarmArea copyWithCompanion(FarmAreasCompanion data) {
     return FarmArea(
+      uuid: data.uuid.present ? data.uuid.value : this.uuid,
+      createdAt: data.createdAt.present ? data.createdAt.value : this.createdAt,
+      updatedAt: data.updatedAt.present ? data.updatedAt.value : this.updatedAt,
+      isDeleted: data.isDeleted.present ? data.isDeleted.value : this.isDeleted,
       id: data.id.present ? data.id.value : this.id,
       name: data.name.present ? data.name.value : this.name,
       sizeInHectares: data.sizeInHectares.present
           ? data.sizeInHectares.value
           : this.sizeInHectares,
-      createdAt: data.createdAt.present ? data.createdAt.value : this.createdAt,
-      updatedAt: data.updatedAt.present ? data.updatedAt.value : this.updatedAt,
-      isDeleted: data.isDeleted.present ? data.isDeleted.value : this.isDeleted,
     );
   }
 
   @override
   String toString() {
     return (StringBuffer('FarmArea(')
-          ..write('id: $id, ')
-          ..write('name: $name, ')
-          ..write('sizeInHectares: $sizeInHectares, ')
+          ..write('uuid: $uuid, ')
           ..write('createdAt: $createdAt, ')
           ..write('updatedAt: $updatedAt, ')
-          ..write('isDeleted: $isDeleted')
+          ..write('isDeleted: $isDeleted, ')
+          ..write('id: $id, ')
+          ..write('name: $name, ')
+          ..write('sizeInHectares: $sizeInHectares')
           ..write(')'))
         .toString();
   }
 
   @override
-  int get hashCode =>
-      Object.hash(id, name, sizeInHectares, createdAt, updatedAt, isDeleted);
+  int get hashCode => Object.hash(
+    uuid,
+    createdAt,
+    updatedAt,
+    isDeleted,
+    id,
+    name,
+    sizeInHectares,
+  );
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
       (other is FarmArea &&
-          other.id == this.id &&
-          other.name == this.name &&
-          other.sizeInHectares == this.sizeInHectares &&
+          other.uuid == this.uuid &&
           other.createdAt == this.createdAt &&
           other.updatedAt == this.updatedAt &&
-          other.isDeleted == this.isDeleted);
+          other.isDeleted == this.isDeleted &&
+          other.id == this.id &&
+          other.name == this.name &&
+          other.sizeInHectares == this.sizeInHectares);
 }
 
 class FarmAreasCompanion extends UpdateCompanion<FarmArea> {
-  final Value<int> id;
-  final Value<String> name;
-  final Value<double?> sizeInHectares;
+  final Value<String> uuid;
   final Value<DateTime> createdAt;
   final Value<DateTime> updatedAt;
   final Value<bool> isDeleted;
+  final Value<int> id;
+  final Value<String> name;
+  final Value<double?> sizeInHectares;
   const FarmAreasCompanion({
+    this.uuid = const Value.absent(),
+    this.createdAt = const Value.absent(),
+    this.updatedAt = const Value.absent(),
+    this.isDeleted = const Value.absent(),
     this.id = const Value.absent(),
     this.name = const Value.absent(),
     this.sizeInHectares = const Value.absent(),
+  });
+  FarmAreasCompanion.insert({
+    this.uuid = const Value.absent(),
     this.createdAt = const Value.absent(),
     this.updatedAt = const Value.absent(),
     this.isDeleted = const Value.absent(),
-  });
-  FarmAreasCompanion.insert({
     this.id = const Value.absent(),
     required String name,
     this.sizeInHectares = const Value.absent(),
-    this.createdAt = const Value.absent(),
-    this.updatedAt = const Value.absent(),
-    this.isDeleted = const Value.absent(),
   }) : name = Value(name);
   static Insertable<FarmArea> custom({
-    Expression<int>? id,
-    Expression<String>? name,
-    Expression<double>? sizeInHectares,
+    Expression<String>? uuid,
     Expression<DateTime>? createdAt,
     Expression<DateTime>? updatedAt,
     Expression<bool>? isDeleted,
+    Expression<int>? id,
+    Expression<String>? name,
+    Expression<double>? sizeInHectares,
   }) {
     return RawValuesInsertable({
-      if (id != null) 'id': id,
-      if (name != null) 'name': name,
-      if (sizeInHectares != null) 'size_in_hectares': sizeInHectares,
+      if (uuid != null) 'uuid': uuid,
       if (createdAt != null) 'created_at': createdAt,
       if (updatedAt != null) 'updated_at': updatedAt,
       if (isDeleted != null) 'is_deleted': isDeleted,
+      if (id != null) 'id': id,
+      if (name != null) 'name': name,
+      if (sizeInHectares != null) 'size_in_hectares': sizeInHectares,
     });
   }
 
   FarmAreasCompanion copyWith({
-    Value<int>? id,
-    Value<String>? name,
-    Value<double?>? sizeInHectares,
+    Value<String>? uuid,
     Value<DateTime>? createdAt,
     Value<DateTime>? updatedAt,
     Value<bool>? isDeleted,
+    Value<int>? id,
+    Value<String>? name,
+    Value<double?>? sizeInHectares,
   }) {
     return FarmAreasCompanion(
-      id: id ?? this.id,
-      name: name ?? this.name,
-      sizeInHectares: sizeInHectares ?? this.sizeInHectares,
+      uuid: uuid ?? this.uuid,
       createdAt: createdAt ?? this.createdAt,
       updatedAt: updatedAt ?? this.updatedAt,
       isDeleted: isDeleted ?? this.isDeleted,
+      id: id ?? this.id,
+      name: name ?? this.name,
+      sizeInHectares: sizeInHectares ?? this.sizeInHectares,
     );
   }
 
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
-    if (id.present) {
-      map['id'] = Variable<int>(id.value);
-    }
-    if (name.present) {
-      map['name'] = Variable<String>(name.value);
-    }
-    if (sizeInHectares.present) {
-      map['size_in_hectares'] = Variable<double>(sizeInHectares.value);
+    if (uuid.present) {
+      map['uuid'] = Variable<String>(uuid.value);
     }
     if (createdAt.present) {
       map['created_at'] = Variable<DateTime>(createdAt.value);
@@ -4616,18 +5171,28 @@ class FarmAreasCompanion extends UpdateCompanion<FarmArea> {
     if (isDeleted.present) {
       map['is_deleted'] = Variable<bool>(isDeleted.value);
     }
+    if (id.present) {
+      map['id'] = Variable<int>(id.value);
+    }
+    if (name.present) {
+      map['name'] = Variable<String>(name.value);
+    }
+    if (sizeInHectares.present) {
+      map['size_in_hectares'] = Variable<double>(sizeInHectares.value);
+    }
     return map;
   }
 
   @override
   String toString() {
     return (StringBuffer('FarmAreasCompanion(')
-          ..write('id: $id, ')
-          ..write('name: $name, ')
-          ..write('sizeInHectares: $sizeInHectares, ')
+          ..write('uuid: $uuid, ')
           ..write('createdAt: $createdAt, ')
           ..write('updatedAt: $updatedAt, ')
-          ..write('isDeleted: $isDeleted')
+          ..write('isDeleted: $isDeleted, ')
+          ..write('id: $id, ')
+          ..write('name: $name, ')
+          ..write('sizeInHectares: $sizeInHectares')
           ..write(')'))
         .toString();
   }
@@ -4639,6 +5204,55 @@ class $FarmProductionsTable extends FarmProductions
   final GeneratedDatabase attachedDatabase;
   final String? _alias;
   $FarmProductionsTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _uuidMeta = const VerificationMeta('uuid');
+  @override
+  late final GeneratedColumn<String> uuid = GeneratedColumn<String>(
+    'uuid',
+    aliasedName,
+    false,
+    type: DriftSqlType.string,
+    requiredDuringInsert: false,
+    clientDefault: () => uuidGenerator.v4(),
+  );
+  static const VerificationMeta _createdAtMeta = const VerificationMeta(
+    'createdAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> createdAt = GeneratedColumn<DateTime>(
+    'created_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: false,
+    defaultValue: currentDateAndTime,
+  );
+  static const VerificationMeta _updatedAtMeta = const VerificationMeta(
+    'updatedAt',
+  );
+  @override
+  late final GeneratedColumn<DateTime> updatedAt = GeneratedColumn<DateTime>(
+    'updated_at',
+    aliasedName,
+    false,
+    type: DriftSqlType.dateTime,
+    requiredDuringInsert: false,
+    defaultValue: currentDateAndTime,
+  );
+  static const VerificationMeta _isDeletedMeta = const VerificationMeta(
+    'isDeleted',
+  );
+  @override
+  late final GeneratedColumn<bool> isDeleted = GeneratedColumn<bool>(
+    'is_deleted',
+    aliasedName,
+    false,
+    type: DriftSqlType.bool,
+    requiredDuringInsert: false,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'CHECK ("is_deleted" IN (0, 1))',
+    ),
+    defaultValue: const Constant(false),
+  );
   static const VerificationMeta _idMeta = const VerificationMeta('id');
   @override
   late final GeneratedColumn<int> id = GeneratedColumn<int>(
@@ -4664,6 +5278,20 @@ class $FarmProductionsTable extends FarmProductions
     requiredDuringInsert: true,
     defaultConstraints: GeneratedColumn.constraintIsAlways(
       'REFERENCES farm_products (id)',
+    ),
+  );
+  static const VerificationMeta _productionAreaIdMeta = const VerificationMeta(
+    'productionAreaId',
+  );
+  @override
+  late final GeneratedColumn<int> productionAreaId = GeneratedColumn<int>(
+    'production_area_id',
+    aliasedName,
+    false,
+    type: DriftSqlType.int,
+    requiredDuringInsert: true,
+    defaultConstraints: GeneratedColumn.constraintIsAlways(
+      'REFERENCES farm_areas (id)',
     ),
   );
   static const VerificationMeta _quantityMeta = const VerificationMeta(
@@ -4709,71 +5337,19 @@ class $FarmProductionsTable extends FarmProductions
     type: DriftSqlType.dateTime,
     requiredDuringInsert: true,
   );
-  static const VerificationMeta _productionAreaIdMeta = const VerificationMeta(
-    'productionAreaId',
-  );
-  @override
-  late final GeneratedColumn<int> productionAreaId = GeneratedColumn<int>(
-    'production_area_id',
-    aliasedName,
-    false,
-    type: DriftSqlType.int,
-    requiredDuringInsert: true,
-    defaultConstraints: GeneratedColumn.constraintIsAlways(
-      'REFERENCES farm_areas (id)',
-    ),
-  );
-  static const VerificationMeta _createdAtMeta = const VerificationMeta(
-    'createdAt',
-  );
-  @override
-  late final GeneratedColumn<DateTime> createdAt = GeneratedColumn<DateTime>(
-    'created_at',
-    aliasedName,
-    false,
-    type: DriftSqlType.dateTime,
-    requiredDuringInsert: false,
-    defaultValue: currentDateAndTime,
-  );
-  static const VerificationMeta _updatedAtMeta = const VerificationMeta(
-    'updatedAt',
-  );
-  @override
-  late final GeneratedColumn<DateTime> updatedAt = GeneratedColumn<DateTime>(
-    'updated_at',
-    aliasedName,
-    false,
-    type: DriftSqlType.dateTime,
-    requiredDuringInsert: false,
-    defaultValue: currentDateAndTime,
-  );
-  static const VerificationMeta _isDeletedMeta = const VerificationMeta(
-    'isDeleted',
-  );
-  @override
-  late final GeneratedColumn<bool> isDeleted = GeneratedColumn<bool>(
-    'is_deleted',
-    aliasedName,
-    false,
-    type: DriftSqlType.bool,
-    requiredDuringInsert: false,
-    defaultConstraints: GeneratedColumn.constraintIsAlways(
-      'CHECK ("is_deleted" IN (0, 1))',
-    ),
-    defaultValue: const Constant(false),
-  );
   @override
   List<GeneratedColumn> get $columns => [
+    uuid,
+    createdAt,
+    updatedAt,
+    isDeleted,
     id,
     productId,
+    productionAreaId,
     quantity,
     unitPriceInCents,
     productionCostInCents,
     harvestDate,
-    productionAreaId,
-    createdAt,
-    updatedAt,
-    isDeleted,
   ];
   @override
   String get aliasedName => _alias ?? actualTableName;
@@ -4787,6 +5363,30 @@ class $FarmProductionsTable extends FarmProductions
   }) {
     final context = VerificationContext();
     final data = instance.toColumns(true);
+    if (data.containsKey('uuid')) {
+      context.handle(
+        _uuidMeta,
+        uuid.isAcceptableOrUnknown(data['uuid']!, _uuidMeta),
+      );
+    }
+    if (data.containsKey('created_at')) {
+      context.handle(
+        _createdAtMeta,
+        createdAt.isAcceptableOrUnknown(data['created_at']!, _createdAtMeta),
+      );
+    }
+    if (data.containsKey('updated_at')) {
+      context.handle(
+        _updatedAtMeta,
+        updatedAt.isAcceptableOrUnknown(data['updated_at']!, _updatedAtMeta),
+      );
+    }
+    if (data.containsKey('is_deleted')) {
+      context.handle(
+        _isDeletedMeta,
+        isDeleted.isAcceptableOrUnknown(data['is_deleted']!, _isDeletedMeta),
+      );
+    }
     if (data.containsKey('id')) {
       context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
     }
@@ -4797,6 +5397,17 @@ class $FarmProductionsTable extends FarmProductions
       );
     } else if (isInserting) {
       context.missing(_productIdMeta);
+    }
+    if (data.containsKey('production_area_id')) {
+      context.handle(
+        _productionAreaIdMeta,
+        productionAreaId.isAcceptableOrUnknown(
+          data['production_area_id']!,
+          _productionAreaIdMeta,
+        ),
+      );
+    } else if (isInserting) {
+      context.missing(_productionAreaIdMeta);
     }
     if (data.containsKey('quantity')) {
       context.handle(
@@ -4839,35 +5450,6 @@ class $FarmProductionsTable extends FarmProductions
     } else if (isInserting) {
       context.missing(_harvestDateMeta);
     }
-    if (data.containsKey('production_area_id')) {
-      context.handle(
-        _productionAreaIdMeta,
-        productionAreaId.isAcceptableOrUnknown(
-          data['production_area_id']!,
-          _productionAreaIdMeta,
-        ),
-      );
-    } else if (isInserting) {
-      context.missing(_productionAreaIdMeta);
-    }
-    if (data.containsKey('created_at')) {
-      context.handle(
-        _createdAtMeta,
-        createdAt.isAcceptableOrUnknown(data['created_at']!, _createdAtMeta),
-      );
-    }
-    if (data.containsKey('updated_at')) {
-      context.handle(
-        _updatedAtMeta,
-        updatedAt.isAcceptableOrUnknown(data['updated_at']!, _updatedAtMeta),
-      );
-    }
-    if (data.containsKey('is_deleted')) {
-      context.handle(
-        _isDeletedMeta,
-        isDeleted.isAcceptableOrUnknown(data['is_deleted']!, _isDeletedMeta),
-      );
-    }
     return context;
   }
 
@@ -4877,6 +5459,22 @@ class $FarmProductionsTable extends FarmProductions
   FarmProduction map(Map<String, dynamic> data, {String? tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
     return FarmProduction(
+      uuid: attachedDatabase.typeMapping.read(
+        DriftSqlType.string,
+        data['${effectivePrefix}uuid'],
+      )!,
+      createdAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}created_at'],
+      )!,
+      updatedAt: attachedDatabase.typeMapping.read(
+        DriftSqlType.dateTime,
+        data['${effectivePrefix}updated_at'],
+      )!,
+      isDeleted: attachedDatabase.typeMapping.read(
+        DriftSqlType.bool,
+        data['${effectivePrefix}is_deleted'],
+      )!,
       id: attachedDatabase.typeMapping.read(
         DriftSqlType.int,
         data['${effectivePrefix}id'],
@@ -4884,6 +5482,10 @@ class $FarmProductionsTable extends FarmProductions
       productId: attachedDatabase.typeMapping.read(
         DriftSqlType.int,
         data['${effectivePrefix}product_id'],
+      )!,
+      productionAreaId: attachedDatabase.typeMapping.read(
+        DriftSqlType.int,
+        data['${effectivePrefix}production_area_id'],
       )!,
       quantity: attachedDatabase.typeMapping.read(
         DriftSqlType.double,
@@ -4901,22 +5503,6 @@ class $FarmProductionsTable extends FarmProductions
         DriftSqlType.dateTime,
         data['${effectivePrefix}harvest_date'],
       )!,
-      productionAreaId: attachedDatabase.typeMapping.read(
-        DriftSqlType.int,
-        data['${effectivePrefix}production_area_id'],
-      )!,
-      createdAt: attachedDatabase.typeMapping.read(
-        DriftSqlType.dateTime,
-        data['${effectivePrefix}created_at'],
-      )!,
-      updatedAt: attachedDatabase.typeMapping.read(
-        DriftSqlType.dateTime,
-        data['${effectivePrefix}updated_at'],
-      )!,
-      isDeleted: attachedDatabase.typeMapping.read(
-        DriftSqlType.bool,
-        data['${effectivePrefix}is_deleted'],
-      )!,
     );
   }
 
@@ -4927,56 +5513,60 @@ class $FarmProductionsTable extends FarmProductions
 }
 
 class FarmProduction extends DataClass implements Insertable<FarmProduction> {
+  final String uuid;
+  final DateTime createdAt;
+  final DateTime updatedAt;
+  final bool isDeleted;
   final int id;
   final int productId;
+  final int productionAreaId;
   final double quantity;
   final int unitPriceInCents;
   final int productionCostInCents;
   final DateTime harvestDate;
-  final int productionAreaId;
-  final DateTime createdAt;
-  final DateTime updatedAt;
-  final bool isDeleted;
   const FarmProduction({
+    required this.uuid,
+    required this.createdAt,
+    required this.updatedAt,
+    required this.isDeleted,
     required this.id,
     required this.productId,
+    required this.productionAreaId,
     required this.quantity,
     required this.unitPriceInCents,
     required this.productionCostInCents,
     required this.harvestDate,
-    required this.productionAreaId,
-    required this.createdAt,
-    required this.updatedAt,
-    required this.isDeleted,
   });
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
+    map['uuid'] = Variable<String>(uuid);
+    map['created_at'] = Variable<DateTime>(createdAt);
+    map['updated_at'] = Variable<DateTime>(updatedAt);
+    map['is_deleted'] = Variable<bool>(isDeleted);
     map['id'] = Variable<int>(id);
     map['product_id'] = Variable<int>(productId);
+    map['production_area_id'] = Variable<int>(productionAreaId);
     map['quantity'] = Variable<double>(quantity);
     map['unit_price_in_cents'] = Variable<int>(unitPriceInCents);
     map['production_cost_in_cents'] = Variable<int>(productionCostInCents);
     map['harvest_date'] = Variable<DateTime>(harvestDate);
-    map['production_area_id'] = Variable<int>(productionAreaId);
-    map['created_at'] = Variable<DateTime>(createdAt);
-    map['updated_at'] = Variable<DateTime>(updatedAt);
-    map['is_deleted'] = Variable<bool>(isDeleted);
     return map;
   }
 
   FarmProductionsCompanion toCompanion(bool nullToAbsent) {
     return FarmProductionsCompanion(
+      uuid: Value(uuid),
+      createdAt: Value(createdAt),
+      updatedAt: Value(updatedAt),
+      isDeleted: Value(isDeleted),
       id: Value(id),
       productId: Value(productId),
+      productionAreaId: Value(productionAreaId),
       quantity: Value(quantity),
       unitPriceInCents: Value(unitPriceInCents),
       productionCostInCents: Value(productionCostInCents),
       harvestDate: Value(harvestDate),
-      productionAreaId: Value(productionAreaId),
-      createdAt: Value(createdAt),
-      updatedAt: Value(updatedAt),
-      isDeleted: Value(isDeleted),
     );
   }
 
@@ -4986,64 +5576,75 @@ class FarmProduction extends DataClass implements Insertable<FarmProduction> {
   }) {
     serializer ??= driftRuntimeOptions.defaultSerializer;
     return FarmProduction(
+      uuid: serializer.fromJson<String>(json['uuid']),
+      createdAt: serializer.fromJson<DateTime>(json['createdAt']),
+      updatedAt: serializer.fromJson<DateTime>(json['updatedAt']),
+      isDeleted: serializer.fromJson<bool>(json['isDeleted']),
       id: serializer.fromJson<int>(json['id']),
       productId: serializer.fromJson<int>(json['productId']),
+      productionAreaId: serializer.fromJson<int>(json['productionAreaId']),
       quantity: serializer.fromJson<double>(json['quantity']),
       unitPriceInCents: serializer.fromJson<int>(json['unitPriceInCents']),
       productionCostInCents: serializer.fromJson<int>(
         json['productionCostInCents'],
       ),
       harvestDate: serializer.fromJson<DateTime>(json['harvestDate']),
-      productionAreaId: serializer.fromJson<int>(json['productionAreaId']),
-      createdAt: serializer.fromJson<DateTime>(json['createdAt']),
-      updatedAt: serializer.fromJson<DateTime>(json['updatedAt']),
-      isDeleted: serializer.fromJson<bool>(json['isDeleted']),
     );
   }
   @override
   Map<String, dynamic> toJson({ValueSerializer? serializer}) {
     serializer ??= driftRuntimeOptions.defaultSerializer;
     return <String, dynamic>{
+      'uuid': serializer.toJson<String>(uuid),
+      'createdAt': serializer.toJson<DateTime>(createdAt),
+      'updatedAt': serializer.toJson<DateTime>(updatedAt),
+      'isDeleted': serializer.toJson<bool>(isDeleted),
       'id': serializer.toJson<int>(id),
       'productId': serializer.toJson<int>(productId),
+      'productionAreaId': serializer.toJson<int>(productionAreaId),
       'quantity': serializer.toJson<double>(quantity),
       'unitPriceInCents': serializer.toJson<int>(unitPriceInCents),
       'productionCostInCents': serializer.toJson<int>(productionCostInCents),
       'harvestDate': serializer.toJson<DateTime>(harvestDate),
-      'productionAreaId': serializer.toJson<int>(productionAreaId),
-      'createdAt': serializer.toJson<DateTime>(createdAt),
-      'updatedAt': serializer.toJson<DateTime>(updatedAt),
-      'isDeleted': serializer.toJson<bool>(isDeleted),
     };
   }
 
   FarmProduction copyWith({
+    String? uuid,
+    DateTime? createdAt,
+    DateTime? updatedAt,
+    bool? isDeleted,
     int? id,
     int? productId,
+    int? productionAreaId,
     double? quantity,
     int? unitPriceInCents,
     int? productionCostInCents,
     DateTime? harvestDate,
-    int? productionAreaId,
-    DateTime? createdAt,
-    DateTime? updatedAt,
-    bool? isDeleted,
   }) => FarmProduction(
+    uuid: uuid ?? this.uuid,
+    createdAt: createdAt ?? this.createdAt,
+    updatedAt: updatedAt ?? this.updatedAt,
+    isDeleted: isDeleted ?? this.isDeleted,
     id: id ?? this.id,
     productId: productId ?? this.productId,
+    productionAreaId: productionAreaId ?? this.productionAreaId,
     quantity: quantity ?? this.quantity,
     unitPriceInCents: unitPriceInCents ?? this.unitPriceInCents,
     productionCostInCents: productionCostInCents ?? this.productionCostInCents,
     harvestDate: harvestDate ?? this.harvestDate,
-    productionAreaId: productionAreaId ?? this.productionAreaId,
-    createdAt: createdAt ?? this.createdAt,
-    updatedAt: updatedAt ?? this.updatedAt,
-    isDeleted: isDeleted ?? this.isDeleted,
   );
   FarmProduction copyWithCompanion(FarmProductionsCompanion data) {
     return FarmProduction(
+      uuid: data.uuid.present ? data.uuid.value : this.uuid,
+      createdAt: data.createdAt.present ? data.createdAt.value : this.createdAt,
+      updatedAt: data.updatedAt.present ? data.updatedAt.value : this.updatedAt,
+      isDeleted: data.isDeleted.present ? data.isDeleted.value : this.isDeleted,
       id: data.id.present ? data.id.value : this.id,
       productId: data.productId.present ? data.productId.value : this.productId,
+      productionAreaId: data.productionAreaId.present
+          ? data.productionAreaId.value
+          : this.productionAreaId,
       quantity: data.quantity.present ? data.quantity.value : this.quantity,
       unitPriceInCents: data.unitPriceInCents.present
           ? data.unitPriceInCents.value
@@ -5054,163 +5655,182 @@ class FarmProduction extends DataClass implements Insertable<FarmProduction> {
       harvestDate: data.harvestDate.present
           ? data.harvestDate.value
           : this.harvestDate,
-      productionAreaId: data.productionAreaId.present
-          ? data.productionAreaId.value
-          : this.productionAreaId,
-      createdAt: data.createdAt.present ? data.createdAt.value : this.createdAt,
-      updatedAt: data.updatedAt.present ? data.updatedAt.value : this.updatedAt,
-      isDeleted: data.isDeleted.present ? data.isDeleted.value : this.isDeleted,
     );
   }
 
   @override
   String toString() {
     return (StringBuffer('FarmProduction(')
+          ..write('uuid: $uuid, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('updatedAt: $updatedAt, ')
+          ..write('isDeleted: $isDeleted, ')
           ..write('id: $id, ')
           ..write('productId: $productId, ')
+          ..write('productionAreaId: $productionAreaId, ')
           ..write('quantity: $quantity, ')
           ..write('unitPriceInCents: $unitPriceInCents, ')
           ..write('productionCostInCents: $productionCostInCents, ')
-          ..write('harvestDate: $harvestDate, ')
-          ..write('productionAreaId: $productionAreaId, ')
-          ..write('createdAt: $createdAt, ')
-          ..write('updatedAt: $updatedAt, ')
-          ..write('isDeleted: $isDeleted')
+          ..write('harvestDate: $harvestDate')
           ..write(')'))
         .toString();
   }
 
   @override
   int get hashCode => Object.hash(
+    uuid,
+    createdAt,
+    updatedAt,
+    isDeleted,
     id,
     productId,
+    productionAreaId,
     quantity,
     unitPriceInCents,
     productionCostInCents,
     harvestDate,
-    productionAreaId,
-    createdAt,
-    updatedAt,
-    isDeleted,
   );
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
       (other is FarmProduction &&
+          other.uuid == this.uuid &&
+          other.createdAt == this.createdAt &&
+          other.updatedAt == this.updatedAt &&
+          other.isDeleted == this.isDeleted &&
           other.id == this.id &&
           other.productId == this.productId &&
+          other.productionAreaId == this.productionAreaId &&
           other.quantity == this.quantity &&
           other.unitPriceInCents == this.unitPriceInCents &&
           other.productionCostInCents == this.productionCostInCents &&
-          other.harvestDate == this.harvestDate &&
-          other.productionAreaId == this.productionAreaId &&
-          other.createdAt == this.createdAt &&
-          other.updatedAt == this.updatedAt &&
-          other.isDeleted == this.isDeleted);
+          other.harvestDate == this.harvestDate);
 }
 
 class FarmProductionsCompanion extends UpdateCompanion<FarmProduction> {
+  final Value<String> uuid;
+  final Value<DateTime> createdAt;
+  final Value<DateTime> updatedAt;
+  final Value<bool> isDeleted;
   final Value<int> id;
   final Value<int> productId;
+  final Value<int> productionAreaId;
   final Value<double> quantity;
   final Value<int> unitPriceInCents;
   final Value<int> productionCostInCents;
   final Value<DateTime> harvestDate;
-  final Value<int> productionAreaId;
-  final Value<DateTime> createdAt;
-  final Value<DateTime> updatedAt;
-  final Value<bool> isDeleted;
   const FarmProductionsCompanion({
+    this.uuid = const Value.absent(),
+    this.createdAt = const Value.absent(),
+    this.updatedAt = const Value.absent(),
+    this.isDeleted = const Value.absent(),
     this.id = const Value.absent(),
     this.productId = const Value.absent(),
+    this.productionAreaId = const Value.absent(),
     this.quantity = const Value.absent(),
     this.unitPriceInCents = const Value.absent(),
     this.productionCostInCents = const Value.absent(),
     this.harvestDate = const Value.absent(),
-    this.productionAreaId = const Value.absent(),
+  });
+  FarmProductionsCompanion.insert({
+    this.uuid = const Value.absent(),
     this.createdAt = const Value.absent(),
     this.updatedAt = const Value.absent(),
     this.isDeleted = const Value.absent(),
-  });
-  FarmProductionsCompanion.insert({
     this.id = const Value.absent(),
     required int productId,
+    required int productionAreaId,
     required double quantity,
     required int unitPriceInCents,
     required int productionCostInCents,
     required DateTime harvestDate,
-    required int productionAreaId,
-    this.createdAt = const Value.absent(),
-    this.updatedAt = const Value.absent(),
-    this.isDeleted = const Value.absent(),
   }) : productId = Value(productId),
+       productionAreaId = Value(productionAreaId),
        quantity = Value(quantity),
        unitPriceInCents = Value(unitPriceInCents),
        productionCostInCents = Value(productionCostInCents),
-       harvestDate = Value(harvestDate),
-       productionAreaId = Value(productionAreaId);
+       harvestDate = Value(harvestDate);
   static Insertable<FarmProduction> custom({
+    Expression<String>? uuid,
+    Expression<DateTime>? createdAt,
+    Expression<DateTime>? updatedAt,
+    Expression<bool>? isDeleted,
     Expression<int>? id,
     Expression<int>? productId,
+    Expression<int>? productionAreaId,
     Expression<double>? quantity,
     Expression<int>? unitPriceInCents,
     Expression<int>? productionCostInCents,
     Expression<DateTime>? harvestDate,
-    Expression<int>? productionAreaId,
-    Expression<DateTime>? createdAt,
-    Expression<DateTime>? updatedAt,
-    Expression<bool>? isDeleted,
   }) {
     return RawValuesInsertable({
+      if (uuid != null) 'uuid': uuid,
+      if (createdAt != null) 'created_at': createdAt,
+      if (updatedAt != null) 'updated_at': updatedAt,
+      if (isDeleted != null) 'is_deleted': isDeleted,
       if (id != null) 'id': id,
       if (productId != null) 'product_id': productId,
+      if (productionAreaId != null) 'production_area_id': productionAreaId,
       if (quantity != null) 'quantity': quantity,
       if (unitPriceInCents != null) 'unit_price_in_cents': unitPriceInCents,
       if (productionCostInCents != null)
         'production_cost_in_cents': productionCostInCents,
       if (harvestDate != null) 'harvest_date': harvestDate,
-      if (productionAreaId != null) 'production_area_id': productionAreaId,
-      if (createdAt != null) 'created_at': createdAt,
-      if (updatedAt != null) 'updated_at': updatedAt,
-      if (isDeleted != null) 'is_deleted': isDeleted,
     });
   }
 
   FarmProductionsCompanion copyWith({
+    Value<String>? uuid,
+    Value<DateTime>? createdAt,
+    Value<DateTime>? updatedAt,
+    Value<bool>? isDeleted,
     Value<int>? id,
     Value<int>? productId,
+    Value<int>? productionAreaId,
     Value<double>? quantity,
     Value<int>? unitPriceInCents,
     Value<int>? productionCostInCents,
     Value<DateTime>? harvestDate,
-    Value<int>? productionAreaId,
-    Value<DateTime>? createdAt,
-    Value<DateTime>? updatedAt,
-    Value<bool>? isDeleted,
   }) {
     return FarmProductionsCompanion(
+      uuid: uuid ?? this.uuid,
+      createdAt: createdAt ?? this.createdAt,
+      updatedAt: updatedAt ?? this.updatedAt,
+      isDeleted: isDeleted ?? this.isDeleted,
       id: id ?? this.id,
       productId: productId ?? this.productId,
+      productionAreaId: productionAreaId ?? this.productionAreaId,
       quantity: quantity ?? this.quantity,
       unitPriceInCents: unitPriceInCents ?? this.unitPriceInCents,
       productionCostInCents:
           productionCostInCents ?? this.productionCostInCents,
       harvestDate: harvestDate ?? this.harvestDate,
-      productionAreaId: productionAreaId ?? this.productionAreaId,
-      createdAt: createdAt ?? this.createdAt,
-      updatedAt: updatedAt ?? this.updatedAt,
-      isDeleted: isDeleted ?? this.isDeleted,
     );
   }
 
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
+    if (uuid.present) {
+      map['uuid'] = Variable<String>(uuid.value);
+    }
+    if (createdAt.present) {
+      map['created_at'] = Variable<DateTime>(createdAt.value);
+    }
+    if (updatedAt.present) {
+      map['updated_at'] = Variable<DateTime>(updatedAt.value);
+    }
+    if (isDeleted.present) {
+      map['is_deleted'] = Variable<bool>(isDeleted.value);
+    }
     if (id.present) {
       map['id'] = Variable<int>(id.value);
     }
     if (productId.present) {
       map['product_id'] = Variable<int>(productId.value);
+    }
+    if (productionAreaId.present) {
+      map['production_area_id'] = Variable<int>(productionAreaId.value);
     }
     if (quantity.present) {
       map['quantity'] = Variable<double>(quantity.value);
@@ -5226,34 +5846,23 @@ class FarmProductionsCompanion extends UpdateCompanion<FarmProduction> {
     if (harvestDate.present) {
       map['harvest_date'] = Variable<DateTime>(harvestDate.value);
     }
-    if (productionAreaId.present) {
-      map['production_area_id'] = Variable<int>(productionAreaId.value);
-    }
-    if (createdAt.present) {
-      map['created_at'] = Variable<DateTime>(createdAt.value);
-    }
-    if (updatedAt.present) {
-      map['updated_at'] = Variable<DateTime>(updatedAt.value);
-    }
-    if (isDeleted.present) {
-      map['is_deleted'] = Variable<bool>(isDeleted.value);
-    }
     return map;
   }
 
   @override
   String toString() {
     return (StringBuffer('FarmProductionsCompanion(')
+          ..write('uuid: $uuid, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('updatedAt: $updatedAt, ')
+          ..write('isDeleted: $isDeleted, ')
           ..write('id: $id, ')
           ..write('productId: $productId, ')
+          ..write('productionAreaId: $productionAreaId, ')
           ..write('quantity: $quantity, ')
           ..write('unitPriceInCents: $unitPriceInCents, ')
           ..write('productionCostInCents: $productionCostInCents, ')
-          ..write('harvestDate: $harvestDate, ')
-          ..write('productionAreaId: $productionAreaId, ')
-          ..write('createdAt: $createdAt, ')
-          ..write('updatedAt: $updatedAt, ')
-          ..write('isDeleted: $isDeleted')
+          ..write('harvestDate: $harvestDate')
           ..write(')'))
         .toString();
   }
@@ -5268,7 +5877,7 @@ abstract class _$AppDatabase extends GeneratedDatabase {
   late final $FarmStockTable farmStock = $FarmStockTable(this);
   late final $FarmStockMovementsTable farmStockMovements =
       $FarmStockMovementsTable(this);
-  late final $FarmSupplyersTable farmSupplyers = $FarmSupplyersTable(this);
+  late final $FarmSuppliersTable farmSuppliers = $FarmSuppliersTable(this);
   late final $FarmPurchasesTable farmPurchases = $FarmPurchasesTable(this);
   late final $FarmPurchaseItemsTable farmPurchaseItems =
       $FarmPurchaseItemsTable(this);
@@ -5286,7 +5895,7 @@ abstract class _$AppDatabase extends GeneratedDatabase {
     farmProducts,
     farmStock,
     farmStockMovements,
-    farmSupplyers,
+    farmSuppliers,
     farmPurchases,
     farmPurchaseItems,
     farmAreas,
@@ -5296,24 +5905,30 @@ abstract class _$AppDatabase extends GeneratedDatabase {
 
 typedef $$SimulationsTableCreateCompanionBuilder =
     SimulationsCompanion Function({
+      Value<String> uuid,
+      Value<DateTime> createdAt,
+      Value<DateTime> updatedAt,
+      Value<bool> isDeleted,
       Value<int> id,
       required String producerName,
-      required String principalAmount,
-      required String interestRate,
+      required int principalAmountInCents,
+      required int interestRateBasisPoints,
       required int periods,
-      required String totalAmount,
-      Value<DateTime> createdAt,
+      required int totalAmountInCents,
       Value<bool> isSynced,
     });
 typedef $$SimulationsTableUpdateCompanionBuilder =
     SimulationsCompanion Function({
+      Value<String> uuid,
+      Value<DateTime> createdAt,
+      Value<DateTime> updatedAt,
+      Value<bool> isDeleted,
       Value<int> id,
       Value<String> producerName,
-      Value<String> principalAmount,
-      Value<String> interestRate,
+      Value<int> principalAmountInCents,
+      Value<int> interestRateBasisPoints,
       Value<int> periods,
-      Value<String> totalAmount,
-      Value<DateTime> createdAt,
+      Value<int> totalAmountInCents,
       Value<bool> isSynced,
     });
 
@@ -5326,6 +5941,26 @@ class $$SimulationsTableFilterComposer
     super.$addJoinBuilderToRootComposer,
     super.$removeJoinBuilderFromRootComposer,
   });
+  ColumnFilters<String> get uuid => $composableBuilder(
+    column: $table.uuid,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get createdAt => $composableBuilder(
+    column: $table.createdAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get updatedAt => $composableBuilder(
+    column: $table.updatedAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<bool> get isDeleted => $composableBuilder(
+    column: $table.isDeleted,
+    builder: (column) => ColumnFilters(column),
+  );
+
   ColumnFilters<int> get id => $composableBuilder(
     column: $table.id,
     builder: (column) => ColumnFilters(column),
@@ -5336,13 +5971,13 @@ class $$SimulationsTableFilterComposer
     builder: (column) => ColumnFilters(column),
   );
 
-  ColumnFilters<String> get principalAmount => $composableBuilder(
-    column: $table.principalAmount,
+  ColumnFilters<int> get principalAmountInCents => $composableBuilder(
+    column: $table.principalAmountInCents,
     builder: (column) => ColumnFilters(column),
   );
 
-  ColumnFilters<String> get interestRate => $composableBuilder(
-    column: $table.interestRate,
+  ColumnFilters<int> get interestRateBasisPoints => $composableBuilder(
+    column: $table.interestRateBasisPoints,
     builder: (column) => ColumnFilters(column),
   );
 
@@ -5351,13 +5986,8 @@ class $$SimulationsTableFilterComposer
     builder: (column) => ColumnFilters(column),
   );
 
-  ColumnFilters<String> get totalAmount => $composableBuilder(
-    column: $table.totalAmount,
-    builder: (column) => ColumnFilters(column),
-  );
-
-  ColumnFilters<DateTime> get createdAt => $composableBuilder(
-    column: $table.createdAt,
+  ColumnFilters<int> get totalAmountInCents => $composableBuilder(
+    column: $table.totalAmountInCents,
     builder: (column) => ColumnFilters(column),
   );
 
@@ -5376,6 +6006,26 @@ class $$SimulationsTableOrderingComposer
     super.$addJoinBuilderToRootComposer,
     super.$removeJoinBuilderFromRootComposer,
   });
+  ColumnOrderings<String> get uuid => $composableBuilder(
+    column: $table.uuid,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get createdAt => $composableBuilder(
+    column: $table.createdAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get updatedAt => $composableBuilder(
+    column: $table.updatedAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<bool> get isDeleted => $composableBuilder(
+    column: $table.isDeleted,
+    builder: (column) => ColumnOrderings(column),
+  );
+
   ColumnOrderings<int> get id => $composableBuilder(
     column: $table.id,
     builder: (column) => ColumnOrderings(column),
@@ -5386,13 +6036,13 @@ class $$SimulationsTableOrderingComposer
     builder: (column) => ColumnOrderings(column),
   );
 
-  ColumnOrderings<String> get principalAmount => $composableBuilder(
-    column: $table.principalAmount,
+  ColumnOrderings<int> get principalAmountInCents => $composableBuilder(
+    column: $table.principalAmountInCents,
     builder: (column) => ColumnOrderings(column),
   );
 
-  ColumnOrderings<String> get interestRate => $composableBuilder(
-    column: $table.interestRate,
+  ColumnOrderings<int> get interestRateBasisPoints => $composableBuilder(
+    column: $table.interestRateBasisPoints,
     builder: (column) => ColumnOrderings(column),
   );
 
@@ -5401,13 +6051,8 @@ class $$SimulationsTableOrderingComposer
     builder: (column) => ColumnOrderings(column),
   );
 
-  ColumnOrderings<String> get totalAmount => $composableBuilder(
-    column: $table.totalAmount,
-    builder: (column) => ColumnOrderings(column),
-  );
-
-  ColumnOrderings<DateTime> get createdAt => $composableBuilder(
-    column: $table.createdAt,
+  ColumnOrderings<int> get totalAmountInCents => $composableBuilder(
+    column: $table.totalAmountInCents,
     builder: (column) => ColumnOrderings(column),
   );
 
@@ -5426,6 +6071,18 @@ class $$SimulationsTableAnnotationComposer
     super.$addJoinBuilderToRootComposer,
     super.$removeJoinBuilderFromRootComposer,
   });
+  GeneratedColumn<String> get uuid =>
+      $composableBuilder(column: $table.uuid, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get createdAt =>
+      $composableBuilder(column: $table.createdAt, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get updatedAt =>
+      $composableBuilder(column: $table.updatedAt, builder: (column) => column);
+
+  GeneratedColumn<bool> get isDeleted =>
+      $composableBuilder(column: $table.isDeleted, builder: (column) => column);
+
   GeneratedColumn<int> get id =>
       $composableBuilder(column: $table.id, builder: (column) => column);
 
@@ -5434,26 +6091,23 @@ class $$SimulationsTableAnnotationComposer
     builder: (column) => column,
   );
 
-  GeneratedColumn<String> get principalAmount => $composableBuilder(
-    column: $table.principalAmount,
+  GeneratedColumn<int> get principalAmountInCents => $composableBuilder(
+    column: $table.principalAmountInCents,
     builder: (column) => column,
   );
 
-  GeneratedColumn<String> get interestRate => $composableBuilder(
-    column: $table.interestRate,
+  GeneratedColumn<int> get interestRateBasisPoints => $composableBuilder(
+    column: $table.interestRateBasisPoints,
     builder: (column) => column,
   );
 
   GeneratedColumn<int> get periods =>
       $composableBuilder(column: $table.periods, builder: (column) => column);
 
-  GeneratedColumn<String> get totalAmount => $composableBuilder(
-    column: $table.totalAmount,
+  GeneratedColumn<int> get totalAmountInCents => $composableBuilder(
+    column: $table.totalAmountInCents,
     builder: (column) => column,
   );
-
-  GeneratedColumn<DateTime> get createdAt =>
-      $composableBuilder(column: $table.createdAt, builder: (column) => column);
 
   GeneratedColumn<bool> get isSynced =>
       $composableBuilder(column: $table.isSynced, builder: (column) => column);
@@ -5490,42 +6144,54 @@ class $$SimulationsTableTableManager
               $$SimulationsTableAnnotationComposer($db: db, $table: table),
           updateCompanionCallback:
               ({
+                Value<String> uuid = const Value.absent(),
+                Value<DateTime> createdAt = const Value.absent(),
+                Value<DateTime> updatedAt = const Value.absent(),
+                Value<bool> isDeleted = const Value.absent(),
                 Value<int> id = const Value.absent(),
                 Value<String> producerName = const Value.absent(),
-                Value<String> principalAmount = const Value.absent(),
-                Value<String> interestRate = const Value.absent(),
+                Value<int> principalAmountInCents = const Value.absent(),
+                Value<int> interestRateBasisPoints = const Value.absent(),
                 Value<int> periods = const Value.absent(),
-                Value<String> totalAmount = const Value.absent(),
-                Value<DateTime> createdAt = const Value.absent(),
+                Value<int> totalAmountInCents = const Value.absent(),
                 Value<bool> isSynced = const Value.absent(),
               }) => SimulationsCompanion(
+                uuid: uuid,
+                createdAt: createdAt,
+                updatedAt: updatedAt,
+                isDeleted: isDeleted,
                 id: id,
                 producerName: producerName,
-                principalAmount: principalAmount,
-                interestRate: interestRate,
+                principalAmountInCents: principalAmountInCents,
+                interestRateBasisPoints: interestRateBasisPoints,
                 periods: periods,
-                totalAmount: totalAmount,
-                createdAt: createdAt,
+                totalAmountInCents: totalAmountInCents,
                 isSynced: isSynced,
               ),
           createCompanionCallback:
               ({
+                Value<String> uuid = const Value.absent(),
+                Value<DateTime> createdAt = const Value.absent(),
+                Value<DateTime> updatedAt = const Value.absent(),
+                Value<bool> isDeleted = const Value.absent(),
                 Value<int> id = const Value.absent(),
                 required String producerName,
-                required String principalAmount,
-                required String interestRate,
+                required int principalAmountInCents,
+                required int interestRateBasisPoints,
                 required int periods,
-                required String totalAmount,
-                Value<DateTime> createdAt = const Value.absent(),
+                required int totalAmountInCents,
                 Value<bool> isSynced = const Value.absent(),
               }) => SimulationsCompanion.insert(
+                uuid: uuid,
+                createdAt: createdAt,
+                updatedAt: updatedAt,
+                isDeleted: isDeleted,
                 id: id,
                 producerName: producerName,
-                principalAmount: principalAmount,
-                interestRate: interestRate,
+                principalAmountInCents: principalAmountInCents,
+                interestRateBasisPoints: interestRateBasisPoints,
                 periods: periods,
-                totalAmount: totalAmount,
-                createdAt: createdAt,
+                totalAmountInCents: totalAmountInCents,
                 isSynced: isSynced,
               ),
           withReferenceMapper: (p0) => p0
@@ -5555,19 +6221,21 @@ typedef $$SimulationsTableProcessedTableManager =
     >;
 typedef $$FarmCategoriesTableCreateCompanionBuilder =
     FarmCategoriesCompanion Function({
-      Value<int> id,
-      required String name,
+      Value<String> uuid,
       Value<DateTime> createdAt,
       Value<DateTime> updatedAt,
       Value<bool> isDeleted,
+      Value<int> id,
+      required String name,
     });
 typedef $$FarmCategoriesTableUpdateCompanionBuilder =
     FarmCategoriesCompanion Function({
-      Value<int> id,
-      Value<String> name,
+      Value<String> uuid,
       Value<DateTime> createdAt,
       Value<DateTime> updatedAt,
       Value<bool> isDeleted,
+      Value<int> id,
+      Value<String> name,
     });
 
 final class $$FarmCategoriesTableReferences
@@ -5609,13 +6277,8 @@ class $$FarmCategoriesTableFilterComposer
     super.$addJoinBuilderToRootComposer,
     super.$removeJoinBuilderFromRootComposer,
   });
-  ColumnFilters<int> get id => $composableBuilder(
-    column: $table.id,
-    builder: (column) => ColumnFilters(column),
-  );
-
-  ColumnFilters<String> get name => $composableBuilder(
-    column: $table.name,
+  ColumnFilters<String> get uuid => $composableBuilder(
+    column: $table.uuid,
     builder: (column) => ColumnFilters(column),
   );
 
@@ -5631,6 +6294,16 @@ class $$FarmCategoriesTableFilterComposer
 
   ColumnFilters<bool> get isDeleted => $composableBuilder(
     column: $table.isDeleted,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get name => $composableBuilder(
+    column: $table.name,
     builder: (column) => ColumnFilters(column),
   );
 
@@ -5669,13 +6342,8 @@ class $$FarmCategoriesTableOrderingComposer
     super.$addJoinBuilderToRootComposer,
     super.$removeJoinBuilderFromRootComposer,
   });
-  ColumnOrderings<int> get id => $composableBuilder(
-    column: $table.id,
-    builder: (column) => ColumnOrderings(column),
-  );
-
-  ColumnOrderings<String> get name => $composableBuilder(
-    column: $table.name,
+  ColumnOrderings<String> get uuid => $composableBuilder(
+    column: $table.uuid,
     builder: (column) => ColumnOrderings(column),
   );
 
@@ -5693,6 +6361,16 @@ class $$FarmCategoriesTableOrderingComposer
     column: $table.isDeleted,
     builder: (column) => ColumnOrderings(column),
   );
+
+  ColumnOrderings<int> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get name => $composableBuilder(
+    column: $table.name,
+    builder: (column) => ColumnOrderings(column),
+  );
 }
 
 class $$FarmCategoriesTableAnnotationComposer
@@ -5704,11 +6382,8 @@ class $$FarmCategoriesTableAnnotationComposer
     super.$addJoinBuilderToRootComposer,
     super.$removeJoinBuilderFromRootComposer,
   });
-  GeneratedColumn<int> get id =>
-      $composableBuilder(column: $table.id, builder: (column) => column);
-
-  GeneratedColumn<String> get name =>
-      $composableBuilder(column: $table.name, builder: (column) => column);
+  GeneratedColumn<String> get uuid =>
+      $composableBuilder(column: $table.uuid, builder: (column) => column);
 
   GeneratedColumn<DateTime> get createdAt =>
       $composableBuilder(column: $table.createdAt, builder: (column) => column);
@@ -5718,6 +6393,12 @@ class $$FarmCategoriesTableAnnotationComposer
 
   GeneratedColumn<bool> get isDeleted =>
       $composableBuilder(column: $table.isDeleted, builder: (column) => column);
+
+  GeneratedColumn<int> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<String> get name =>
+      $composableBuilder(column: $table.name, builder: (column) => column);
 
   Expression<T> farmProductsRefs<T extends Object>(
     Expression<T> Function($$FarmProductsTableAnnotationComposer a) f,
@@ -5775,31 +6456,35 @@ class $$FarmCategoriesTableTableManager
               $$FarmCategoriesTableAnnotationComposer($db: db, $table: table),
           updateCompanionCallback:
               ({
-                Value<int> id = const Value.absent(),
-                Value<String> name = const Value.absent(),
+                Value<String> uuid = const Value.absent(),
                 Value<DateTime> createdAt = const Value.absent(),
                 Value<DateTime> updatedAt = const Value.absent(),
                 Value<bool> isDeleted = const Value.absent(),
+                Value<int> id = const Value.absent(),
+                Value<String> name = const Value.absent(),
               }) => FarmCategoriesCompanion(
-                id: id,
-                name: name,
+                uuid: uuid,
                 createdAt: createdAt,
                 updatedAt: updatedAt,
                 isDeleted: isDeleted,
+                id: id,
+                name: name,
               ),
           createCompanionCallback:
               ({
-                Value<int> id = const Value.absent(),
-                required String name,
+                Value<String> uuid = const Value.absent(),
                 Value<DateTime> createdAt = const Value.absent(),
                 Value<DateTime> updatedAt = const Value.absent(),
                 Value<bool> isDeleted = const Value.absent(),
+                Value<int> id = const Value.absent(),
+                required String name,
               }) => FarmCategoriesCompanion.insert(
-                id: id,
-                name: name,
+                uuid: uuid,
                 createdAt: createdAt,
                 updatedAt: updatedAt,
                 isDeleted: isDeleted,
+                id: id,
+                name: name,
               ),
           withReferenceMapper: (p0) => p0
               .map(
@@ -5859,27 +6544,29 @@ typedef $$FarmCategoriesTableProcessedTableManager =
     >;
 typedef $$FarmProductsTableCreateCompanionBuilder =
     FarmProductsCompanion Function({
+      Value<String> uuid,
+      Value<DateTime> createdAt,
+      Value<DateTime> updatedAt,
+      Value<bool> isDeleted,
       Value<int> id,
       required String name,
       required int categoryId,
       Value<String?> description,
       required String unit,
       required bool isProduction,
-      Value<DateTime> createdAt,
-      Value<DateTime> updatedAt,
-      Value<bool> isDeleted,
     });
 typedef $$FarmProductsTableUpdateCompanionBuilder =
     FarmProductsCompanion Function({
+      Value<String> uuid,
+      Value<DateTime> createdAt,
+      Value<DateTime> updatedAt,
+      Value<bool> isDeleted,
       Value<int> id,
       Value<String> name,
       Value<int> categoryId,
       Value<String?> description,
       Value<String> unit,
       Value<bool> isProduction,
-      Value<DateTime> createdAt,
-      Value<DateTime> updatedAt,
-      Value<bool> isDeleted,
     });
 
 final class $$FarmProductsTableReferences
@@ -5918,30 +6605,6 @@ final class $$FarmProductsTableReferences
     ).filter((f) => f.productId.id.sqlEquals($_itemColumn<int>('id')!));
 
     final cache = $_typedResult.readTableOrNull(_farmStockRefsTable($_db));
-    return ProcessedTableManager(
-      manager.$state.copyWith(prefetchedData: cache),
-    );
-  }
-
-  static MultiTypedResultKey<$FarmStockMovementsTable, List<FarmStockMovement>>
-  _farmStockMovementsRefsTable(_$AppDatabase db) =>
-      MultiTypedResultKey.fromTable(
-        db.farmStockMovements,
-        aliasName: $_aliasNameGenerator(
-          db.farmProducts.id,
-          db.farmStockMovements.productId,
-        ),
-      );
-
-  $$FarmStockMovementsTableProcessedTableManager get farmStockMovementsRefs {
-    final manager = $$FarmStockMovementsTableTableManager(
-      $_db,
-      $_db.farmStockMovements,
-    ).filter((f) => f.productId.id.sqlEquals($_itemColumn<int>('id')!));
-
-    final cache = $_typedResult.readTableOrNull(
-      _farmStockMovementsRefsTable($_db),
-    );
     return ProcessedTableManager(
       manager.$state.copyWith(prefetchedData: cache),
     );
@@ -6004,6 +6667,26 @@ class $$FarmProductsTableFilterComposer
     super.$addJoinBuilderToRootComposer,
     super.$removeJoinBuilderFromRootComposer,
   });
+  ColumnFilters<String> get uuid => $composableBuilder(
+    column: $table.uuid,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get createdAt => $composableBuilder(
+    column: $table.createdAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get updatedAt => $composableBuilder(
+    column: $table.updatedAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<bool> get isDeleted => $composableBuilder(
+    column: $table.isDeleted,
+    builder: (column) => ColumnFilters(column),
+  );
+
   ColumnFilters<int> get id => $composableBuilder(
     column: $table.id,
     builder: (column) => ColumnFilters(column),
@@ -6026,21 +6709,6 @@ class $$FarmProductsTableFilterComposer
 
   ColumnFilters<bool> get isProduction => $composableBuilder(
     column: $table.isProduction,
-    builder: (column) => ColumnFilters(column),
-  );
-
-  ColumnFilters<DateTime> get createdAt => $composableBuilder(
-    column: $table.createdAt,
-    builder: (column) => ColumnFilters(column),
-  );
-
-  ColumnFilters<DateTime> get updatedAt => $composableBuilder(
-    column: $table.updatedAt,
-    builder: (column) => ColumnFilters(column),
-  );
-
-  ColumnFilters<bool> get isDeleted => $composableBuilder(
-    column: $table.isDeleted,
     builder: (column) => ColumnFilters(column),
   );
 
@@ -6083,31 +6751,6 @@ class $$FarmProductsTableFilterComposer
           }) => $$FarmStockTableFilterComposer(
             $db: $db,
             $table: $db.farmStock,
-            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-            joinBuilder: joinBuilder,
-            $removeJoinBuilderFromRootComposer:
-                $removeJoinBuilderFromRootComposer,
-          ),
-    );
-    return f(composer);
-  }
-
-  Expression<bool> farmStockMovementsRefs(
-    Expression<bool> Function($$FarmStockMovementsTableFilterComposer f) f,
-  ) {
-    final $$FarmStockMovementsTableFilterComposer composer = $composerBuilder(
-      composer: this,
-      getCurrentColumn: (t) => t.id,
-      referencedTable: $db.farmStockMovements,
-      getReferencedColumn: (t) => t.productId,
-      builder:
-          (
-            joinBuilder, {
-            $addJoinBuilderToRootComposer,
-            $removeJoinBuilderFromRootComposer,
-          }) => $$FarmStockMovementsTableFilterComposer(
-            $db: $db,
-            $table: $db.farmStockMovements,
             $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
             joinBuilder: joinBuilder,
             $removeJoinBuilderFromRootComposer:
@@ -6177,6 +6820,26 @@ class $$FarmProductsTableOrderingComposer
     super.$addJoinBuilderToRootComposer,
     super.$removeJoinBuilderFromRootComposer,
   });
+  ColumnOrderings<String> get uuid => $composableBuilder(
+    column: $table.uuid,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get createdAt => $composableBuilder(
+    column: $table.createdAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get updatedAt => $composableBuilder(
+    column: $table.updatedAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<bool> get isDeleted => $composableBuilder(
+    column: $table.isDeleted,
+    builder: (column) => ColumnOrderings(column),
+  );
+
   ColumnOrderings<int> get id => $composableBuilder(
     column: $table.id,
     builder: (column) => ColumnOrderings(column),
@@ -6199,21 +6862,6 @@ class $$FarmProductsTableOrderingComposer
 
   ColumnOrderings<bool> get isProduction => $composableBuilder(
     column: $table.isProduction,
-    builder: (column) => ColumnOrderings(column),
-  );
-
-  ColumnOrderings<DateTime> get createdAt => $composableBuilder(
-    column: $table.createdAt,
-    builder: (column) => ColumnOrderings(column),
-  );
-
-  ColumnOrderings<DateTime> get updatedAt => $composableBuilder(
-    column: $table.updatedAt,
-    builder: (column) => ColumnOrderings(column),
-  );
-
-  ColumnOrderings<bool> get isDeleted => $composableBuilder(
-    column: $table.isDeleted,
     builder: (column) => ColumnOrderings(column),
   );
 
@@ -6250,6 +6898,18 @@ class $$FarmProductsTableAnnotationComposer
     super.$addJoinBuilderToRootComposer,
     super.$removeJoinBuilderFromRootComposer,
   });
+  GeneratedColumn<String> get uuid =>
+      $composableBuilder(column: $table.uuid, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get createdAt =>
+      $composableBuilder(column: $table.createdAt, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get updatedAt =>
+      $composableBuilder(column: $table.updatedAt, builder: (column) => column);
+
+  GeneratedColumn<bool> get isDeleted =>
+      $composableBuilder(column: $table.isDeleted, builder: (column) => column);
+
   GeneratedColumn<int> get id =>
       $composableBuilder(column: $table.id, builder: (column) => column);
 
@@ -6268,15 +6928,6 @@ class $$FarmProductsTableAnnotationComposer
     column: $table.isProduction,
     builder: (column) => column,
   );
-
-  GeneratedColumn<DateTime> get createdAt =>
-      $composableBuilder(column: $table.createdAt, builder: (column) => column);
-
-  GeneratedColumn<DateTime> get updatedAt =>
-      $composableBuilder(column: $table.updatedAt, builder: (column) => column);
-
-  GeneratedColumn<bool> get isDeleted =>
-      $composableBuilder(column: $table.isDeleted, builder: (column) => column);
 
   $$FarmCategoriesTableAnnotationComposer get categoryId {
     final $$FarmCategoriesTableAnnotationComposer composer = $composerBuilder(
@@ -6323,32 +6974,6 @@ class $$FarmProductsTableAnnotationComposer
                 $removeJoinBuilderFromRootComposer,
           ),
     );
-    return f(composer);
-  }
-
-  Expression<T> farmStockMovementsRefs<T extends Object>(
-    Expression<T> Function($$FarmStockMovementsTableAnnotationComposer a) f,
-  ) {
-    final $$FarmStockMovementsTableAnnotationComposer composer =
-        $composerBuilder(
-          composer: this,
-          getCurrentColumn: (t) => t.id,
-          referencedTable: $db.farmStockMovements,
-          getReferencedColumn: (t) => t.productId,
-          builder:
-              (
-                joinBuilder, {
-                $addJoinBuilderToRootComposer,
-                $removeJoinBuilderFromRootComposer,
-              }) => $$FarmStockMovementsTableAnnotationComposer(
-                $db: $db,
-                $table: $db.farmStockMovements,
-                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
-                joinBuilder: joinBuilder,
-                $removeJoinBuilderFromRootComposer:
-                    $removeJoinBuilderFromRootComposer,
-              ),
-        );
     return f(composer);
   }
 
@@ -6420,7 +7045,6 @@ class $$FarmProductsTableTableManager
           PrefetchHooks Function({
             bool categoryId,
             bool farmStockRefs,
-            bool farmStockMovementsRefs,
             bool farmPurchaseItemsRefs,
             bool farmProductionsRefs,
           })
@@ -6438,47 +7062,51 @@ class $$FarmProductsTableTableManager
               $$FarmProductsTableAnnotationComposer($db: db, $table: table),
           updateCompanionCallback:
               ({
+                Value<String> uuid = const Value.absent(),
+                Value<DateTime> createdAt = const Value.absent(),
+                Value<DateTime> updatedAt = const Value.absent(),
+                Value<bool> isDeleted = const Value.absent(),
                 Value<int> id = const Value.absent(),
                 Value<String> name = const Value.absent(),
                 Value<int> categoryId = const Value.absent(),
                 Value<String?> description = const Value.absent(),
                 Value<String> unit = const Value.absent(),
                 Value<bool> isProduction = const Value.absent(),
-                Value<DateTime> createdAt = const Value.absent(),
-                Value<DateTime> updatedAt = const Value.absent(),
-                Value<bool> isDeleted = const Value.absent(),
               }) => FarmProductsCompanion(
+                uuid: uuid,
+                createdAt: createdAt,
+                updatedAt: updatedAt,
+                isDeleted: isDeleted,
                 id: id,
                 name: name,
                 categoryId: categoryId,
                 description: description,
                 unit: unit,
                 isProduction: isProduction,
-                createdAt: createdAt,
-                updatedAt: updatedAt,
-                isDeleted: isDeleted,
               ),
           createCompanionCallback:
               ({
+                Value<String> uuid = const Value.absent(),
+                Value<DateTime> createdAt = const Value.absent(),
+                Value<DateTime> updatedAt = const Value.absent(),
+                Value<bool> isDeleted = const Value.absent(),
                 Value<int> id = const Value.absent(),
                 required String name,
                 required int categoryId,
                 Value<String?> description = const Value.absent(),
                 required String unit,
                 required bool isProduction,
-                Value<DateTime> createdAt = const Value.absent(),
-                Value<DateTime> updatedAt = const Value.absent(),
-                Value<bool> isDeleted = const Value.absent(),
               }) => FarmProductsCompanion.insert(
+                uuid: uuid,
+                createdAt: createdAt,
+                updatedAt: updatedAt,
+                isDeleted: isDeleted,
                 id: id,
                 name: name,
                 categoryId: categoryId,
                 description: description,
                 unit: unit,
                 isProduction: isProduction,
-                createdAt: createdAt,
-                updatedAt: updatedAt,
-                isDeleted: isDeleted,
               ),
           withReferenceMapper: (p0) => p0
               .map(
@@ -6492,7 +7120,6 @@ class $$FarmProductsTableTableManager
               ({
                 categoryId = false,
                 farmStockRefs = false,
-                farmStockMovementsRefs = false,
                 farmPurchaseItemsRefs = false,
                 farmProductionsRefs = false,
               }) {
@@ -6500,7 +7127,6 @@ class $$FarmProductsTableTableManager
                   db: db,
                   explicitlyWatchedTables: [
                     if (farmStockRefs) db.farmStock,
-                    if (farmStockMovementsRefs) db.farmStockMovements,
                     if (farmPurchaseItemsRefs) db.farmPurchaseItems,
                     if (farmProductionsRefs) db.farmProductions,
                   ],
@@ -6555,27 +7181,6 @@ class $$FarmProductsTableTableManager
                                 table,
                                 p0,
                               ).farmStockRefs,
-                          referencedItemsForCurrentItem:
-                              (item, referencedItems) => referencedItems.where(
-                                (e) => e.productId == item.id,
-                              ),
-                          typedResults: items,
-                        ),
-                      if (farmStockMovementsRefs)
-                        await $_getPrefetchedData<
-                          FarmProduct,
-                          $FarmProductsTable,
-                          FarmStockMovement
-                        >(
-                          currentTable: table,
-                          referencedTable: $$FarmProductsTableReferences
-                              ._farmStockMovementsRefsTable(db),
-                          managerFromTypedResult: (p0) =>
-                              $$FarmProductsTableReferences(
-                                db,
-                                table,
-                                p0,
-                              ).farmStockMovementsRefs,
                           referencedItemsForCurrentItem:
                               (item, referencedItems) => referencedItems.where(
                                 (e) => e.productId == item.id,
@@ -6647,13 +7252,16 @@ typedef $$FarmProductsTableProcessedTableManager =
       PrefetchHooks Function({
         bool categoryId,
         bool farmStockRefs,
-        bool farmStockMovementsRefs,
         bool farmPurchaseItemsRefs,
         bool farmProductionsRefs,
       })
     >;
 typedef $$FarmStockTableCreateCompanionBuilder =
     FarmStockCompanion Function({
+      Value<String> uuid,
+      Value<DateTime> createdAt,
+      Value<DateTime> updatedAt,
+      Value<bool> isDeleted,
       Value<int> id,
       required int productId,
       required double quantity,
@@ -6661,12 +7269,13 @@ typedef $$FarmStockTableCreateCompanionBuilder =
       Value<String?> location,
       Value<String?> lotNumber,
       Value<DateTime?> expirationDate,
-      Value<DateTime> createdAt,
-      Value<DateTime> updatedAt,
-      Value<bool> isDeleted,
     });
 typedef $$FarmStockTableUpdateCompanionBuilder =
     FarmStockCompanion Function({
+      Value<String> uuid,
+      Value<DateTime> createdAt,
+      Value<DateTime> updatedAt,
+      Value<bool> isDeleted,
       Value<int> id,
       Value<int> productId,
       Value<double> quantity,
@@ -6674,9 +7283,6 @@ typedef $$FarmStockTableUpdateCompanionBuilder =
       Value<String?> location,
       Value<String?> lotNumber,
       Value<DateTime?> expirationDate,
-      Value<DateTime> createdAt,
-      Value<DateTime> updatedAt,
-      Value<bool> isDeleted,
     });
 
 final class $$FarmStockTableReferences
@@ -6701,6 +7307,30 @@ final class $$FarmStockTableReferences
       manager.$state.copyWith(prefetchedData: [item]),
     );
   }
+
+  static MultiTypedResultKey<$FarmStockMovementsTable, List<FarmStockMovement>>
+  _farmStockMovementsRefsTable(_$AppDatabase db) =>
+      MultiTypedResultKey.fromTable(
+        db.farmStockMovements,
+        aliasName: $_aliasNameGenerator(
+          db.farmStock.id,
+          db.farmStockMovements.stockId,
+        ),
+      );
+
+  $$FarmStockMovementsTableProcessedTableManager get farmStockMovementsRefs {
+    final manager = $$FarmStockMovementsTableTableManager(
+      $_db,
+      $_db.farmStockMovements,
+    ).filter((f) => f.stockId.id.sqlEquals($_itemColumn<int>('id')!));
+
+    final cache = $_typedResult.readTableOrNull(
+      _farmStockMovementsRefsTable($_db),
+    );
+    return ProcessedTableManager(
+      manager.$state.copyWith(prefetchedData: cache),
+    );
+  }
 }
 
 class $$FarmStockTableFilterComposer
@@ -6712,6 +7342,26 @@ class $$FarmStockTableFilterComposer
     super.$addJoinBuilderToRootComposer,
     super.$removeJoinBuilderFromRootComposer,
   });
+  ColumnFilters<String> get uuid => $composableBuilder(
+    column: $table.uuid,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get createdAt => $composableBuilder(
+    column: $table.createdAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get updatedAt => $composableBuilder(
+    column: $table.updatedAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<bool> get isDeleted => $composableBuilder(
+    column: $table.isDeleted,
+    builder: (column) => ColumnFilters(column),
+  );
+
   ColumnFilters<int> get id => $composableBuilder(
     column: $table.id,
     builder: (column) => ColumnFilters(column),
@@ -6742,21 +7392,6 @@ class $$FarmStockTableFilterComposer
     builder: (column) => ColumnFilters(column),
   );
 
-  ColumnFilters<DateTime> get createdAt => $composableBuilder(
-    column: $table.createdAt,
-    builder: (column) => ColumnFilters(column),
-  );
-
-  ColumnFilters<DateTime> get updatedAt => $composableBuilder(
-    column: $table.updatedAt,
-    builder: (column) => ColumnFilters(column),
-  );
-
-  ColumnFilters<bool> get isDeleted => $composableBuilder(
-    column: $table.isDeleted,
-    builder: (column) => ColumnFilters(column),
-  );
-
   $$FarmProductsTableFilterComposer get productId {
     final $$FarmProductsTableFilterComposer composer = $composerBuilder(
       composer: this,
@@ -6779,6 +7414,31 @@ class $$FarmStockTableFilterComposer
     );
     return composer;
   }
+
+  Expression<bool> farmStockMovementsRefs(
+    Expression<bool> Function($$FarmStockMovementsTableFilterComposer f) f,
+  ) {
+    final $$FarmStockMovementsTableFilterComposer composer = $composerBuilder(
+      composer: this,
+      getCurrentColumn: (t) => t.id,
+      referencedTable: $db.farmStockMovements,
+      getReferencedColumn: (t) => t.stockId,
+      builder:
+          (
+            joinBuilder, {
+            $addJoinBuilderToRootComposer,
+            $removeJoinBuilderFromRootComposer,
+          }) => $$FarmStockMovementsTableFilterComposer(
+            $db: $db,
+            $table: $db.farmStockMovements,
+            $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+            joinBuilder: joinBuilder,
+            $removeJoinBuilderFromRootComposer:
+                $removeJoinBuilderFromRootComposer,
+          ),
+    );
+    return f(composer);
+  }
 }
 
 class $$FarmStockTableOrderingComposer
@@ -6790,6 +7450,26 @@ class $$FarmStockTableOrderingComposer
     super.$addJoinBuilderToRootComposer,
     super.$removeJoinBuilderFromRootComposer,
   });
+  ColumnOrderings<String> get uuid => $composableBuilder(
+    column: $table.uuid,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get createdAt => $composableBuilder(
+    column: $table.createdAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get updatedAt => $composableBuilder(
+    column: $table.updatedAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<bool> get isDeleted => $composableBuilder(
+    column: $table.isDeleted,
+    builder: (column) => ColumnOrderings(column),
+  );
+
   ColumnOrderings<int> get id => $composableBuilder(
     column: $table.id,
     builder: (column) => ColumnOrderings(column),
@@ -6817,21 +7497,6 @@ class $$FarmStockTableOrderingComposer
 
   ColumnOrderings<DateTime> get expirationDate => $composableBuilder(
     column: $table.expirationDate,
-    builder: (column) => ColumnOrderings(column),
-  );
-
-  ColumnOrderings<DateTime> get createdAt => $composableBuilder(
-    column: $table.createdAt,
-    builder: (column) => ColumnOrderings(column),
-  );
-
-  ColumnOrderings<DateTime> get updatedAt => $composableBuilder(
-    column: $table.updatedAt,
-    builder: (column) => ColumnOrderings(column),
-  );
-
-  ColumnOrderings<bool> get isDeleted => $composableBuilder(
-    column: $table.isDeleted,
     builder: (column) => ColumnOrderings(column),
   );
 
@@ -6868,6 +7533,18 @@ class $$FarmStockTableAnnotationComposer
     super.$addJoinBuilderToRootComposer,
     super.$removeJoinBuilderFromRootComposer,
   });
+  GeneratedColumn<String> get uuid =>
+      $composableBuilder(column: $table.uuid, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get createdAt =>
+      $composableBuilder(column: $table.createdAt, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get updatedAt =>
+      $composableBuilder(column: $table.updatedAt, builder: (column) => column);
+
+  GeneratedColumn<bool> get isDeleted =>
+      $composableBuilder(column: $table.isDeleted, builder: (column) => column);
+
   GeneratedColumn<int> get id =>
       $composableBuilder(column: $table.id, builder: (column) => column);
 
@@ -6889,15 +7566,6 @@ class $$FarmStockTableAnnotationComposer
     column: $table.expirationDate,
     builder: (column) => column,
   );
-
-  GeneratedColumn<DateTime> get createdAt =>
-      $composableBuilder(column: $table.createdAt, builder: (column) => column);
-
-  GeneratedColumn<DateTime> get updatedAt =>
-      $composableBuilder(column: $table.updatedAt, builder: (column) => column);
-
-  GeneratedColumn<bool> get isDeleted =>
-      $composableBuilder(column: $table.isDeleted, builder: (column) => column);
 
   $$FarmProductsTableAnnotationComposer get productId {
     final $$FarmProductsTableAnnotationComposer composer = $composerBuilder(
@@ -6921,6 +7589,32 @@ class $$FarmStockTableAnnotationComposer
     );
     return composer;
   }
+
+  Expression<T> farmStockMovementsRefs<T extends Object>(
+    Expression<T> Function($$FarmStockMovementsTableAnnotationComposer a) f,
+  ) {
+    final $$FarmStockMovementsTableAnnotationComposer composer =
+        $composerBuilder(
+          composer: this,
+          getCurrentColumn: (t) => t.id,
+          referencedTable: $db.farmStockMovements,
+          getReferencedColumn: (t) => t.stockId,
+          builder:
+              (
+                joinBuilder, {
+                $addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer,
+              }) => $$FarmStockMovementsTableAnnotationComposer(
+                $db: $db,
+                $table: $db.farmStockMovements,
+                $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                joinBuilder: joinBuilder,
+                $removeJoinBuilderFromRootComposer:
+                    $removeJoinBuilderFromRootComposer,
+              ),
+        );
+    return f(composer);
+  }
 }
 
 class $$FarmStockTableTableManager
@@ -6936,7 +7630,7 @@ class $$FarmStockTableTableManager
           $$FarmStockTableUpdateCompanionBuilder,
           (FarmStockData, $$FarmStockTableReferences),
           FarmStockData,
-          PrefetchHooks Function({bool productId})
+          PrefetchHooks Function({bool productId, bool farmStockMovementsRefs})
         > {
   $$FarmStockTableTableManager(_$AppDatabase db, $FarmStockTable table)
     : super(
@@ -6951,6 +7645,10 @@ class $$FarmStockTableTableManager
               $$FarmStockTableAnnotationComposer($db: db, $table: table),
           updateCompanionCallback:
               ({
+                Value<String> uuid = const Value.absent(),
+                Value<DateTime> createdAt = const Value.absent(),
+                Value<DateTime> updatedAt = const Value.absent(),
+                Value<bool> isDeleted = const Value.absent(),
                 Value<int> id = const Value.absent(),
                 Value<int> productId = const Value.absent(),
                 Value<double> quantity = const Value.absent(),
@@ -6958,10 +7656,11 @@ class $$FarmStockTableTableManager
                 Value<String?> location = const Value.absent(),
                 Value<String?> lotNumber = const Value.absent(),
                 Value<DateTime?> expirationDate = const Value.absent(),
-                Value<DateTime> createdAt = const Value.absent(),
-                Value<DateTime> updatedAt = const Value.absent(),
-                Value<bool> isDeleted = const Value.absent(),
               }) => FarmStockCompanion(
+                uuid: uuid,
+                createdAt: createdAt,
+                updatedAt: updatedAt,
+                isDeleted: isDeleted,
                 id: id,
                 productId: productId,
                 quantity: quantity,
@@ -6969,12 +7668,13 @@ class $$FarmStockTableTableManager
                 location: location,
                 lotNumber: lotNumber,
                 expirationDate: expirationDate,
-                createdAt: createdAt,
-                updatedAt: updatedAt,
-                isDeleted: isDeleted,
               ),
           createCompanionCallback:
               ({
+                Value<String> uuid = const Value.absent(),
+                Value<DateTime> createdAt = const Value.absent(),
+                Value<DateTime> updatedAt = const Value.absent(),
+                Value<bool> isDeleted = const Value.absent(),
                 Value<int> id = const Value.absent(),
                 required int productId,
                 required double quantity,
@@ -6982,10 +7682,11 @@ class $$FarmStockTableTableManager
                 Value<String?> location = const Value.absent(),
                 Value<String?> lotNumber = const Value.absent(),
                 Value<DateTime?> expirationDate = const Value.absent(),
-                Value<DateTime> createdAt = const Value.absent(),
-                Value<DateTime> updatedAt = const Value.absent(),
-                Value<bool> isDeleted = const Value.absent(),
               }) => FarmStockCompanion.insert(
+                uuid: uuid,
+                createdAt: createdAt,
+                updatedAt: updatedAt,
+                isDeleted: isDeleted,
                 id: id,
                 productId: productId,
                 quantity: quantity,
@@ -6993,9 +7694,6 @@ class $$FarmStockTableTableManager
                 location: location,
                 lotNumber: lotNumber,
                 expirationDate: expirationDate,
-                createdAt: createdAt,
-                updatedAt: updatedAt,
-                isDeleted: isDeleted,
               ),
           withReferenceMapper: (p0) => p0
               .map(
@@ -7005,47 +7703,72 @@ class $$FarmStockTableTableManager
                 ),
               )
               .toList(),
-          prefetchHooksCallback: ({productId = false}) {
-            return PrefetchHooks(
-              db: db,
-              explicitlyWatchedTables: [],
-              addJoins:
-                  <
-                    T extends TableManagerState<
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic,
-                      dynamic
-                    >
-                  >(state) {
-                    if (productId) {
-                      state =
-                          state.withJoin(
-                                currentTable: table,
-                                currentColumn: table.productId,
-                                referencedTable: $$FarmStockTableReferences
-                                    ._productIdTable(db),
-                                referencedColumn: $$FarmStockTableReferences
-                                    ._productIdTable(db)
-                                    .id,
-                              )
-                              as T;
-                    }
+          prefetchHooksCallback:
+              ({productId = false, farmStockMovementsRefs = false}) {
+                return PrefetchHooks(
+                  db: db,
+                  explicitlyWatchedTables: [
+                    if (farmStockMovementsRefs) db.farmStockMovements,
+                  ],
+                  addJoins:
+                      <
+                        T extends TableManagerState<
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic,
+                          dynamic
+                        >
+                      >(state) {
+                        if (productId) {
+                          state =
+                              state.withJoin(
+                                    currentTable: table,
+                                    currentColumn: table.productId,
+                                    referencedTable: $$FarmStockTableReferences
+                                        ._productIdTable(db),
+                                    referencedColumn: $$FarmStockTableReferences
+                                        ._productIdTable(db)
+                                        .id,
+                                  )
+                                  as T;
+                        }
 
-                    return state;
+                        return state;
+                      },
+                  getPrefetchedDataCallback: (items) async {
+                    return [
+                      if (farmStockMovementsRefs)
+                        await $_getPrefetchedData<
+                          FarmStockData,
+                          $FarmStockTable,
+                          FarmStockMovement
+                        >(
+                          currentTable: table,
+                          referencedTable: $$FarmStockTableReferences
+                              ._farmStockMovementsRefsTable(db),
+                          managerFromTypedResult: (p0) =>
+                              $$FarmStockTableReferences(
+                                db,
+                                table,
+                                p0,
+                              ).farmStockMovementsRefs,
+                          referencedItemsForCurrentItem:
+                              (item, referencedItems) => referencedItems.where(
+                                (e) => e.stockId == item.id,
+                              ),
+                          typedResults: items,
+                        ),
+                    ];
                   },
-              getPrefetchedDataCallback: (items) async {
-                return [];
+                );
               },
-            );
-          },
         ),
       );
 }
@@ -7062,31 +7785,35 @@ typedef $$FarmStockTableProcessedTableManager =
       $$FarmStockTableUpdateCompanionBuilder,
       (FarmStockData, $$FarmStockTableReferences),
       FarmStockData,
-      PrefetchHooks Function({bool productId})
+      PrefetchHooks Function({bool productId, bool farmStockMovementsRefs})
     >;
 typedef $$FarmStockMovementsTableCreateCompanionBuilder =
     FarmStockMovementsCompanion Function({
+      Value<String> uuid,
+      Value<DateTime> createdAt,
+      Value<DateTime> updatedAt,
+      Value<bool> isDeleted,
       Value<int> id,
-      required int productId,
+      required int stockId,
       required StockMovementType type,
       required double quantity,
       Value<int?> unitCostInCents,
       Value<String?> referenceType,
-      Value<DateTime> createdAt,
-      Value<DateTime> updatedAt,
-      Value<bool> isDeleted,
+      Value<String?> referenceId,
     });
 typedef $$FarmStockMovementsTableUpdateCompanionBuilder =
     FarmStockMovementsCompanion Function({
+      Value<String> uuid,
+      Value<DateTime> createdAt,
+      Value<DateTime> updatedAt,
+      Value<bool> isDeleted,
       Value<int> id,
-      Value<int> productId,
+      Value<int> stockId,
       Value<StockMovementType> type,
       Value<double> quantity,
       Value<int?> unitCostInCents,
       Value<String?> referenceType,
-      Value<DateTime> createdAt,
-      Value<DateTime> updatedAt,
-      Value<bool> isDeleted,
+      Value<String?> referenceId,
     });
 
 final class $$FarmStockMovementsTableReferences
@@ -7102,22 +7829,19 @@ final class $$FarmStockMovementsTableReferences
     super.$_typedResult,
   );
 
-  static $FarmProductsTable _productIdTable(_$AppDatabase db) =>
-      db.farmProducts.createAlias(
-        $_aliasNameGenerator(
-          db.farmStockMovements.productId,
-          db.farmProducts.id,
-        ),
+  static $FarmStockTable _stockIdTable(_$AppDatabase db) =>
+      db.farmStock.createAlias(
+        $_aliasNameGenerator(db.farmStockMovements.stockId, db.farmStock.id),
       );
 
-  $$FarmProductsTableProcessedTableManager get productId {
-    final $_column = $_itemColumn<int>('product_id')!;
+  $$FarmStockTableProcessedTableManager get stockId {
+    final $_column = $_itemColumn<int>('stock_id')!;
 
-    final manager = $$FarmProductsTableTableManager(
+    final manager = $$FarmStockTableTableManager(
       $_db,
-      $_db.farmProducts,
+      $_db.farmStock,
     ).filter((f) => f.id.sqlEquals($_column));
-    final item = $_typedResult.readTableOrNull(_productIdTable($_db));
+    final item = $_typedResult.readTableOrNull(_stockIdTable($_db));
     if (item == null) return manager;
     return ProcessedTableManager(
       manager.$state.copyWith(prefetchedData: [item]),
@@ -7134,6 +7858,26 @@ class $$FarmStockMovementsTableFilterComposer
     super.$addJoinBuilderToRootComposer,
     super.$removeJoinBuilderFromRootComposer,
   });
+  ColumnFilters<String> get uuid => $composableBuilder(
+    column: $table.uuid,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get createdAt => $composableBuilder(
+    column: $table.createdAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get updatedAt => $composableBuilder(
+    column: $table.updatedAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<bool> get isDeleted => $composableBuilder(
+    column: $table.isDeleted,
+    builder: (column) => ColumnFilters(column),
+  );
+
   ColumnFilters<int> get id => $composableBuilder(
     column: $table.id,
     builder: (column) => ColumnFilters(column),
@@ -7160,35 +7904,25 @@ class $$FarmStockMovementsTableFilterComposer
     builder: (column) => ColumnFilters(column),
   );
 
-  ColumnFilters<DateTime> get createdAt => $composableBuilder(
-    column: $table.createdAt,
+  ColumnFilters<String> get referenceId => $composableBuilder(
+    column: $table.referenceId,
     builder: (column) => ColumnFilters(column),
   );
 
-  ColumnFilters<DateTime> get updatedAt => $composableBuilder(
-    column: $table.updatedAt,
-    builder: (column) => ColumnFilters(column),
-  );
-
-  ColumnFilters<bool> get isDeleted => $composableBuilder(
-    column: $table.isDeleted,
-    builder: (column) => ColumnFilters(column),
-  );
-
-  $$FarmProductsTableFilterComposer get productId {
-    final $$FarmProductsTableFilterComposer composer = $composerBuilder(
+  $$FarmStockTableFilterComposer get stockId {
+    final $$FarmStockTableFilterComposer composer = $composerBuilder(
       composer: this,
-      getCurrentColumn: (t) => t.productId,
-      referencedTable: $db.farmProducts,
+      getCurrentColumn: (t) => t.stockId,
+      referencedTable: $db.farmStock,
       getReferencedColumn: (t) => t.id,
       builder:
           (
             joinBuilder, {
             $addJoinBuilderToRootComposer,
             $removeJoinBuilderFromRootComposer,
-          }) => $$FarmProductsTableFilterComposer(
+          }) => $$FarmStockTableFilterComposer(
             $db: $db,
-            $table: $db.farmProducts,
+            $table: $db.farmStock,
             $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
             joinBuilder: joinBuilder,
             $removeJoinBuilderFromRootComposer:
@@ -7208,6 +7942,26 @@ class $$FarmStockMovementsTableOrderingComposer
     super.$addJoinBuilderToRootComposer,
     super.$removeJoinBuilderFromRootComposer,
   });
+  ColumnOrderings<String> get uuid => $composableBuilder(
+    column: $table.uuid,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get createdAt => $composableBuilder(
+    column: $table.createdAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get updatedAt => $composableBuilder(
+    column: $table.updatedAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<bool> get isDeleted => $composableBuilder(
+    column: $table.isDeleted,
+    builder: (column) => ColumnOrderings(column),
+  );
+
   ColumnOrderings<int> get id => $composableBuilder(
     column: $table.id,
     builder: (column) => ColumnOrderings(column),
@@ -7233,35 +7987,25 @@ class $$FarmStockMovementsTableOrderingComposer
     builder: (column) => ColumnOrderings(column),
   );
 
-  ColumnOrderings<DateTime> get createdAt => $composableBuilder(
-    column: $table.createdAt,
+  ColumnOrderings<String> get referenceId => $composableBuilder(
+    column: $table.referenceId,
     builder: (column) => ColumnOrderings(column),
   );
 
-  ColumnOrderings<DateTime> get updatedAt => $composableBuilder(
-    column: $table.updatedAt,
-    builder: (column) => ColumnOrderings(column),
-  );
-
-  ColumnOrderings<bool> get isDeleted => $composableBuilder(
-    column: $table.isDeleted,
-    builder: (column) => ColumnOrderings(column),
-  );
-
-  $$FarmProductsTableOrderingComposer get productId {
-    final $$FarmProductsTableOrderingComposer composer = $composerBuilder(
+  $$FarmStockTableOrderingComposer get stockId {
+    final $$FarmStockTableOrderingComposer composer = $composerBuilder(
       composer: this,
-      getCurrentColumn: (t) => t.productId,
-      referencedTable: $db.farmProducts,
+      getCurrentColumn: (t) => t.stockId,
+      referencedTable: $db.farmStock,
       getReferencedColumn: (t) => t.id,
       builder:
           (
             joinBuilder, {
             $addJoinBuilderToRootComposer,
             $removeJoinBuilderFromRootComposer,
-          }) => $$FarmProductsTableOrderingComposer(
+          }) => $$FarmStockTableOrderingComposer(
             $db: $db,
-            $table: $db.farmProducts,
+            $table: $db.farmStock,
             $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
             joinBuilder: joinBuilder,
             $removeJoinBuilderFromRootComposer:
@@ -7281,6 +8025,18 @@ class $$FarmStockMovementsTableAnnotationComposer
     super.$addJoinBuilderToRootComposer,
     super.$removeJoinBuilderFromRootComposer,
   });
+  GeneratedColumn<String> get uuid =>
+      $composableBuilder(column: $table.uuid, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get createdAt =>
+      $composableBuilder(column: $table.createdAt, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get updatedAt =>
+      $composableBuilder(column: $table.updatedAt, builder: (column) => column);
+
+  GeneratedColumn<bool> get isDeleted =>
+      $composableBuilder(column: $table.isDeleted, builder: (column) => column);
+
   GeneratedColumn<int> get id =>
       $composableBuilder(column: $table.id, builder: (column) => column);
 
@@ -7300,29 +8056,25 @@ class $$FarmStockMovementsTableAnnotationComposer
     builder: (column) => column,
   );
 
-  GeneratedColumn<DateTime> get createdAt =>
-      $composableBuilder(column: $table.createdAt, builder: (column) => column);
+  GeneratedColumn<String> get referenceId => $composableBuilder(
+    column: $table.referenceId,
+    builder: (column) => column,
+  );
 
-  GeneratedColumn<DateTime> get updatedAt =>
-      $composableBuilder(column: $table.updatedAt, builder: (column) => column);
-
-  GeneratedColumn<bool> get isDeleted =>
-      $composableBuilder(column: $table.isDeleted, builder: (column) => column);
-
-  $$FarmProductsTableAnnotationComposer get productId {
-    final $$FarmProductsTableAnnotationComposer composer = $composerBuilder(
+  $$FarmStockTableAnnotationComposer get stockId {
+    final $$FarmStockTableAnnotationComposer composer = $composerBuilder(
       composer: this,
-      getCurrentColumn: (t) => t.productId,
-      referencedTable: $db.farmProducts,
+      getCurrentColumn: (t) => t.stockId,
+      referencedTable: $db.farmStock,
       getReferencedColumn: (t) => t.id,
       builder:
           (
             joinBuilder, {
             $addJoinBuilderToRootComposer,
             $removeJoinBuilderFromRootComposer,
-          }) => $$FarmProductsTableAnnotationComposer(
+          }) => $$FarmStockTableAnnotationComposer(
             $db: $db,
-            $table: $db.farmProducts,
+            $table: $db.farmStock,
             $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
             joinBuilder: joinBuilder,
             $removeJoinBuilderFromRootComposer:
@@ -7346,7 +8098,7 @@ class $$FarmStockMovementsTableTableManager
           $$FarmStockMovementsTableUpdateCompanionBuilder,
           (FarmStockMovement, $$FarmStockMovementsTableReferences),
           FarmStockMovement,
-          PrefetchHooks Function({bool productId})
+          PrefetchHooks Function({bool stockId})
         > {
   $$FarmStockMovementsTableTableManager(
     _$AppDatabase db,
@@ -7366,47 +8118,55 @@ class $$FarmStockMovementsTableTableManager
               ),
           updateCompanionCallback:
               ({
+                Value<String> uuid = const Value.absent(),
+                Value<DateTime> createdAt = const Value.absent(),
+                Value<DateTime> updatedAt = const Value.absent(),
+                Value<bool> isDeleted = const Value.absent(),
                 Value<int> id = const Value.absent(),
-                Value<int> productId = const Value.absent(),
+                Value<int> stockId = const Value.absent(),
                 Value<StockMovementType> type = const Value.absent(),
                 Value<double> quantity = const Value.absent(),
                 Value<int?> unitCostInCents = const Value.absent(),
                 Value<String?> referenceType = const Value.absent(),
-                Value<DateTime> createdAt = const Value.absent(),
-                Value<DateTime> updatedAt = const Value.absent(),
-                Value<bool> isDeleted = const Value.absent(),
+                Value<String?> referenceId = const Value.absent(),
               }) => FarmStockMovementsCompanion(
+                uuid: uuid,
+                createdAt: createdAt,
+                updatedAt: updatedAt,
+                isDeleted: isDeleted,
                 id: id,
-                productId: productId,
+                stockId: stockId,
                 type: type,
                 quantity: quantity,
                 unitCostInCents: unitCostInCents,
                 referenceType: referenceType,
-                createdAt: createdAt,
-                updatedAt: updatedAt,
-                isDeleted: isDeleted,
+                referenceId: referenceId,
               ),
           createCompanionCallback:
               ({
+                Value<String> uuid = const Value.absent(),
+                Value<DateTime> createdAt = const Value.absent(),
+                Value<DateTime> updatedAt = const Value.absent(),
+                Value<bool> isDeleted = const Value.absent(),
                 Value<int> id = const Value.absent(),
-                required int productId,
+                required int stockId,
                 required StockMovementType type,
                 required double quantity,
                 Value<int?> unitCostInCents = const Value.absent(),
                 Value<String?> referenceType = const Value.absent(),
-                Value<DateTime> createdAt = const Value.absent(),
-                Value<DateTime> updatedAt = const Value.absent(),
-                Value<bool> isDeleted = const Value.absent(),
+                Value<String?> referenceId = const Value.absent(),
               }) => FarmStockMovementsCompanion.insert(
+                uuid: uuid,
+                createdAt: createdAt,
+                updatedAt: updatedAt,
+                isDeleted: isDeleted,
                 id: id,
-                productId: productId,
+                stockId: stockId,
                 type: type,
                 quantity: quantity,
                 unitCostInCents: unitCostInCents,
                 referenceType: referenceType,
-                createdAt: createdAt,
-                updatedAt: updatedAt,
-                isDeleted: isDeleted,
+                referenceId: referenceId,
               ),
           withReferenceMapper: (p0) => p0
               .map(
@@ -7416,7 +8176,7 @@ class $$FarmStockMovementsTableTableManager
                 ),
               )
               .toList(),
-          prefetchHooksCallback: ({productId = false}) {
+          prefetchHooksCallback: ({stockId = false}) {
             return PrefetchHooks(
               db: db,
               explicitlyWatchedTables: [],
@@ -7436,17 +8196,17 @@ class $$FarmStockMovementsTableTableManager
                       dynamic
                     >
                   >(state) {
-                    if (productId) {
+                    if (stockId) {
                       state =
                           state.withJoin(
                                 currentTable: table,
-                                currentColumn: table.productId,
+                                currentColumn: table.stockId,
                                 referencedTable:
                                     $$FarmStockMovementsTableReferences
-                                        ._productIdTable(db),
+                                        ._stockIdTable(db),
                                 referencedColumn:
                                     $$FarmStockMovementsTableReferences
-                                        ._productIdTable(db)
+                                        ._stockIdTable(db)
                                         .id,
                               )
                               as T;
@@ -7475,30 +8235,32 @@ typedef $$FarmStockMovementsTableProcessedTableManager =
       $$FarmStockMovementsTableUpdateCompanionBuilder,
       (FarmStockMovement, $$FarmStockMovementsTableReferences),
       FarmStockMovement,
-      PrefetchHooks Function({bool productId})
+      PrefetchHooks Function({bool stockId})
     >;
-typedef $$FarmSupplyersTableCreateCompanionBuilder =
-    FarmSupplyersCompanion Function({
+typedef $$FarmSuppliersTableCreateCompanionBuilder =
+    FarmSuppliersCompanion Function({
+      Value<String> uuid,
+      Value<DateTime> createdAt,
+      Value<DateTime> updatedAt,
+      Value<bool> isDeleted,
       Value<int> id,
       required String name,
       Value<String?> contactInfo,
+    });
+typedef $$FarmSuppliersTableUpdateCompanionBuilder =
+    FarmSuppliersCompanion Function({
+      Value<String> uuid,
       Value<DateTime> createdAt,
       Value<DateTime> updatedAt,
       Value<bool> isDeleted,
-    });
-typedef $$FarmSupplyersTableUpdateCompanionBuilder =
-    FarmSupplyersCompanion Function({
       Value<int> id,
       Value<String> name,
       Value<String?> contactInfo,
-      Value<DateTime> createdAt,
-      Value<DateTime> updatedAt,
-      Value<bool> isDeleted,
     });
 
-final class $$FarmSupplyersTableReferences
-    extends BaseReferences<_$AppDatabase, $FarmSupplyersTable, FarmSupplyer> {
-  $$FarmSupplyersTableReferences(
+final class $$FarmSuppliersTableReferences
+    extends BaseReferences<_$AppDatabase, $FarmSuppliersTable, FarmSupplier> {
+  $$FarmSuppliersTableReferences(
     super.$_db,
     super.$_table,
     super.$_typedResult,
@@ -7508,7 +8270,7 @@ final class $$FarmSupplyersTableReferences
   _farmPurchasesRefsTable(_$AppDatabase db) => MultiTypedResultKey.fromTable(
     db.farmPurchases,
     aliasName: $_aliasNameGenerator(
-      db.farmSupplyers.id,
+      db.farmSuppliers.id,
       db.farmPurchases.supplierId,
     ),
   );
@@ -7526,27 +8288,17 @@ final class $$FarmSupplyersTableReferences
   }
 }
 
-class $$FarmSupplyersTableFilterComposer
-    extends Composer<_$AppDatabase, $FarmSupplyersTable> {
-  $$FarmSupplyersTableFilterComposer({
+class $$FarmSuppliersTableFilterComposer
+    extends Composer<_$AppDatabase, $FarmSuppliersTable> {
+  $$FarmSuppliersTableFilterComposer({
     required super.$db,
     required super.$table,
     super.joinBuilder,
     super.$addJoinBuilderToRootComposer,
     super.$removeJoinBuilderFromRootComposer,
   });
-  ColumnFilters<int> get id => $composableBuilder(
-    column: $table.id,
-    builder: (column) => ColumnFilters(column),
-  );
-
-  ColumnFilters<String> get name => $composableBuilder(
-    column: $table.name,
-    builder: (column) => ColumnFilters(column),
-  );
-
-  ColumnFilters<String> get contactInfo => $composableBuilder(
-    column: $table.contactInfo,
+  ColumnFilters<String> get uuid => $composableBuilder(
+    column: $table.uuid,
     builder: (column) => ColumnFilters(column),
   );
 
@@ -7562,6 +8314,21 @@ class $$FarmSupplyersTableFilterComposer
 
   ColumnFilters<bool> get isDeleted => $composableBuilder(
     column: $table.isDeleted,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get name => $composableBuilder(
+    column: $table.name,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get contactInfo => $composableBuilder(
+    column: $table.contactInfo,
     builder: (column) => ColumnFilters(column),
   );
 
@@ -7591,27 +8358,17 @@ class $$FarmSupplyersTableFilterComposer
   }
 }
 
-class $$FarmSupplyersTableOrderingComposer
-    extends Composer<_$AppDatabase, $FarmSupplyersTable> {
-  $$FarmSupplyersTableOrderingComposer({
+class $$FarmSuppliersTableOrderingComposer
+    extends Composer<_$AppDatabase, $FarmSuppliersTable> {
+  $$FarmSuppliersTableOrderingComposer({
     required super.$db,
     required super.$table,
     super.joinBuilder,
     super.$addJoinBuilderToRootComposer,
     super.$removeJoinBuilderFromRootComposer,
   });
-  ColumnOrderings<int> get id => $composableBuilder(
-    column: $table.id,
-    builder: (column) => ColumnOrderings(column),
-  );
-
-  ColumnOrderings<String> get name => $composableBuilder(
-    column: $table.name,
-    builder: (column) => ColumnOrderings(column),
-  );
-
-  ColumnOrderings<String> get contactInfo => $composableBuilder(
-    column: $table.contactInfo,
+  ColumnOrderings<String> get uuid => $composableBuilder(
+    column: $table.uuid,
     builder: (column) => ColumnOrderings(column),
   );
 
@@ -7629,17 +8386,44 @@ class $$FarmSupplyersTableOrderingComposer
     column: $table.isDeleted,
     builder: (column) => ColumnOrderings(column),
   );
+
+  ColumnOrderings<int> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get name => $composableBuilder(
+    column: $table.name,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get contactInfo => $composableBuilder(
+    column: $table.contactInfo,
+    builder: (column) => ColumnOrderings(column),
+  );
 }
 
-class $$FarmSupplyersTableAnnotationComposer
-    extends Composer<_$AppDatabase, $FarmSupplyersTable> {
-  $$FarmSupplyersTableAnnotationComposer({
+class $$FarmSuppliersTableAnnotationComposer
+    extends Composer<_$AppDatabase, $FarmSuppliersTable> {
+  $$FarmSuppliersTableAnnotationComposer({
     required super.$db,
     required super.$table,
     super.joinBuilder,
     super.$addJoinBuilderToRootComposer,
     super.$removeJoinBuilderFromRootComposer,
   });
+  GeneratedColumn<String> get uuid =>
+      $composableBuilder(column: $table.uuid, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get createdAt =>
+      $composableBuilder(column: $table.createdAt, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get updatedAt =>
+      $composableBuilder(column: $table.updatedAt, builder: (column) => column);
+
+  GeneratedColumn<bool> get isDeleted =>
+      $composableBuilder(column: $table.isDeleted, builder: (column) => column);
+
   GeneratedColumn<int> get id =>
       $composableBuilder(column: $table.id, builder: (column) => column);
 
@@ -7650,15 +8434,6 @@ class $$FarmSupplyersTableAnnotationComposer
     column: $table.contactInfo,
     builder: (column) => column,
   );
-
-  GeneratedColumn<DateTime> get createdAt =>
-      $composableBuilder(column: $table.createdAt, builder: (column) => column);
-
-  GeneratedColumn<DateTime> get updatedAt =>
-      $composableBuilder(column: $table.updatedAt, builder: (column) => column);
-
-  GeneratedColumn<bool> get isDeleted =>
-      $composableBuilder(column: $table.isDeleted, builder: (column) => column);
 
   Expression<T> farmPurchasesRefs<T extends Object>(
     Expression<T> Function($$FarmPurchasesTableAnnotationComposer a) f,
@@ -7686,69 +8461,73 @@ class $$FarmSupplyersTableAnnotationComposer
   }
 }
 
-class $$FarmSupplyersTableTableManager
+class $$FarmSuppliersTableTableManager
     extends
         RootTableManager<
           _$AppDatabase,
-          $FarmSupplyersTable,
-          FarmSupplyer,
-          $$FarmSupplyersTableFilterComposer,
-          $$FarmSupplyersTableOrderingComposer,
-          $$FarmSupplyersTableAnnotationComposer,
-          $$FarmSupplyersTableCreateCompanionBuilder,
-          $$FarmSupplyersTableUpdateCompanionBuilder,
-          (FarmSupplyer, $$FarmSupplyersTableReferences),
-          FarmSupplyer,
+          $FarmSuppliersTable,
+          FarmSupplier,
+          $$FarmSuppliersTableFilterComposer,
+          $$FarmSuppliersTableOrderingComposer,
+          $$FarmSuppliersTableAnnotationComposer,
+          $$FarmSuppliersTableCreateCompanionBuilder,
+          $$FarmSuppliersTableUpdateCompanionBuilder,
+          (FarmSupplier, $$FarmSuppliersTableReferences),
+          FarmSupplier,
           PrefetchHooks Function({bool farmPurchasesRefs})
         > {
-  $$FarmSupplyersTableTableManager(_$AppDatabase db, $FarmSupplyersTable table)
+  $$FarmSuppliersTableTableManager(_$AppDatabase db, $FarmSuppliersTable table)
     : super(
         TableManagerState(
           db: db,
           table: table,
           createFilteringComposer: () =>
-              $$FarmSupplyersTableFilterComposer($db: db, $table: table),
+              $$FarmSuppliersTableFilterComposer($db: db, $table: table),
           createOrderingComposer: () =>
-              $$FarmSupplyersTableOrderingComposer($db: db, $table: table),
+              $$FarmSuppliersTableOrderingComposer($db: db, $table: table),
           createComputedFieldComposer: () =>
-              $$FarmSupplyersTableAnnotationComposer($db: db, $table: table),
+              $$FarmSuppliersTableAnnotationComposer($db: db, $table: table),
           updateCompanionCallback:
               ({
+                Value<String> uuid = const Value.absent(),
+                Value<DateTime> createdAt = const Value.absent(),
+                Value<DateTime> updatedAt = const Value.absent(),
+                Value<bool> isDeleted = const Value.absent(),
                 Value<int> id = const Value.absent(),
                 Value<String> name = const Value.absent(),
                 Value<String?> contactInfo = const Value.absent(),
-                Value<DateTime> createdAt = const Value.absent(),
-                Value<DateTime> updatedAt = const Value.absent(),
-                Value<bool> isDeleted = const Value.absent(),
-              }) => FarmSupplyersCompanion(
-                id: id,
-                name: name,
-                contactInfo: contactInfo,
+              }) => FarmSuppliersCompanion(
+                uuid: uuid,
                 createdAt: createdAt,
                 updatedAt: updatedAt,
                 isDeleted: isDeleted,
+                id: id,
+                name: name,
+                contactInfo: contactInfo,
               ),
           createCompanionCallback:
               ({
-                Value<int> id = const Value.absent(),
-                required String name,
-                Value<String?> contactInfo = const Value.absent(),
+                Value<String> uuid = const Value.absent(),
                 Value<DateTime> createdAt = const Value.absent(),
                 Value<DateTime> updatedAt = const Value.absent(),
                 Value<bool> isDeleted = const Value.absent(),
-              }) => FarmSupplyersCompanion.insert(
-                id: id,
-                name: name,
-                contactInfo: contactInfo,
+                Value<int> id = const Value.absent(),
+                required String name,
+                Value<String?> contactInfo = const Value.absent(),
+              }) => FarmSuppliersCompanion.insert(
+                uuid: uuid,
                 createdAt: createdAt,
                 updatedAt: updatedAt,
                 isDeleted: isDeleted,
+                id: id,
+                name: name,
+                contactInfo: contactInfo,
               ),
           withReferenceMapper: (p0) => p0
               .map(
                 (e) => (
                   e.readTable(table),
-                  $$FarmSupplyersTableReferences(db, table, e),
+                  $$FarmSuppliersTableReferences(db, table, e),
                 ),
               )
               .toList(),
@@ -7763,15 +8542,15 @@ class $$FarmSupplyersTableTableManager
                 return [
                   if (farmPurchasesRefs)
                     await $_getPrefetchedData<
-                      FarmSupplyer,
-                      $FarmSupplyersTable,
+                      FarmSupplier,
+                      $FarmSuppliersTable,
                       FarmPurchase
                     >(
                       currentTable: table,
-                      referencedTable: $$FarmSupplyersTableReferences
+                      referencedTable: $$FarmSuppliersTableReferences
                           ._farmPurchasesRefsTable(db),
                       managerFromTypedResult: (p0) =>
-                          $$FarmSupplyersTableReferences(
+                          $$FarmSuppliersTableReferences(
                             db,
                             table,
                             p0,
@@ -7788,22 +8567,26 @@ class $$FarmSupplyersTableTableManager
       );
 }
 
-typedef $$FarmSupplyersTableProcessedTableManager =
+typedef $$FarmSuppliersTableProcessedTableManager =
     ProcessedTableManager<
       _$AppDatabase,
-      $FarmSupplyersTable,
-      FarmSupplyer,
-      $$FarmSupplyersTableFilterComposer,
-      $$FarmSupplyersTableOrderingComposer,
-      $$FarmSupplyersTableAnnotationComposer,
-      $$FarmSupplyersTableCreateCompanionBuilder,
-      $$FarmSupplyersTableUpdateCompanionBuilder,
-      (FarmSupplyer, $$FarmSupplyersTableReferences),
-      FarmSupplyer,
+      $FarmSuppliersTable,
+      FarmSupplier,
+      $$FarmSuppliersTableFilterComposer,
+      $$FarmSuppliersTableOrderingComposer,
+      $$FarmSuppliersTableAnnotationComposer,
+      $$FarmSuppliersTableCreateCompanionBuilder,
+      $$FarmSuppliersTableUpdateCompanionBuilder,
+      (FarmSupplier, $$FarmSuppliersTableReferences),
+      FarmSupplier,
       PrefetchHooks Function({bool farmPurchasesRefs})
     >;
 typedef $$FarmPurchasesTableCreateCompanionBuilder =
     FarmPurchasesCompanion Function({
+      Value<String> uuid,
+      Value<DateTime> createdAt,
+      Value<DateTime> updatedAt,
+      Value<bool> isDeleted,
       Value<int> id,
       required int supplierId,
       required DateTime purchaseDate,
@@ -7812,12 +8595,13 @@ typedef $$FarmPurchasesTableCreateCompanionBuilder =
       Value<bool> isPaid,
       Value<DateTime?> paymentDate,
       Value<String?> description,
-      Value<DateTime> createdAt,
-      Value<DateTime> updatedAt,
-      Value<bool> isDeleted,
     });
 typedef $$FarmPurchasesTableUpdateCompanionBuilder =
     FarmPurchasesCompanion Function({
+      Value<String> uuid,
+      Value<DateTime> createdAt,
+      Value<DateTime> updatedAt,
+      Value<bool> isDeleted,
       Value<int> id,
       Value<int> supplierId,
       Value<DateTime> purchaseDate,
@@ -7826,9 +8610,6 @@ typedef $$FarmPurchasesTableUpdateCompanionBuilder =
       Value<bool> isPaid,
       Value<DateTime?> paymentDate,
       Value<String?> description,
-      Value<DateTime> createdAt,
-      Value<DateTime> updatedAt,
-      Value<bool> isDeleted,
     });
 
 final class $$FarmPurchasesTableReferences
@@ -7839,17 +8620,17 @@ final class $$FarmPurchasesTableReferences
     super.$_typedResult,
   );
 
-  static $FarmSupplyersTable _supplierIdTable(_$AppDatabase db) =>
-      db.farmSupplyers.createAlias(
-        $_aliasNameGenerator(db.farmPurchases.supplierId, db.farmSupplyers.id),
+  static $FarmSuppliersTable _supplierIdTable(_$AppDatabase db) =>
+      db.farmSuppliers.createAlias(
+        $_aliasNameGenerator(db.farmPurchases.supplierId, db.farmSuppliers.id),
       );
 
-  $$FarmSupplyersTableProcessedTableManager get supplierId {
+  $$FarmSuppliersTableProcessedTableManager get supplierId {
     final $_column = $_itemColumn<int>('supplier_id')!;
 
-    final manager = $$FarmSupplyersTableTableManager(
+    final manager = $$FarmSuppliersTableTableManager(
       $_db,
-      $_db.farmSupplyers,
+      $_db.farmSuppliers,
     ).filter((f) => f.id.sqlEquals($_column));
     final item = $_typedResult.readTableOrNull(_supplierIdTable($_db));
     if (item == null) return manager;
@@ -7892,6 +8673,26 @@ class $$FarmPurchasesTableFilterComposer
     super.$addJoinBuilderToRootComposer,
     super.$removeJoinBuilderFromRootComposer,
   });
+  ColumnFilters<String> get uuid => $composableBuilder(
+    column: $table.uuid,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get createdAt => $composableBuilder(
+    column: $table.createdAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get updatedAt => $composableBuilder(
+    column: $table.updatedAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<bool> get isDeleted => $composableBuilder(
+    column: $table.isDeleted,
+    builder: (column) => ColumnFilters(column),
+  );
+
   ColumnFilters<int> get id => $composableBuilder(
     column: $table.id,
     builder: (column) => ColumnFilters(column),
@@ -7927,35 +8728,20 @@ class $$FarmPurchasesTableFilterComposer
     builder: (column) => ColumnFilters(column),
   );
 
-  ColumnFilters<DateTime> get createdAt => $composableBuilder(
-    column: $table.createdAt,
-    builder: (column) => ColumnFilters(column),
-  );
-
-  ColumnFilters<DateTime> get updatedAt => $composableBuilder(
-    column: $table.updatedAt,
-    builder: (column) => ColumnFilters(column),
-  );
-
-  ColumnFilters<bool> get isDeleted => $composableBuilder(
-    column: $table.isDeleted,
-    builder: (column) => ColumnFilters(column),
-  );
-
-  $$FarmSupplyersTableFilterComposer get supplierId {
-    final $$FarmSupplyersTableFilterComposer composer = $composerBuilder(
+  $$FarmSuppliersTableFilterComposer get supplierId {
+    final $$FarmSuppliersTableFilterComposer composer = $composerBuilder(
       composer: this,
       getCurrentColumn: (t) => t.supplierId,
-      referencedTable: $db.farmSupplyers,
+      referencedTable: $db.farmSuppliers,
       getReferencedColumn: (t) => t.id,
       builder:
           (
             joinBuilder, {
             $addJoinBuilderToRootComposer,
             $removeJoinBuilderFromRootComposer,
-          }) => $$FarmSupplyersTableFilterComposer(
+          }) => $$FarmSuppliersTableFilterComposer(
             $db: $db,
-            $table: $db.farmSupplyers,
+            $table: $db.farmSuppliers,
             $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
             joinBuilder: joinBuilder,
             $removeJoinBuilderFromRootComposer:
@@ -8000,6 +8786,26 @@ class $$FarmPurchasesTableOrderingComposer
     super.$addJoinBuilderToRootComposer,
     super.$removeJoinBuilderFromRootComposer,
   });
+  ColumnOrderings<String> get uuid => $composableBuilder(
+    column: $table.uuid,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get createdAt => $composableBuilder(
+    column: $table.createdAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get updatedAt => $composableBuilder(
+    column: $table.updatedAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<bool> get isDeleted => $composableBuilder(
+    column: $table.isDeleted,
+    builder: (column) => ColumnOrderings(column),
+  );
+
   ColumnOrderings<int> get id => $composableBuilder(
     column: $table.id,
     builder: (column) => ColumnOrderings(column),
@@ -8035,35 +8841,20 @@ class $$FarmPurchasesTableOrderingComposer
     builder: (column) => ColumnOrderings(column),
   );
 
-  ColumnOrderings<DateTime> get createdAt => $composableBuilder(
-    column: $table.createdAt,
-    builder: (column) => ColumnOrderings(column),
-  );
-
-  ColumnOrderings<DateTime> get updatedAt => $composableBuilder(
-    column: $table.updatedAt,
-    builder: (column) => ColumnOrderings(column),
-  );
-
-  ColumnOrderings<bool> get isDeleted => $composableBuilder(
-    column: $table.isDeleted,
-    builder: (column) => ColumnOrderings(column),
-  );
-
-  $$FarmSupplyersTableOrderingComposer get supplierId {
-    final $$FarmSupplyersTableOrderingComposer composer = $composerBuilder(
+  $$FarmSuppliersTableOrderingComposer get supplierId {
+    final $$FarmSuppliersTableOrderingComposer composer = $composerBuilder(
       composer: this,
       getCurrentColumn: (t) => t.supplierId,
-      referencedTable: $db.farmSupplyers,
+      referencedTable: $db.farmSuppliers,
       getReferencedColumn: (t) => t.id,
       builder:
           (
             joinBuilder, {
             $addJoinBuilderToRootComposer,
             $removeJoinBuilderFromRootComposer,
-          }) => $$FarmSupplyersTableOrderingComposer(
+          }) => $$FarmSuppliersTableOrderingComposer(
             $db: $db,
-            $table: $db.farmSupplyers,
+            $table: $db.farmSuppliers,
             $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
             joinBuilder: joinBuilder,
             $removeJoinBuilderFromRootComposer:
@@ -8083,6 +8874,18 @@ class $$FarmPurchasesTableAnnotationComposer
     super.$addJoinBuilderToRootComposer,
     super.$removeJoinBuilderFromRootComposer,
   });
+  GeneratedColumn<String> get uuid =>
+      $composableBuilder(column: $table.uuid, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get createdAt =>
+      $composableBuilder(column: $table.createdAt, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get updatedAt =>
+      $composableBuilder(column: $table.updatedAt, builder: (column) => column);
+
+  GeneratedColumn<bool> get isDeleted =>
+      $composableBuilder(column: $table.isDeleted, builder: (column) => column);
+
   GeneratedColumn<int> get id =>
       $composableBuilder(column: $table.id, builder: (column) => column);
 
@@ -8112,29 +8915,20 @@ class $$FarmPurchasesTableAnnotationComposer
     builder: (column) => column,
   );
 
-  GeneratedColumn<DateTime> get createdAt =>
-      $composableBuilder(column: $table.createdAt, builder: (column) => column);
-
-  GeneratedColumn<DateTime> get updatedAt =>
-      $composableBuilder(column: $table.updatedAt, builder: (column) => column);
-
-  GeneratedColumn<bool> get isDeleted =>
-      $composableBuilder(column: $table.isDeleted, builder: (column) => column);
-
-  $$FarmSupplyersTableAnnotationComposer get supplierId {
-    final $$FarmSupplyersTableAnnotationComposer composer = $composerBuilder(
+  $$FarmSuppliersTableAnnotationComposer get supplierId {
+    final $$FarmSuppliersTableAnnotationComposer composer = $composerBuilder(
       composer: this,
       getCurrentColumn: (t) => t.supplierId,
-      referencedTable: $db.farmSupplyers,
+      referencedTable: $db.farmSuppliers,
       getReferencedColumn: (t) => t.id,
       builder:
           (
             joinBuilder, {
             $addJoinBuilderToRootComposer,
             $removeJoinBuilderFromRootComposer,
-          }) => $$FarmSupplyersTableAnnotationComposer(
+          }) => $$FarmSuppliersTableAnnotationComposer(
             $db: $db,
-            $table: $db.farmSupplyers,
+            $table: $db.farmSuppliers,
             $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
             joinBuilder: joinBuilder,
             $removeJoinBuilderFromRootComposer:
@@ -8199,6 +8993,10 @@ class $$FarmPurchasesTableTableManager
               $$FarmPurchasesTableAnnotationComposer($db: db, $table: table),
           updateCompanionCallback:
               ({
+                Value<String> uuid = const Value.absent(),
+                Value<DateTime> createdAt = const Value.absent(),
+                Value<DateTime> updatedAt = const Value.absent(),
+                Value<bool> isDeleted = const Value.absent(),
                 Value<int> id = const Value.absent(),
                 Value<int> supplierId = const Value.absent(),
                 Value<DateTime> purchaseDate = const Value.absent(),
@@ -8207,10 +9005,11 @@ class $$FarmPurchasesTableTableManager
                 Value<bool> isPaid = const Value.absent(),
                 Value<DateTime?> paymentDate = const Value.absent(),
                 Value<String?> description = const Value.absent(),
-                Value<DateTime> createdAt = const Value.absent(),
-                Value<DateTime> updatedAt = const Value.absent(),
-                Value<bool> isDeleted = const Value.absent(),
               }) => FarmPurchasesCompanion(
+                uuid: uuid,
+                createdAt: createdAt,
+                updatedAt: updatedAt,
+                isDeleted: isDeleted,
                 id: id,
                 supplierId: supplierId,
                 purchaseDate: purchaseDate,
@@ -8219,12 +9018,13 @@ class $$FarmPurchasesTableTableManager
                 isPaid: isPaid,
                 paymentDate: paymentDate,
                 description: description,
-                createdAt: createdAt,
-                updatedAt: updatedAt,
-                isDeleted: isDeleted,
               ),
           createCompanionCallback:
               ({
+                Value<String> uuid = const Value.absent(),
+                Value<DateTime> createdAt = const Value.absent(),
+                Value<DateTime> updatedAt = const Value.absent(),
+                Value<bool> isDeleted = const Value.absent(),
                 Value<int> id = const Value.absent(),
                 required int supplierId,
                 required DateTime purchaseDate,
@@ -8233,10 +9033,11 @@ class $$FarmPurchasesTableTableManager
                 Value<bool> isPaid = const Value.absent(),
                 Value<DateTime?> paymentDate = const Value.absent(),
                 Value<String?> description = const Value.absent(),
-                Value<DateTime> createdAt = const Value.absent(),
-                Value<DateTime> updatedAt = const Value.absent(),
-                Value<bool> isDeleted = const Value.absent(),
               }) => FarmPurchasesCompanion.insert(
+                uuid: uuid,
+                createdAt: createdAt,
+                updatedAt: updatedAt,
+                isDeleted: isDeleted,
                 id: id,
                 supplierId: supplierId,
                 purchaseDate: purchaseDate,
@@ -8245,9 +9046,6 @@ class $$FarmPurchasesTableTableManager
                 isPaid: isPaid,
                 paymentDate: paymentDate,
                 description: description,
-                createdAt: createdAt,
-                updatedAt: updatedAt,
-                isDeleted: isDeleted,
               ),
           withReferenceMapper: (p0) => p0
               .map(
@@ -8345,25 +9143,27 @@ typedef $$FarmPurchasesTableProcessedTableManager =
     >;
 typedef $$FarmPurchaseItemsTableCreateCompanionBuilder =
     FarmPurchaseItemsCompanion Function({
+      Value<String> uuid,
+      Value<DateTime> createdAt,
+      Value<DateTime> updatedAt,
+      Value<bool> isDeleted,
       Value<int> id,
       required int purchaseId,
       required int productId,
       required double quantity,
       required int unitCostInCents,
-      Value<DateTime> createdAt,
-      Value<DateTime> updatedAt,
-      Value<bool> isDeleted,
     });
 typedef $$FarmPurchaseItemsTableUpdateCompanionBuilder =
     FarmPurchaseItemsCompanion Function({
+      Value<String> uuid,
+      Value<DateTime> createdAt,
+      Value<DateTime> updatedAt,
+      Value<bool> isDeleted,
       Value<int> id,
       Value<int> purchaseId,
       Value<int> productId,
       Value<double> quantity,
       Value<int> unitCostInCents,
-      Value<DateTime> createdAt,
-      Value<DateTime> updatedAt,
-      Value<bool> isDeleted,
     });
 
 final class $$FarmPurchaseItemsTableReferences
@@ -8433,18 +9233,8 @@ class $$FarmPurchaseItemsTableFilterComposer
     super.$addJoinBuilderToRootComposer,
     super.$removeJoinBuilderFromRootComposer,
   });
-  ColumnFilters<int> get id => $composableBuilder(
-    column: $table.id,
-    builder: (column) => ColumnFilters(column),
-  );
-
-  ColumnFilters<double> get quantity => $composableBuilder(
-    column: $table.quantity,
-    builder: (column) => ColumnFilters(column),
-  );
-
-  ColumnFilters<int> get unitCostInCents => $composableBuilder(
-    column: $table.unitCostInCents,
+  ColumnFilters<String> get uuid => $composableBuilder(
+    column: $table.uuid,
     builder: (column) => ColumnFilters(column),
   );
 
@@ -8460,6 +9250,21 @@ class $$FarmPurchaseItemsTableFilterComposer
 
   ColumnFilters<bool> get isDeleted => $composableBuilder(
     column: $table.isDeleted,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<double> get quantity => $composableBuilder(
+    column: $table.quantity,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get unitCostInCents => $composableBuilder(
+    column: $table.unitCostInCents,
     builder: (column) => ColumnFilters(column),
   );
 
@@ -8519,18 +9324,8 @@ class $$FarmPurchaseItemsTableOrderingComposer
     super.$addJoinBuilderToRootComposer,
     super.$removeJoinBuilderFromRootComposer,
   });
-  ColumnOrderings<int> get id => $composableBuilder(
-    column: $table.id,
-    builder: (column) => ColumnOrderings(column),
-  );
-
-  ColumnOrderings<double> get quantity => $composableBuilder(
-    column: $table.quantity,
-    builder: (column) => ColumnOrderings(column),
-  );
-
-  ColumnOrderings<int> get unitCostInCents => $composableBuilder(
-    column: $table.unitCostInCents,
+  ColumnOrderings<String> get uuid => $composableBuilder(
+    column: $table.uuid,
     builder: (column) => ColumnOrderings(column),
   );
 
@@ -8546,6 +9341,21 @@ class $$FarmPurchaseItemsTableOrderingComposer
 
   ColumnOrderings<bool> get isDeleted => $composableBuilder(
     column: $table.isDeleted,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<double> get quantity => $composableBuilder(
+    column: $table.quantity,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<int> get unitCostInCents => $composableBuilder(
+    column: $table.unitCostInCents,
     builder: (column) => ColumnOrderings(column),
   );
 
@@ -8605,6 +9415,18 @@ class $$FarmPurchaseItemsTableAnnotationComposer
     super.$addJoinBuilderToRootComposer,
     super.$removeJoinBuilderFromRootComposer,
   });
+  GeneratedColumn<String> get uuid =>
+      $composableBuilder(column: $table.uuid, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get createdAt =>
+      $composableBuilder(column: $table.createdAt, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get updatedAt =>
+      $composableBuilder(column: $table.updatedAt, builder: (column) => column);
+
+  GeneratedColumn<bool> get isDeleted =>
+      $composableBuilder(column: $table.isDeleted, builder: (column) => column);
+
   GeneratedColumn<int> get id =>
       $composableBuilder(column: $table.id, builder: (column) => column);
 
@@ -8615,15 +9437,6 @@ class $$FarmPurchaseItemsTableAnnotationComposer
     column: $table.unitCostInCents,
     builder: (column) => column,
   );
-
-  GeneratedColumn<DateTime> get createdAt =>
-      $composableBuilder(column: $table.createdAt, builder: (column) => column);
-
-  GeneratedColumn<DateTime> get updatedAt =>
-      $composableBuilder(column: $table.updatedAt, builder: (column) => column);
-
-  GeneratedColumn<bool> get isDeleted =>
-      $composableBuilder(column: $table.isDeleted, builder: (column) => column);
 
   $$FarmPurchasesTableAnnotationComposer get purchaseId {
     final $$FarmPurchasesTableAnnotationComposer composer = $composerBuilder(
@@ -8705,43 +9518,47 @@ class $$FarmPurchaseItemsTableTableManager
               ),
           updateCompanionCallback:
               ({
+                Value<String> uuid = const Value.absent(),
+                Value<DateTime> createdAt = const Value.absent(),
+                Value<DateTime> updatedAt = const Value.absent(),
+                Value<bool> isDeleted = const Value.absent(),
                 Value<int> id = const Value.absent(),
                 Value<int> purchaseId = const Value.absent(),
                 Value<int> productId = const Value.absent(),
                 Value<double> quantity = const Value.absent(),
                 Value<int> unitCostInCents = const Value.absent(),
-                Value<DateTime> createdAt = const Value.absent(),
-                Value<DateTime> updatedAt = const Value.absent(),
-                Value<bool> isDeleted = const Value.absent(),
               }) => FarmPurchaseItemsCompanion(
+                uuid: uuid,
+                createdAt: createdAt,
+                updatedAt: updatedAt,
+                isDeleted: isDeleted,
                 id: id,
                 purchaseId: purchaseId,
                 productId: productId,
                 quantity: quantity,
                 unitCostInCents: unitCostInCents,
-                createdAt: createdAt,
-                updatedAt: updatedAt,
-                isDeleted: isDeleted,
               ),
           createCompanionCallback:
               ({
+                Value<String> uuid = const Value.absent(),
+                Value<DateTime> createdAt = const Value.absent(),
+                Value<DateTime> updatedAt = const Value.absent(),
+                Value<bool> isDeleted = const Value.absent(),
                 Value<int> id = const Value.absent(),
                 required int purchaseId,
                 required int productId,
                 required double quantity,
                 required int unitCostInCents,
-                Value<DateTime> createdAt = const Value.absent(),
-                Value<DateTime> updatedAt = const Value.absent(),
-                Value<bool> isDeleted = const Value.absent(),
               }) => FarmPurchaseItemsCompanion.insert(
+                uuid: uuid,
+                createdAt: createdAt,
+                updatedAt: updatedAt,
+                isDeleted: isDeleted,
                 id: id,
                 purchaseId: purchaseId,
                 productId: productId,
                 quantity: quantity,
                 unitCostInCents: unitCostInCents,
-                createdAt: createdAt,
-                updatedAt: updatedAt,
-                isDeleted: isDeleted,
               ),
           withReferenceMapper: (p0) => p0
               .map(
@@ -8829,21 +9646,23 @@ typedef $$FarmPurchaseItemsTableProcessedTableManager =
     >;
 typedef $$FarmAreasTableCreateCompanionBuilder =
     FarmAreasCompanion Function({
+      Value<String> uuid,
+      Value<DateTime> createdAt,
+      Value<DateTime> updatedAt,
+      Value<bool> isDeleted,
       Value<int> id,
       required String name,
       Value<double?> sizeInHectares,
-      Value<DateTime> createdAt,
-      Value<DateTime> updatedAt,
-      Value<bool> isDeleted,
     });
 typedef $$FarmAreasTableUpdateCompanionBuilder =
     FarmAreasCompanion Function({
-      Value<int> id,
-      Value<String> name,
-      Value<double?> sizeInHectares,
+      Value<String> uuid,
       Value<DateTime> createdAt,
       Value<DateTime> updatedAt,
       Value<bool> isDeleted,
+      Value<int> id,
+      Value<String> name,
+      Value<double?> sizeInHectares,
     });
 
 final class $$FarmAreasTableReferences
@@ -8883,18 +9702,8 @@ class $$FarmAreasTableFilterComposer
     super.$addJoinBuilderToRootComposer,
     super.$removeJoinBuilderFromRootComposer,
   });
-  ColumnFilters<int> get id => $composableBuilder(
-    column: $table.id,
-    builder: (column) => ColumnFilters(column),
-  );
-
-  ColumnFilters<String> get name => $composableBuilder(
-    column: $table.name,
-    builder: (column) => ColumnFilters(column),
-  );
-
-  ColumnFilters<double> get sizeInHectares => $composableBuilder(
-    column: $table.sizeInHectares,
+  ColumnFilters<String> get uuid => $composableBuilder(
+    column: $table.uuid,
     builder: (column) => ColumnFilters(column),
   );
 
@@ -8910,6 +9719,21 @@ class $$FarmAreasTableFilterComposer
 
   ColumnFilters<bool> get isDeleted => $composableBuilder(
     column: $table.isDeleted,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<int> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<String> get name => $composableBuilder(
+    column: $table.name,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<double> get sizeInHectares => $composableBuilder(
+    column: $table.sizeInHectares,
     builder: (column) => ColumnFilters(column),
   );
 
@@ -8948,18 +9772,8 @@ class $$FarmAreasTableOrderingComposer
     super.$addJoinBuilderToRootComposer,
     super.$removeJoinBuilderFromRootComposer,
   });
-  ColumnOrderings<int> get id => $composableBuilder(
-    column: $table.id,
-    builder: (column) => ColumnOrderings(column),
-  );
-
-  ColumnOrderings<String> get name => $composableBuilder(
-    column: $table.name,
-    builder: (column) => ColumnOrderings(column),
-  );
-
-  ColumnOrderings<double> get sizeInHectares => $composableBuilder(
-    column: $table.sizeInHectares,
+  ColumnOrderings<String> get uuid => $composableBuilder(
+    column: $table.uuid,
     builder: (column) => ColumnOrderings(column),
   );
 
@@ -8977,6 +9791,21 @@ class $$FarmAreasTableOrderingComposer
     column: $table.isDeleted,
     builder: (column) => ColumnOrderings(column),
   );
+
+  ColumnOrderings<int> get id => $composableBuilder(
+    column: $table.id,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<String> get name => $composableBuilder(
+    column: $table.name,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<double> get sizeInHectares => $composableBuilder(
+    column: $table.sizeInHectares,
+    builder: (column) => ColumnOrderings(column),
+  );
 }
 
 class $$FarmAreasTableAnnotationComposer
@@ -8988,6 +9817,18 @@ class $$FarmAreasTableAnnotationComposer
     super.$addJoinBuilderToRootComposer,
     super.$removeJoinBuilderFromRootComposer,
   });
+  GeneratedColumn<String> get uuid =>
+      $composableBuilder(column: $table.uuid, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get createdAt =>
+      $composableBuilder(column: $table.createdAt, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get updatedAt =>
+      $composableBuilder(column: $table.updatedAt, builder: (column) => column);
+
+  GeneratedColumn<bool> get isDeleted =>
+      $composableBuilder(column: $table.isDeleted, builder: (column) => column);
+
   GeneratedColumn<int> get id =>
       $composableBuilder(column: $table.id, builder: (column) => column);
 
@@ -8998,15 +9839,6 @@ class $$FarmAreasTableAnnotationComposer
     column: $table.sizeInHectares,
     builder: (column) => column,
   );
-
-  GeneratedColumn<DateTime> get createdAt =>
-      $composableBuilder(column: $table.createdAt, builder: (column) => column);
-
-  GeneratedColumn<DateTime> get updatedAt =>
-      $composableBuilder(column: $table.updatedAt, builder: (column) => column);
-
-  GeneratedColumn<bool> get isDeleted =>
-      $composableBuilder(column: $table.isDeleted, builder: (column) => column);
 
   Expression<T> farmProductionsRefs<T extends Object>(
     Expression<T> Function($$FarmProductionsTableAnnotationComposer a) f,
@@ -9062,35 +9894,39 @@ class $$FarmAreasTableTableManager
               $$FarmAreasTableAnnotationComposer($db: db, $table: table),
           updateCompanionCallback:
               ({
+                Value<String> uuid = const Value.absent(),
+                Value<DateTime> createdAt = const Value.absent(),
+                Value<DateTime> updatedAt = const Value.absent(),
+                Value<bool> isDeleted = const Value.absent(),
                 Value<int> id = const Value.absent(),
                 Value<String> name = const Value.absent(),
                 Value<double?> sizeInHectares = const Value.absent(),
-                Value<DateTime> createdAt = const Value.absent(),
-                Value<DateTime> updatedAt = const Value.absent(),
-                Value<bool> isDeleted = const Value.absent(),
               }) => FarmAreasCompanion(
-                id: id,
-                name: name,
-                sizeInHectares: sizeInHectares,
+                uuid: uuid,
                 createdAt: createdAt,
                 updatedAt: updatedAt,
                 isDeleted: isDeleted,
+                id: id,
+                name: name,
+                sizeInHectares: sizeInHectares,
               ),
           createCompanionCallback:
               ({
-                Value<int> id = const Value.absent(),
-                required String name,
-                Value<double?> sizeInHectares = const Value.absent(),
+                Value<String> uuid = const Value.absent(),
                 Value<DateTime> createdAt = const Value.absent(),
                 Value<DateTime> updatedAt = const Value.absent(),
                 Value<bool> isDeleted = const Value.absent(),
+                Value<int> id = const Value.absent(),
+                required String name,
+                Value<double?> sizeInHectares = const Value.absent(),
               }) => FarmAreasCompanion.insert(
-                id: id,
-                name: name,
-                sizeInHectares: sizeInHectares,
+                uuid: uuid,
                 createdAt: createdAt,
                 updatedAt: updatedAt,
                 isDeleted: isDeleted,
+                id: id,
+                name: name,
+                sizeInHectares: sizeInHectares,
               ),
           withReferenceMapper: (p0) => p0
               .map(
@@ -9154,29 +9990,31 @@ typedef $$FarmAreasTableProcessedTableManager =
     >;
 typedef $$FarmProductionsTableCreateCompanionBuilder =
     FarmProductionsCompanion Function({
+      Value<String> uuid,
+      Value<DateTime> createdAt,
+      Value<DateTime> updatedAt,
+      Value<bool> isDeleted,
       Value<int> id,
       required int productId,
+      required int productionAreaId,
       required double quantity,
       required int unitPriceInCents,
       required int productionCostInCents,
       required DateTime harvestDate,
-      required int productionAreaId,
-      Value<DateTime> createdAt,
-      Value<DateTime> updatedAt,
-      Value<bool> isDeleted,
     });
 typedef $$FarmProductionsTableUpdateCompanionBuilder =
     FarmProductionsCompanion Function({
+      Value<String> uuid,
+      Value<DateTime> createdAt,
+      Value<DateTime> updatedAt,
+      Value<bool> isDeleted,
       Value<int> id,
       Value<int> productId,
+      Value<int> productionAreaId,
       Value<double> quantity,
       Value<int> unitPriceInCents,
       Value<int> productionCostInCents,
       Value<DateTime> harvestDate,
-      Value<int> productionAreaId,
-      Value<DateTime> createdAt,
-      Value<DateTime> updatedAt,
-      Value<bool> isDeleted,
     });
 
 final class $$FarmProductionsTableReferences
@@ -9239,6 +10077,26 @@ class $$FarmProductionsTableFilterComposer
     super.$addJoinBuilderToRootComposer,
     super.$removeJoinBuilderFromRootComposer,
   });
+  ColumnFilters<String> get uuid => $composableBuilder(
+    column: $table.uuid,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get createdAt => $composableBuilder(
+    column: $table.createdAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<DateTime> get updatedAt => $composableBuilder(
+    column: $table.updatedAt,
+    builder: (column) => ColumnFilters(column),
+  );
+
+  ColumnFilters<bool> get isDeleted => $composableBuilder(
+    column: $table.isDeleted,
+    builder: (column) => ColumnFilters(column),
+  );
+
   ColumnFilters<int> get id => $composableBuilder(
     column: $table.id,
     builder: (column) => ColumnFilters(column),
@@ -9261,21 +10119,6 @@ class $$FarmProductionsTableFilterComposer
 
   ColumnFilters<DateTime> get harvestDate => $composableBuilder(
     column: $table.harvestDate,
-    builder: (column) => ColumnFilters(column),
-  );
-
-  ColumnFilters<DateTime> get createdAt => $composableBuilder(
-    column: $table.createdAt,
-    builder: (column) => ColumnFilters(column),
-  );
-
-  ColumnFilters<DateTime> get updatedAt => $composableBuilder(
-    column: $table.updatedAt,
-    builder: (column) => ColumnFilters(column),
-  );
-
-  ColumnFilters<bool> get isDeleted => $composableBuilder(
-    column: $table.isDeleted,
     builder: (column) => ColumnFilters(column),
   );
 
@@ -9335,6 +10178,26 @@ class $$FarmProductionsTableOrderingComposer
     super.$addJoinBuilderToRootComposer,
     super.$removeJoinBuilderFromRootComposer,
   });
+  ColumnOrderings<String> get uuid => $composableBuilder(
+    column: $table.uuid,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get createdAt => $composableBuilder(
+    column: $table.createdAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<DateTime> get updatedAt => $composableBuilder(
+    column: $table.updatedAt,
+    builder: (column) => ColumnOrderings(column),
+  );
+
+  ColumnOrderings<bool> get isDeleted => $composableBuilder(
+    column: $table.isDeleted,
+    builder: (column) => ColumnOrderings(column),
+  );
+
   ColumnOrderings<int> get id => $composableBuilder(
     column: $table.id,
     builder: (column) => ColumnOrderings(column),
@@ -9357,21 +10220,6 @@ class $$FarmProductionsTableOrderingComposer
 
   ColumnOrderings<DateTime> get harvestDate => $composableBuilder(
     column: $table.harvestDate,
-    builder: (column) => ColumnOrderings(column),
-  );
-
-  ColumnOrderings<DateTime> get createdAt => $composableBuilder(
-    column: $table.createdAt,
-    builder: (column) => ColumnOrderings(column),
-  );
-
-  ColumnOrderings<DateTime> get updatedAt => $composableBuilder(
-    column: $table.updatedAt,
-    builder: (column) => ColumnOrderings(column),
-  );
-
-  ColumnOrderings<bool> get isDeleted => $composableBuilder(
-    column: $table.isDeleted,
     builder: (column) => ColumnOrderings(column),
   );
 
@@ -9431,6 +10279,18 @@ class $$FarmProductionsTableAnnotationComposer
     super.$addJoinBuilderToRootComposer,
     super.$removeJoinBuilderFromRootComposer,
   });
+  GeneratedColumn<String> get uuid =>
+      $composableBuilder(column: $table.uuid, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get createdAt =>
+      $composableBuilder(column: $table.createdAt, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get updatedAt =>
+      $composableBuilder(column: $table.updatedAt, builder: (column) => column);
+
+  GeneratedColumn<bool> get isDeleted =>
+      $composableBuilder(column: $table.isDeleted, builder: (column) => column);
+
   GeneratedColumn<int> get id =>
       $composableBuilder(column: $table.id, builder: (column) => column);
 
@@ -9451,15 +10311,6 @@ class $$FarmProductionsTableAnnotationComposer
     column: $table.harvestDate,
     builder: (column) => column,
   );
-
-  GeneratedColumn<DateTime> get createdAt =>
-      $composableBuilder(column: $table.createdAt, builder: (column) => column);
-
-  GeneratedColumn<DateTime> get updatedAt =>
-      $composableBuilder(column: $table.updatedAt, builder: (column) => column);
-
-  GeneratedColumn<bool> get isDeleted =>
-      $composableBuilder(column: $table.isDeleted, builder: (column) => column);
 
   $$FarmProductsTableAnnotationComposer get productId {
     final $$FarmProductsTableAnnotationComposer composer = $composerBuilder(
@@ -9538,51 +10389,55 @@ class $$FarmProductionsTableTableManager
               $$FarmProductionsTableAnnotationComposer($db: db, $table: table),
           updateCompanionCallback:
               ({
+                Value<String> uuid = const Value.absent(),
+                Value<DateTime> createdAt = const Value.absent(),
+                Value<DateTime> updatedAt = const Value.absent(),
+                Value<bool> isDeleted = const Value.absent(),
                 Value<int> id = const Value.absent(),
                 Value<int> productId = const Value.absent(),
+                Value<int> productionAreaId = const Value.absent(),
                 Value<double> quantity = const Value.absent(),
                 Value<int> unitPriceInCents = const Value.absent(),
                 Value<int> productionCostInCents = const Value.absent(),
                 Value<DateTime> harvestDate = const Value.absent(),
-                Value<int> productionAreaId = const Value.absent(),
-                Value<DateTime> createdAt = const Value.absent(),
-                Value<DateTime> updatedAt = const Value.absent(),
-                Value<bool> isDeleted = const Value.absent(),
               }) => FarmProductionsCompanion(
+                uuid: uuid,
+                createdAt: createdAt,
+                updatedAt: updatedAt,
+                isDeleted: isDeleted,
                 id: id,
                 productId: productId,
+                productionAreaId: productionAreaId,
                 quantity: quantity,
                 unitPriceInCents: unitPriceInCents,
                 productionCostInCents: productionCostInCents,
                 harvestDate: harvestDate,
-                productionAreaId: productionAreaId,
-                createdAt: createdAt,
-                updatedAt: updatedAt,
-                isDeleted: isDeleted,
               ),
           createCompanionCallback:
               ({
+                Value<String> uuid = const Value.absent(),
+                Value<DateTime> createdAt = const Value.absent(),
+                Value<DateTime> updatedAt = const Value.absent(),
+                Value<bool> isDeleted = const Value.absent(),
                 Value<int> id = const Value.absent(),
                 required int productId,
+                required int productionAreaId,
                 required double quantity,
                 required int unitPriceInCents,
                 required int productionCostInCents,
                 required DateTime harvestDate,
-                required int productionAreaId,
-                Value<DateTime> createdAt = const Value.absent(),
-                Value<DateTime> updatedAt = const Value.absent(),
-                Value<bool> isDeleted = const Value.absent(),
               }) => FarmProductionsCompanion.insert(
+                uuid: uuid,
+                createdAt: createdAt,
+                updatedAt: updatedAt,
+                isDeleted: isDeleted,
                 id: id,
                 productId: productId,
+                productionAreaId: productionAreaId,
                 quantity: quantity,
                 unitPriceInCents: unitPriceInCents,
                 productionCostInCents: productionCostInCents,
                 harvestDate: harvestDate,
-                productionAreaId: productionAreaId,
-                createdAt: createdAt,
-                updatedAt: updatedAt,
-                isDeleted: isDeleted,
               ),
           withReferenceMapper: (p0) => p0
               .map(
@@ -9683,8 +10538,8 @@ class $AppDatabaseManager {
       $$FarmStockTableTableManager(_db, _db.farmStock);
   $$FarmStockMovementsTableTableManager get farmStockMovements =>
       $$FarmStockMovementsTableTableManager(_db, _db.farmStockMovements);
-  $$FarmSupplyersTableTableManager get farmSupplyers =>
-      $$FarmSupplyersTableTableManager(_db, _db.farmSupplyers);
+  $$FarmSuppliersTableTableManager get farmSuppliers =>
+      $$FarmSuppliersTableTableManager(_db, _db.farmSuppliers);
   $$FarmPurchasesTableTableManager get farmPurchases =>
       $$FarmPurchasesTableTableManager(_db, _db.farmPurchases);
   $$FarmPurchaseItemsTableTableManager get farmPurchaseItems =>

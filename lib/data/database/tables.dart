@@ -1,70 +1,83 @@
 import 'package:drift/drift.dart';
+import 'package:uuid/uuid.dart';
+
+const uuidGenerator = Uuid();
 
 enum StockMovementType { inEntry, outEntry, loss, adjustment }
 
-class Simulations extends Table {
+mixin BaseTable on Table {
+  TextColumn get uuid => text().clientDefault(() => uuidGenerator.v4())();
+
+  DateTimeColumn get createdAt => dateTime().withDefault(currentDateAndTime)();
+
+  DateTimeColumn get updatedAt => dateTime().withDefault(currentDateAndTime)();
+
+  BoolColumn get isDeleted => boolean().withDefault(const Constant(false))();
+}
+
+class Simulations extends Table with BaseTable {
   IntColumn get id => integer().autoIncrement()();
   TextColumn get producerName => text().withLength(min: 1, max: 100)();
 
-  TextColumn get principalAmount => text()();
-  TextColumn get interestRate => text()();
-  IntColumn get periods => integer()();
-  TextColumn get totalAmount => text()();
+  IntColumn get principalAmountInCents => integer()();
+  IntColumn get interestRateBasisPoints => integer()(); // 5.25% = 525
 
-  DateTimeColumn get createdAt => dateTime().withDefault(currentDateAndTime)();
+  IntColumn get periods => integer()();
+  IntColumn get totalAmountInCents => integer()();
+
   BoolColumn get isSynced => boolean().withDefault(const Constant(false))();
 }
 
-class FarmCategories extends Table {
+class FarmCategories extends Table with BaseTable {
   IntColumn get id => integer().autoIncrement()();
   TextColumn get name => text().withLength(min: 1, max: 100)();
-  DateTimeColumn get createdAt => dateTime().withDefault(currentDateAndTime)();
 
-  DateTimeColumn get updatedAt => dateTime().withDefault(currentDateAndTime)();
-
-  BoolColumn get isDeleted => boolean().withDefault(const Constant(false))();
+  List<Set<Column>> get indexes => [
+    {name},
+  ];
 }
 
-class FarmProducts extends Table {
+class FarmProducts extends Table with BaseTable {
   IntColumn get id => integer().autoIncrement()();
 
   TextColumn get name => text().withLength(min: 1, max: 100)();
+
   IntColumn get categoryId => integer().references(FarmCategories, #id)();
+
   TextColumn get description => text().nullable()();
-  TextColumn get unit =>
-      text().withLength(min: 1, max: 50)(); // kg, L, un, saca
-  BoolColumn get isProduction => boolean()(); // produzido no sítio
-  DateTimeColumn get createdAt => dateTime().withDefault(currentDateAndTime)();
 
-  DateTimeColumn get updatedAt => dateTime().withDefault(currentDateAndTime)();
+  TextColumn get unit => text().withLength(min: 1, max: 50)();
 
-  BoolColumn get isDeleted => boolean().withDefault(const Constant(false))();
+  BoolColumn get isProduction => boolean()();
+
+  List<Set<Column>> get indexes => [
+    {categoryId},
+    {name},
+  ];
 }
 
-class FarmStock extends Table {
+class FarmStock extends Table with BaseTable {
   IntColumn get id => integer().autoIncrement()();
+
   IntColumn get productId => integer().references(FarmProducts, #id)();
 
-  RealColumn get quantity => real()(); //atualizar somente via movimentações
+  RealColumn get quantity => real()();
   RealColumn get minimumStock => real().nullable()();
 
   TextColumn get location => text().nullable()();
   TextColumn get lotNumber => text().nullable()();
   DateTimeColumn get expirationDate => dateTime().nullable()();
-  DateTimeColumn get createdAt => dateTime().withDefault(currentDateAndTime)();
-
-  DateTimeColumn get updatedAt => dateTime().withDefault(currentDateAndTime)();
-
-  BoolColumn get isDeleted => boolean().withDefault(const Constant(false))();
 
   List<Set<Column>> get indexes => [
     {productId},
+    {lotNumber},
   ];
 }
 
-class FarmStockMovements extends Table {
+class FarmStockMovements extends Table with BaseTable {
   IntColumn get id => integer().autoIncrement()();
-  IntColumn get productId => integer().references(FarmProducts, #id)();
+
+  IntColumn get stockId => integer().references(FarmStock, #id)();
 
   IntColumn get type => intEnum<StockMovementType>()();
 
@@ -72,34 +85,27 @@ class FarmStockMovements extends Table {
   IntColumn get unitCostInCents => integer().nullable()();
 
   TextColumn get referenceType => text().nullable()();
-  DateTimeColumn get createdAt => dateTime().withDefault(currentDateAndTime)();
-
-  DateTimeColumn get updatedAt => dateTime().withDefault(currentDateAndTime)();
-
-  BoolColumn get isDeleted => boolean().withDefault(const Constant(false))();
+  TextColumn get referenceId => text().nullable()();
 
   List<Set<Column>> get indexes => [
-    {productId},
+    {stockId},
+    {type},
   ];
 }
 
-class FarmSupplyers extends Table {
+class FarmSuppliers extends Table with BaseTable {
   IntColumn get id => integer().autoIncrement()();
   TextColumn get name => text().withLength(min: 1, max: 100)();
   TextColumn get contactInfo => text().nullable()();
-
-  DateTimeColumn get createdAt => dateTime().withDefault(currentDateAndTime)();
-
-  DateTimeColumn get updatedAt => dateTime().withDefault(currentDateAndTime)();
-
-  BoolColumn get isDeleted => boolean().withDefault(const Constant(false))();
 }
 
-class FarmPurchases extends Table {
+class FarmPurchases extends Table with BaseTable {
   IntColumn get id => integer().autoIncrement()();
-  IntColumn get supplierId => integer().references(FarmSupplyers, #id)();
+
+  IntColumn get supplierId => integer().references(FarmSuppliers, #id)();
 
   DateTimeColumn get purchaseDate => dateTime()();
+
   IntColumn get totalValueInCents => integer()();
 
   DateTimeColumn get dueDate => dateTime().nullable()();
@@ -107,55 +113,51 @@ class FarmPurchases extends Table {
   DateTimeColumn get paymentDate => dateTime().nullable()();
 
   TextColumn get description => text().nullable()();
-  DateTimeColumn get createdAt => dateTime().withDefault(currentDateAndTime)();
 
-  DateTimeColumn get updatedAt => dateTime().withDefault(currentDateAndTime)();
-
-  BoolColumn get isDeleted => boolean().withDefault(const Constant(false))();
+  List<Set<Column>> get indexes => [
+    {supplierId},
+    {isPaid},
+  ];
 }
 
-class FarmPurchaseItems extends Table {
+class FarmPurchaseItems extends Table with BaseTable {
   IntColumn get id => integer().autoIncrement()();
+
   IntColumn get purchaseId => integer().references(FarmPurchases, #id)();
+
   IntColumn get productId => integer().references(FarmProducts, #id)();
 
   RealColumn get quantity => real()();
   IntColumn get unitCostInCents => integer()();
-  DateTimeColumn get createdAt => dateTime().withDefault(currentDateAndTime)();
-
-  DateTimeColumn get updatedAt => dateTime().withDefault(currentDateAndTime)();
-
-  BoolColumn get isDeleted => boolean().withDefault(const Constant(false))();
 
   List<Set<Column>> get indexes => [
+    {purchaseId},
     {productId},
   ];
 }
 
-class FarmAreas extends Table {
+class FarmAreas extends Table with BaseTable {
   IntColumn get id => integer().autoIncrement()();
   TextColumn get name => text().withLength(min: 1, max: 100)();
   RealColumn get sizeInHectares => real().nullable()();
-  DateTimeColumn get createdAt => dateTime().withDefault(currentDateAndTime)();
-
-  DateTimeColumn get updatedAt => dateTime().withDefault(currentDateAndTime)();
-
-  BoolColumn get isDeleted => boolean().withDefault(const Constant(false))();
 }
 
-class FarmProductions extends Table {
+class FarmProductions extends Table with BaseTable {
   IntColumn get id => integer().autoIncrement()();
+
   IntColumn get productId => integer().references(FarmProducts, #id)();
 
+  IntColumn get productionAreaId => integer().references(FarmAreas, #id)();
+
   RealColumn get quantity => real()();
+
   IntColumn get unitPriceInCents => integer()();
   IntColumn get productionCostInCents => integer()();
 
   DateTimeColumn get harvestDate => dateTime()();
-  IntColumn get productionAreaId => integer().references(FarmAreas, #id)();
-  DateTimeColumn get createdAt => dateTime().withDefault(currentDateAndTime)();
 
-  DateTimeColumn get updatedAt => dateTime().withDefault(currentDateAndTime)();
-
-  BoolColumn get isDeleted => boolean().withDefault(const Constant(false))();
+  List<Set<Column>> get indexes => [
+    {productId},
+    {productionAreaId},
+  ];
 }
