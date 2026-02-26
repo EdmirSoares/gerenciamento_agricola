@@ -8,7 +8,7 @@ import 'package:gerenciamento_agricola/data/database/tables.dart';
 /// 
 class StockMovementEntity {
   final int? id;
-  final int productId;
+  final int stockId;
   final StockMovementType type;
   final double quantity;
   final int? unitCostInCents;
@@ -19,7 +19,7 @@ class StockMovementEntity {
 
   StockMovementEntity({
     this.id,
-    required this.productId,
+    required this.stockId,
     required this.type,
     required this.quantity,
     this.unitCostInCents,
@@ -30,14 +30,14 @@ class StockMovementEntity {
   });
 
   factory StockMovementEntity.create({
-    required int productId,
+    required int stockId,
     required StockMovementType type,
     required double quantity,
     int? unitCostInCents,
     String? referenceType,
   }) {
-    if (productId <= 0) {
-      throw ArgumentError('ID do produto deve ser maior que zero');
+    if (stockId <= 0) {
+      throw ArgumentError('ID do estoque deve ser maior que zero');
     }
 
     if (quantity <= 0) {
@@ -51,7 +51,7 @@ class StockMovementEntity {
     final now = DateTime.now();
 
     return StockMovementEntity(
-      productId: productId,
+      stockId: stockId,
       type: type,
       quantity: quantity,
       unitCostInCents: unitCostInCents,
@@ -64,7 +64,7 @@ class StockMovementEntity {
 
   StockMovementEntity copyWith({
     int? id,
-    int? productId,
+    int? stockId,
     StockMovementType? type,
     double? quantity,
     int? unitCostInCents,
@@ -86,7 +86,7 @@ class StockMovementEntity {
 
     return StockMovementEntity(
       id: id ?? this.id,
-      productId: productId ?? this.productId,
+      stockId: stockId ?? this.stockId,
       type: type ?? this.type,
       quantity: newQuantity,
       unitCostInCents: newUnitCost,

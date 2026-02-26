@@ -2,6 +2,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gerenciamento_agricola/data/database/tables.dart';
 import 'package:gerenciamento_agricola/domain/usecases/stock_movements_usecase.dart';
 import 'package:gerenciamento_agricola/presentation/cubits/stock_movements/stock_movements_state.dart';
+import 'package:gerenciamento_agricola/presentation/widgets/error_display_widget.dart';
 
 class StockMovementsCubit extends Cubit<StockMovementsState> {
   final AddStockMovementUseCase _addStockMovementUseCase;
@@ -30,7 +31,7 @@ class StockMovementsCubit extends Cubit<StockMovementsState> {
   ) : super(StockMovementsInicial());
 
   Future<void> addStockMovement(
-    int productId,
+    int stockId,
     double quantity,
     StockMovementType type,
     int? unitCostInCents,
@@ -39,7 +40,7 @@ class StockMovementsCubit extends Cubit<StockMovementsState> {
     emit(StockMovementsLoading());
     try {
       await _addStockMovementUseCase(
-        productId,
+        stockId,
         quantity,
         type,
         unitCostInCents,
@@ -67,7 +68,7 @@ class StockMovementsCubit extends Cubit<StockMovementsState> {
 
   Future<void> updateStockMovement(
     int movementId,
-    int productId,
+    int stockId,
     double quantity,
     StockMovementType type,
     int? unitCostInCents,
@@ -82,7 +83,7 @@ class StockMovementsCubit extends Cubit<StockMovementsState> {
       }
 
       final updatedMovement = existingMovement.copyWith(
-        productId: productId,
+        stockId: stockId,
         type: type,
         quantity: quantity,
         unitCostInCents: unitCostInCents,

@@ -13,7 +13,7 @@ class StockMovementsImpl implements IStockMovementsRepository {
   @override
   Future<void> addStockMovement(StockMovementEntity stockMovement) async {
     final companion = FarmStockMovementsCompanion(
-      productId: Value<int>(stockMovement.productId),
+      stockId: Value<int>(stockMovement.stockId),
       quantity: Value<double>(stockMovement.quantity),
       type: Value<StockMovementType>(stockMovement.type),
       unitCostInCents: Value<int?>(stockMovement.unitCostInCents),
@@ -34,7 +34,7 @@ class StockMovementsImpl implements IStockMovementsRepository {
 
     final companion = FarmStockMovementsCompanion(
       id: Value<int>(stockMovement.id!),
-      productId: Value<int>(stockMovement.productId),
+      stockId: Value<int>(stockMovement.stockId),
       quantity: Value<double>(stockMovement.quantity),
       type: Value<StockMovementType>(stockMovement.type),
       unitCostInCents: Value<int?>(stockMovement.unitCostInCents),
@@ -91,12 +91,17 @@ class StockMovementsImpl implements IStockMovementsRepository {
   Future<List<StockMovementWithProduct>> getAllStockMovements() async {
     final query = _db.select(_db.farmStockMovements).join([
       innerJoin(
+        _db.farmStock,
+        _db.farmStock.id.equalsExp(_db.farmStockMovements.stockId),
+      ),
+      innerJoin(
         _db.farmProducts,
-        _db.farmProducts.id.equalsExp(_db.farmStockMovements.productId),
+        _db.farmProducts.id.equalsExp(_db.farmStock.productId),
       ),
     ])
       ..where(
         _db.farmStockMovements.isDeleted.equals(false) &
+            _db.farmStock.isDeleted.equals(false) &
             _db.farmProducts.isDeleted.equals(false),
       )
       ..orderBy([OrderingTerm.desc(_db.farmStockMovements.createdAt)]);
@@ -115,13 +120,18 @@ class StockMovementsImpl implements IStockMovementsRepository {
 
     final query = _db.select(_db.farmStockMovements).join([
       innerJoin(
+        _db.farmStock,
+        _db.farmStock.id.equalsExp(_db.farmStockMovements.stockId),
+      ),
+      innerJoin(
         _db.farmProducts,
-        _db.farmProducts.id.equalsExp(_db.farmStockMovements.productId),
+        _db.farmProducts.id.equalsExp(_db.farmStock.productId),
       ),
     ])
       ..where(
-        _db.farmStockMovements.productId.equals(productId) &
+        _db.farmStock.productId.equals(productId) &
             _db.farmStockMovements.isDeleted.equals(false) &
+            _db.farmStock.isDeleted.equals(false) &
             _db.farmProducts.isDeleted.equals(false),
       )
       ..orderBy([OrderingTerm.desc(_db.farmStockMovements.createdAt)]);
@@ -136,13 +146,18 @@ class StockMovementsImpl implements IStockMovementsRepository {
   ) async {
     final query = _db.select(_db.farmStockMovements).join([
       innerJoin(
+        _db.farmStock,
+        _db.farmStock.id.equalsExp(_db.farmStockMovements.stockId),
+      ),
+      innerJoin(
         _db.farmProducts,
-        _db.farmProducts.id.equalsExp(_db.farmStockMovements.productId),
+        _db.farmProducts.id.equalsExp(_db.farmStock.productId),
       ),
     ])
       ..where(
         _db.farmStockMovements.type.equals(type.index) &
             _db.farmStockMovements.isDeleted.equals(false) &
+            _db.farmStock.isDeleted.equals(false) &
             _db.farmProducts.isDeleted.equals(false),
       )
       ..orderBy([OrderingTerm.desc(_db.farmStockMovements.createdAt)]);
@@ -162,14 +177,19 @@ class StockMovementsImpl implements IStockMovementsRepository {
 
     final query = _db.select(_db.farmStockMovements).join([
       innerJoin(
+        _db.farmStock,
+        _db.farmStock.id.equalsExp(_db.farmStockMovements.stockId),
+      ),
+      innerJoin(
         _db.farmProducts,
-        _db.farmProducts.id.equalsExp(_db.farmStockMovements.productId),
+        _db.farmProducts.id.equalsExp(_db.farmStock.productId),
       ),
     ])
       ..where(
         _db.farmStockMovements.createdAt.isBiggerOrEqualValue(startDate) &
             _db.farmStockMovements.createdAt.isSmallerOrEqualValue(endDate) &
             _db.farmStockMovements.isDeleted.equals(false) &
+            _db.farmStock.isDeleted.equals(false) &
             _db.farmProducts.isDeleted.equals(false),
       )
       ..orderBy([OrderingTerm.desc(_db.farmStockMovements.createdAt)]);
@@ -181,7 +201,7 @@ class StockMovementsImpl implements IStockMovementsRepository {
   StockMovementEntity _mapToEntity(FarmStockMovement row) {
     return StockMovementEntity(
       id: row.id,
-      productId: row.productId,
+      stockId: row.stockId,
       quantity: row.quantity,
       type: row.type,
       unitCostInCents: row.unitCostInCents,
@@ -204,13 +224,18 @@ class StockMovementsImpl implements IStockMovementsRepository {
     final query =
         _db.select(_db.farmStockMovements).join([
             innerJoin(
+              _db.farmStock,
+              _db.farmStock.id.equalsExp(_db.farmStockMovements.stockId),
+            ),
+            innerJoin(
               _db.farmProducts,
-              _db.farmProducts.id.equalsExp(_db.farmStockMovements.productId),
+              _db.farmProducts.id.equalsExp(_db.farmStock.productId),
             ),
           ])
           ..where(
             _db.farmProducts.name.like('%$trimmedName%') &
                 _db.farmStockMovements.isDeleted.equals(false) &
+                _db.farmStock.isDeleted.equals(false) &
                 _db.farmProducts.isDeleted.equals(false),
           )
           ..orderBy([OrderingTerm.desc(_db.farmStockMovements.createdAt)]);
@@ -230,13 +255,18 @@ class StockMovementsImpl implements IStockMovementsRepository {
     final query =
         _db.select(_db.farmStockMovements).join([
             innerJoin(
+              _db.farmStock,
+              _db.farmStock.id.equalsExp(_db.farmStockMovements.stockId),
+            ),
+            innerJoin(
               _db.farmProducts,
-              _db.farmProducts.id.equalsExp(_db.farmStockMovements.productId),
+              _db.farmProducts.id.equalsExp(_db.farmStock.productId),
             ),
           ])
           ..where(
             _db.farmProducts.categoryId.equals(categoryId) &
                 _db.farmStockMovements.isDeleted.equals(false) &
+                _db.farmStock.isDeleted.equals(false) &
                 _db.farmProducts.isDeleted.equals(false),
           )
           ..orderBy([OrderingTerm.desc(_db.farmStockMovements.createdAt)]);
@@ -247,11 +277,12 @@ class StockMovementsImpl implements IStockMovementsRepository {
 
   StockMovementWithProduct _mapToDto(TypedResult row) {
     final movement = row.readTable(_db.farmStockMovements);
+    final stock = row.readTable(_db.farmStock);
     final product = row.readTable(_db.farmProducts);
 
     return StockMovementWithProduct(
       movementId: movement.id,
-      productId: movement.productId,
+      productId: stock.productId,
       type: movement.type,
       quantity: movement.quantity,
       unitCostInCents: movement.unitCostInCents,

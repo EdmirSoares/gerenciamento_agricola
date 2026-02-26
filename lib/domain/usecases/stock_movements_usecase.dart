@@ -9,7 +9,7 @@ class AddStockMovementUseCase {
   AddStockMovementUseCase(this._repository);
 
   Future<void> call(
-    int productId,
+    int stockId,
     double quantity,
     StockMovementType type,
     int? unitCostInCents,
@@ -17,7 +17,7 @@ class AddStockMovementUseCase {
   ) async {
     try {
       final stockMovement = StockMovementEntity.create(
-        productId: productId,
+        stockId: stockId,
         type: type,
         quantity: quantity,
         unitCostInCents: unitCostInCents,

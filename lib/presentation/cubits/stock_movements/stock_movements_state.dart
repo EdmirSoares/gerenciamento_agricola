@@ -1,5 +1,6 @@
 import 'package:gerenciamento_agricola/domain/entities/stock_entity.dart';
 import 'package:gerenciamento_agricola/domain/entities/stock_movement_with_product.dart';
+import 'package:gerenciamento_agricola/presentation/widgets/error_display_widget.dart';
 
 abstract class StockMovementsState {}
 
@@ -17,22 +18,17 @@ class StockMovementWithProductLoaded extends StockMovementsState {
   StockMovementWithProductLoaded(this.stock);
 }
 
-class StockMovementsError extends StockMovementsState {
+class StockMovementsError extends StockMovementsState implements AppError {
+  @override
   final String message;
+  @override
   final String? details;
+  @override
   final ErrorType type;
-  
+
   StockMovementsError(
     this.message, {
     this.details,
     this.type = ErrorType.generic,
   });
-}
-
-enum ErrorType {
-  validation,
-  notFound,
-  network,
-  permission,
-  generic,
 }
