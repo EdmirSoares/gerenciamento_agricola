@@ -9,8 +9,8 @@ class SupplierRepositoryImpl implements ISupplierRepository {
   SupplierRepositoryImpl(this._db);
 
   @override
-  Future<void> saveSupplier(SupplierEntity supplier) async {
-    final companion = FarmSupplyersCompanion(
+  Future<SupplierEntity> saveSupplier(SupplierEntity supplier) async {
+    final companion = FarmSuppliersCompanion(
       name: Value(supplier.name),
       contactInfo: Value(supplier.contactInfo),
       createdAt: Value(supplier.createdAt),
@@ -18,12 +18,13 @@ class SupplierRepositoryImpl implements ISupplierRepository {
       isDeleted: Value(supplier.isDeleted),
     );
 
-    await _db.into(_db.farmSupplyers).insert(companion);
+    await _db.into(_db.farmSuppliers).insert(companion);
+    return supplier;
   }
 
   @override
   Future<List<SupplierEntity>> getAllSuppliers() async {
-    final query = _db.select(_db.farmSupplyers)
+    final query = _db.select(_db.farmSuppliers)
       ..where((tbl) => tbl.isDeleted.equals(false))
       ..orderBy([(tbl) => OrderingTerm.asc(tbl.name)]);
 
@@ -33,7 +34,7 @@ class SupplierRepositoryImpl implements ISupplierRepository {
 
   @override
   Future<SupplierEntity?> getSupplierById(int id) async {
-    final query = _db.select(_db.farmSupplyers)
+    final query = _db.select(_db.farmSuppliers)
       ..where((tbl) => tbl.id.equals(id) & tbl.isDeleted.equals(false));
 
     final result = await query.getSingleOrNull();
@@ -48,22 +49,22 @@ class SupplierRepositoryImpl implements ISupplierRepository {
       throw Exception('Não é possível atualizar fornecedor sem ID');
     }
 
-    final companion = FarmSupplyersCompanion(
+    final companion = FarmSuppliersCompanion(
       id: Value(supplier.id!),
       name: Value(supplier.name),
       contactInfo: Value(supplier.contactInfo),
       updatedAt: Value(DateTime.now()),
     );
 
-    await _db.update(_db.farmSupplyers).replace(companion);
+    await _db.update(_db.farmSuppliers).replace(companion);
   }
 
   @override
   Future<void> deleteSupplier(int id) async {
     await (_db.update(
-      _db.farmSupplyers,
+      _db.farmSuppliers,
     )..where((tbl) => tbl.id.equals(id))).write(
-      const FarmSupplyersCompanion(
+      const FarmSuppliersCompanion(
         isDeleted: Value(true),
         updatedAt: Value.absent(),
       ),
@@ -73,7 +74,7 @@ class SupplierRepositoryImpl implements ISupplierRepository {
   @override
   Future<List<SupplierEntity>> searchSuppliersByName(String query) async {
     final results =
-        await (_db.select(_db.farmSupplyers)
+        await (_db.select(_db.farmSuppliers)
               ..where(
                 (tbl) =>
                     tbl.name.like('%$query%') & tbl.isDeleted.equals(false),
@@ -84,7 +85,7 @@ class SupplierRepositoryImpl implements ISupplierRepository {
     return results.map((row) => _mapToEntity(row)).toList();
   }
 
-  SupplierEntity _mapToEntity(FarmSupplyer row) {
+  SupplierEntity _mapToEntity(FarmSupplier row) {
     return SupplierEntity(
       id: row.id,
       name: row.name,
