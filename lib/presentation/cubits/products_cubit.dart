@@ -1,5 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gerenciamento_agricola/domain/usecases/products_usecase.dart';
+import '../widgets/error_display_widget.dart';
 import 'products_state.dart';
 
 class ProductsCubit extends Cubit<ProductsState> {

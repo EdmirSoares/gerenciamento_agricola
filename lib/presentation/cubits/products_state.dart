@@ -1,4 +1,5 @@
 import 'package:gerenciamento_agricola/domain/entities/products_entity.dart';
+import '../widgets/error_display_widget.dart';
 
 abstract class ProductsState {}
 
@@ -11,9 +12,12 @@ class ProductsLoaded extends ProductsState {
   ProductsLoaded(this.products);
 }
 
-class ProductOperationError extends ProductsState {
+class ProductOperationError extends ProductsState implements AppError {
+  @override
   final String message;
+  @override
   final String? details;
+  @override
   final ErrorType type;
 
   ProductOperationError(
@@ -22,5 +26,3 @@ class ProductOperationError extends ProductsState {
     this.type = ErrorType.generic,
   });
 }
-
-enum ErrorType { validation, notFound, network, permission, generic }
