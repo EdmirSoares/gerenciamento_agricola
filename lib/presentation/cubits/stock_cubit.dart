@@ -1,5 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gerenciamento_agricola/domain/usecases/stock_usecase.dart';
+import 'package:gerenciamento_agricola/presentation/widgets/error_display_widget.dart';
 import 'package:gerenciamento_agricola/presentation/cubits/stock_state.dart';
 
 class StockCubit extends Cubit<StockState> {

@@ -1,4 +1,5 @@
 import 'package:gerenciamento_agricola/domain/entities/stock_entity.dart';
+import '../widgets/error_display_widget.dart';
 
 abstract class StockState {}
 
@@ -11,22 +12,13 @@ class StockLoaded extends StockState {
   StockLoaded(this.stocks);
 }
 
-class StockError extends StockState {
+class StockError extends StockState implements AppError {
+  @override
   final String message;
+  @override
   final String? details;
+  @override
   final ErrorType type;
-  
-  StockError(
-    this.message, {
-    this.details,
-    this.type = ErrorType.generic,
-  });
-}
 
-enum ErrorType {
-  validation,
-  notFound,
-  network,
-  permission,
-  generic,
+  StockError(this.message, {this.details, this.type = ErrorType.generic});
 }
