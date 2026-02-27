@@ -11,13 +11,12 @@ class SimulationRepositoryImpl implements ISimulationRepository {
 
   @override
   Future<void> saveSimulation(SimulationEntity entity) async {
-    // Converte a Entidade para um "Companion" do Drift para salvar
     final companion = SimulationsCompanion.insert(
       producerName: entity.producerName,
-      principalAmount: entity.principalAmount.toString(),
-      interestRate: entity.interestRate.toString(),
+      principalAmountInCents: (entity.principalAmount * Decimal.fromInt(100)).toBigInt().toInt(),
+      interestRateBasisPoints: (entity.interestRate * Decimal.fromInt(100)).toBigInt().toInt(),
       periods: entity.periods,
-      totalAmount: entity.totalAmount.toString(),
+      totalAmountInCents: (entity.totalAmount * Decimal.fromInt(100)).toBigInt().toInt(),
       createdAt: Value(entity.createdAt),
     );
 
@@ -32,10 +31,10 @@ class SimulationRepositoryImpl implements ISimulationRepository {
       return SimulationEntity(
         id: row.id,
         producerName: row.producerName,
-        principalAmount: Decimal.parse(row.principalAmount),
-        interestRate: Decimal.parse(row.interestRate),
+        principalAmount: (Decimal.fromInt(row.principalAmountInCents) / Decimal.fromInt(100)).toDecimal(),
+        interestRate: (Decimal.fromInt(row.interestRateBasisPoints) / Decimal.fromInt(100)).toDecimal(),
         periods: row.periods,
-        totalAmount: Decimal.parse(row.totalAmount),
+        totalAmount: (Decimal.fromInt(row.totalAmountInCents) / Decimal.fromInt(100)).toDecimal(),
         createdAt: row.createdAt,
         isSynced: row.isSynced,
       );
@@ -44,7 +43,6 @@ class SimulationRepositoryImpl implements ISimulationRepository {
 
   @override
   Future<void> syncSimulations() async {
-    // Implementaremos quando tivermos uma API
     throw UnimplementedError();
   }
 }
