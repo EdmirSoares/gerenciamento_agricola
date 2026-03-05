@@ -29,7 +29,14 @@ class AppDatabase extends _$AppDatabase {
 
   @override
   MigrationStrategy get migration => MigrationStrategy(
+    onCreate: (migrator) async {
+      await migrator.createAll();
+    },
     onUpgrade: (migrator, from, to) async {
+      for (final table in allTables) {
+        await migrator.createTable(table);
+      }
+
       if (from < 3) {
         await migrator.alterTable(
           TableMigration(
@@ -40,17 +47,18 @@ class AppDatabase extends _$AppDatabase {
           ),
         );
       }
-      
+
       if (from < 4) {
         await migrator.alterTable(
           TableMigration(
             farmPurchaseItems,
             columnTransformer: {
-              farmPurchaseItems.quantity: farmPurchaseItems.quantity.cast<double>(),
+              farmPurchaseItems.quantity: farmPurchaseItems.quantity
+                  .cast<double>(),
             },
           ),
         );
-        
+
         await migrator.alterTable(
           TableMigration(
             farmProductions,
