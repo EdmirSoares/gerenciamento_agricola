@@ -119,22 +119,22 @@ class _CustomBottomNavigationBarState extends State<CustomBottomNavigationBar>
                               begin: Alignment.topCenter,
                               end: Alignment.bottomCenter,
                               colors: [
-                                customColors.gradientStart,
-                                customColors.gradientEnd,
+                                customColors.gradientStart.withValues(alpha: 0.15),
+                                customColors.gradientEnd.withValues(alpha: 0.5),
                               ],
                             ),
                             borderRadius: AppRadius.radiusXL,
                             border: Border.all(
-                              color: customColors.gradientBorder,
-                              width: 2,
+                              color: customColors.gradientBorder.withValues(alpha: 0.15),
+                              width: 1,
                             ),
                             boxShadow: [
                               BoxShadow(
-                                color: customColors.gradientEnd.withValues(
-                                  alpha: 0.50,
+                                color: customColors.gradientStart.withValues(
+                                  alpha: 0.35,
                                 ),
-                                blurRadius: 24,
-                                offset: const Offset(0, 7),
+                                blurRadius: 10,
+                                offset: const Offset(0, 6),
                               ),
                             ],
                           ),
@@ -199,7 +199,7 @@ class _NavItem extends StatelessWidget {
                   isSelected ? item.selectedIcon : item.icon,
                   key: ValueKey(isSelected),
                   color: isSelected
-                      ? colorScheme.onPrimary
+                      ? colorScheme.onSurface
                       : colorScheme.onSurfaceVariant.withValues(alpha: 0.6),
                   size: 24,
                 ),
@@ -211,7 +211,7 @@ class _NavItem extends StatelessWidget {
                   style: AppTextStyles.labelSmall(context).copyWith(
                     fontWeight: isSelected ? FontWeight.w600 : FontWeight.w400,
                     color: isSelected
-                        ? colorScheme.onPrimary
+                        ? colorScheme.onSurface
                         : colorScheme.onSurfaceVariant.withValues(alpha: 0.6),
                   ),
                   child: Text(
