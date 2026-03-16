@@ -152,6 +152,43 @@ class _CategoryList extends StatelessWidget {
     CategoryEntity category,
   ) async {
     final cubit = context.read<CategoryCubit>();
+
+    final count = await cubit.countProductsByCategory(category.id!);
+    if (!context.mounted) return;
+
+    if (count > 0) {
+      await showDialog<void>(
+        context: context,
+        builder: (_) => AlertDialog(
+          title: const Text('Não é possível excluir'),
+          content: RichText(
+            text: TextSpan(
+              style: DefaultTextStyle.of(context).style,
+              children: [
+                const TextSpan(text: 'A categoria '),
+                TextSpan(
+                  text: '"${category.name}"',
+                  style: const TextStyle(fontWeight: FontWeight.bold),
+                ),
+                TextSpan(
+                  text:
+                      ' possui $count produto${count > 1 ? 's' : ''} vinculado${count > 1 ? 's' : ''}.\n\n'
+                      'Remova ou reatribua os produtos antes de excluir esta categoria.',
+                ),
+              ],
+            ),
+          ),
+          actions: [
+            FilledButton(
+              onPressed: () => Navigator.pop(context),
+              child: const Text('Entendi'),
+            ),
+          ],
+        ),
+      );
+      return;
+    }
+
     final confirmed = await showDialog<bool>(
       context: context,
       builder: (_) => AlertDialog(
@@ -165,10 +202,7 @@ class _CategoryList extends StatelessWidget {
                 text: '"${category.name}"',
                 style: const TextStyle(fontWeight: FontWeight.bold),
               ),
-              const TextSpan(
-                text:
-                    '?\n\nCategorias com produtos vinculados não podem ser removidas.',
-              ),
+              const TextSpan(text: '?'),
             ],
           ),
         ),
@@ -185,7 +219,7 @@ class _CategoryList extends StatelessWidget {
             child: Text(
               'Excluir',
               style: AppTextStyles.labelMedium(context).copyWith(
-                color: Theme.of(context).colorScheme.onSurfaceVariant,
+                color: Theme.of(context).colorScheme.onError,
               ),
             ),
           ),
@@ -193,7 +227,7 @@ class _CategoryList extends StatelessWidget {
       ),
     );
 
-    if (confirmed == true) {
+    if (confirmed == true && context.mounted) {
       await cubit.deleteCategory(category.id!);
     }
   }
