@@ -97,6 +97,7 @@ void setup() {
   sl.registerLazySingleton(() => GetCategoryByIdUseCase(sl()));
   sl.registerLazySingleton(() => UpdateCategoryUseCase(sl()));
   sl.registerLazySingleton(() => DeleteCategoryByIdUseCase(sl()));
+  sl.registerLazySingleton(() => CountProductsByCategoryUseCase(sl()));
 
   // UseCases - Products
   sl.registerLazySingleton(() => CreateProductUseCase(sl()));
@@ -187,6 +188,7 @@ sl.registerLazySingleton(() => GetMovementsByCategoryUseCase(sl()));
       sl(), // GetCategoryByIdUseCase
       sl(), // UpdateCategoryUseCase
       sl(), // DeleteCategoryByIdUseCase
+      sl(), // CountProductsByCategoryUseCase
     ),
   );
   sl.registerFactory(
