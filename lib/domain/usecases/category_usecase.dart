@@ -1,6 +1,15 @@
 import 'package:gerenciamento_agricola/domain/entities/category_entity.dart';
 import 'package:gerenciamento_agricola/domain/repositories/category_repository.dart';
 
+class CategoryHasProductsException implements Exception {
+  final int productCount;
+  CategoryHasProductsException(this.productCount);
+
+  @override
+  String toString() =>
+      'A categoria possui $productCount produto(s) vinculado(s) e não pode ser excluída.';
+}
+
 class CreateCategoryUseCase {
   final ICategoryRepository _repository;
 
@@ -47,7 +56,15 @@ class DeleteCategoryByIdUseCase {
     }
 
     try {
+      final count = await _repository.countProductsByCategory(id);
+      if (count > 0) {
+        throw CategoryHasProductsException(count);
+      }
       await _repository.deleteCategory(id);
+    } on ArgumentError {
+      rethrow;
+    } on CategoryHasProductsException {
+      rethrow;
     } catch (e) {
       throw Exception('Erro ao deletar categoria: ${e.toString()}');
     }
@@ -83,5 +100,18 @@ class GetCategoryByIdUseCase {
     } catch (e) {
       throw Exception('Erro ao buscar categoria por ID: ${e.toString()}');
     }
+  }
+}
+
+class CountProductsByCategoryUseCase {
+  final ICategoryRepository _repository;
+
+  CountProductsByCategoryUseCase(this._repository);
+
+  Future<int> call(int categoryId) async {
+    if (categoryId <= 0) {
+      throw ArgumentError('ID da categoria deve ser maior que zero');
+    }
+    return _repository.countProductsByCategory(categoryId);
   }
 }

@@ -8,6 +8,7 @@ class CategoryCubit extends Cubit<CategoryState> {
   final DeleteCategoryByIdUseCase _deleteUseCase;
   final GetAllCategoriesUseCase _getAllUseCase;
   final GetCategoryByIdUseCase _getByIdUseCase;
+  final CountProductsByCategoryUseCase _countProductsUseCase;
 
   CategoryCubit(
     this._createUseCase,
@@ -15,6 +16,7 @@ class CategoryCubit extends Cubit<CategoryState> {
     this._getByIdUseCase,
     this._updateUseCase,
     this._deleteUseCase,
+    this._countProductsUseCase,
   ) : super(CategoryInitial());
 
   Future<void> createCategory(String name) async {
@@ -103,10 +105,27 @@ class CategoryCubit extends Cubit<CategoryState> {
     }
   }
 
+  Future<int> countProductsByCategory(int categoryId) async {
+    try {
+      return await _countProductsUseCase(categoryId);
+    } catch (_) {
+      return 0;
+    }
+  }
+
   Future<void> deleteCategory(int id) async {
     emit(CategoryLoading());
     try {
       await _deleteUseCase(id);
+      await loadCategories();
+    } on CategoryHasProductsException catch (e) {
+      emit(
+        CategoryError(
+          'Não é possível excluir',
+          details: e.toString(),
+          type: ErrorType.validation,
+        ),
+      );
       await loadCategories();
     } on ArgumentError catch (e) {
       emit(

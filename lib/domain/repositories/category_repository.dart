@@ -6,4 +6,5 @@ abstract class ICategoryRepository {
   Future<CategoryEntity?> getCategoryById(int id);
   Future<void> updateCategory(CategoryEntity category);
   Future<void> deleteCategory(int id);
+  Future<int> countProductsByCategory(int categoryId);
 }

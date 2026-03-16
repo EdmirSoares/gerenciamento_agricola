@@ -68,6 +68,17 @@ class CategoryRepositoryImpl implements ICategoryRepository {
     );
   }
 
+  @override
+  Future<int> countProductsByCategory(int categoryId) async {
+    final query = _db.select(_db.farmProducts)
+      ..where(
+        (tbl) =>
+            tbl.categoryId.equals(categoryId) & tbl.isDeleted.equals(false),
+      );
+    final results = await query.get();
+    return results.length;
+  }
+
   CategoryEntity _mapToEntity(FarmCategory row) {
     return CategoryEntity(
       id: row.id,
